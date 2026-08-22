@@ -286,6 +286,9 @@ export default function MedicalTeam() {
         <FormCC
           key={`${editing?._id ?? "new"}-${memberModalOpen}`}
           identifier="MedicalTeamForm"
+          // Mismo esquema que el modal de carpetas: sin esto el título y las
+          // etiquetas se pintan con la paleta clara sobre el fondo del modal.
+          colorSchema="night"
           title={editing ? "Editar integrante" : "Nuevo integrante"}
           subtitle="El tutor se asigna automáticamente y no puede cambiarse desde esta cuenta."
           buttonLoading={loading}
