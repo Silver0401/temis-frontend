@@ -5,9 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useGlobalContext } from "@/e2e/globalContext";
 import { Get_Admin_Stats } from "@/e2e/server/FeathersAPI";
-import LoaderCC from "@/components/Loader-CC";
 import PieChartCC from "@/components/PieChart-CC";
 import MonthBarsCC from "@/components/MonthBars-CC";
+
+import AdminStatsSkeleton from "./AdminStatsSkeleton";
 
 import AdminFilters, {
   AdminFilterState,
@@ -113,7 +114,7 @@ export default function AdminStats() {
       />
 
       {stats.isPending ? (
-        <LoaderCC schema="night" />
+        <AdminStatsSkeleton />
       ) : stats.isError || !stats.data ? (
         <p className="admin-empty">No se pudieron calcular las estadísticas.</p>
       ) : (

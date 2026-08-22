@@ -988,3 +988,80 @@
     .AdminSearchView .admin-results-head,
     .AdminSearchView .admin-row
         min-width: 760px
+
+// ═══════════════════ Esqueleto de carga del tablero ═══════════════════
+// Repite la geometría del tablero real para que el contenido no salte al
+// aterrizar. Reutiliza .admin-hero / .admin-pies / .admin-chart, así que solo
+// hace falta describir los bloques grises.
+.AdminDashboard
+    .admin-skeleton
+        display: flex
+        flex-direction: column
+        gap: 16px
+
+        // Texto solo para lectores de pantalla: el esqueleto no dice nada solo.
+        .sr-only
+            position: absolute
+            width: 1px
+            height: 1px
+            padding: 0
+            margin: -1px
+            overflow: hidden
+            clip: rect(0, 0, 0, 0)
+            white-space: nowrap
+            border: 0
+
+        .sk
+            display: block
+            border-radius: 8px
+            background: linear-gradient(90deg, var(--dash-line) 25%, var(--dash-card-bg-2) 37%, var(--dash-line) 63%)
+            background-size: 400% 100%
+            animation: adminSkShimmer 1.4s ease-in-out infinite
+
+        .sk-line
+            height: 10px
+            margin: 6px 0
+
+        .sk-xs
+            width: 34%
+
+        .sk-sm
+            width: 52%
+
+        .sk-md
+            width: 70%
+
+        .sk-big
+            width: 62%
+            height: 58px
+            margin: 12px 0 10px
+
+        .sk-num
+            width: 56%
+            height: 22px
+            margin: 8px 0
+
+        .sk-spark
+            width: 46px
+            height: 16px
+
+        .sk-pie
+            width: 168px
+            height: 168px
+            border-radius: 50%
+            margin: 14px auto 4px
+
+        .sk-bars
+            width: 100%
+            height: 148px
+            margin-top: 14px
+
+    // El esqueleto no lleva borde animado propio: hereda el del tablero.
+    .admin-sk-hero
+        min-height: 168px
+
+@keyframes adminSkShimmer
+    0%
+        background-position: 100% 50%
+    100%
+        background-position: 0 50%

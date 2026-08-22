@@ -11731,6 +11731,102 @@ label svg {
     min-width: 760px;
   }
 }
+.AdminDashboard .admin-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.AdminDashboard .admin-skeleton .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.AdminDashboard .admin-skeleton .sk {
+  display: block;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--dash-line) 25%, var(--dash-card-bg-2) 37%, var(--dash-line) 63%);
+  background-size: 400% 100%;
+  animation: adminSkShimmer 1.4s ease-in-out infinite;
+}
+.AdminDashboard .admin-skeleton .sk-line {
+  height: 10px;
+  margin: 6px 0;
+}
+.AdminDashboard .admin-skeleton .sk-xs {
+  width: 34%;
+}
+.AdminDashboard .admin-skeleton .sk-sm {
+  width: 52%;
+}
+.AdminDashboard .admin-skeleton .sk-md {
+  width: 70%;
+}
+.AdminDashboard .admin-skeleton .sk-big {
+  width: 62%;
+  height: 58px;
+  margin: 12px 0 10px;
+}
+.AdminDashboard .admin-skeleton .sk-num {
+  width: 56%;
+  height: 22px;
+  margin: 8px 0;
+}
+.AdminDashboard .admin-skeleton .sk-spark {
+  width: 46px;
+  height: 16px;
+}
+.AdminDashboard .admin-skeleton .sk-pie {
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  margin: 14px auto 4px;
+}
+.AdminDashboard .admin-skeleton .sk-bars {
+  width: 100%;
+  height: 148px;
+  margin-top: 14px;
+}
+.AdminDashboard .admin-sk-hero {
+  min-height: 168px;
+}
+@-moz-keyframes adminSkShimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+@-webkit-keyframes adminSkShimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+@-o-keyframes adminSkShimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+@keyframes adminSkShimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
 .MyPatientsContainer {
   position: relative;
   width: 100%;
