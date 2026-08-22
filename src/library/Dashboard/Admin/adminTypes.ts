@@ -40,10 +40,14 @@ export type AdminStatsResponse = {
     recetas: number;
     farmacosRecetados: number;
     solicitudes: number;
+    /** Estudios individuales dentro de esas solicitudes. */
+    estudiosSolicitados: number;
     somatometrias: number;
   };
   /** Fármacos recetados en el periodo, de mayor a menor. */
   drugs: Array<{ name: string; count: number }>;
+  /** Estudios solicitados en el periodo, de mayor a menor. */
+  studies: Array<{ name: string; count: number }>;
   /** Diagnósticos CIE-10 del periodo, de mayor a menor. */
   diagnoses: Array<{ cie: string; name: string; count: number }>;
   /** Doce meses del año, incluidos los que van en cero. */

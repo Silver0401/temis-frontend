@@ -191,6 +191,20 @@ export default function AdminStats() {
             </article>
 
             <article className="admin-chart">
+              <h2>Estudios más solicitados</h2>
+              <p className="admin-chart-sub">
+                {miles(stats.data.totals.estudiosSolicitados)} estudios en{" "}
+                {miles(stats.data.totals.solicitudes)} solicitudes
+              </p>
+              <PieChartCC
+                data={stats.data.studies.map((row) => ({
+                  label: row.name,
+                  value: row.count,
+                }))}
+              />
+            </article>
+
+            <article className="admin-chart">
               <h2>Diagnósticos CIE-10</h2>
               <p className="admin-chart-sub">
                 {stats.data.diagnoses.length} claves distintas en el mes

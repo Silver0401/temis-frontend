@@ -31,7 +31,7 @@ const AdminStatsSkeleton: React.FC = () => (
     </div>
 
     <div className="admin-pies">
-      {[0, 1].map((i) => (
+      {[0, 1, 2].map((i) => (
         <article className="admin-chart" key={i}>
           <span className="sk sk-line sk-sm" />
           <span className="sk sk-line sk-xs" />
