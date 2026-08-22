@@ -11798,9 +11798,41 @@ label svg {
 .AdminSearchView .admin-head-actions {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   gap: 16px;
   flex-wrap: wrap;
+}
+.AdminSearchView .admin-export {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.AdminSearchView .admin-export-label {
+  font-size: 0.63rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dash-text-3);
+}
+.AdminSearchView .admin-export-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.AdminSearchView .admin-export-row input[type="date"] {
+  min-height: 38px;
+  padding: 0 10px;
+  color: var(--dash-text);
+  border: 1px solid var(--dash-line);
+  border-radius: 10px;
+  background: var(--dash-card-bg);
+  font-size: 0.78rem;
+}
+.AdminSearchView .admin-export-hint {
+  max-width: 440px;
+  font-size: 0.7rem;
+  color: var(--dash-text-3);
 }
 .AdminSearchView .admin-exchange-progress {
   position: relative;

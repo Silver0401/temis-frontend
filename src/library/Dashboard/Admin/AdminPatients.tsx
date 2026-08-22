@@ -27,6 +27,11 @@ type ExchangeFileBatch = {
 
 const PAGE_SIZE = 25;
 
+/** Tope del backend (`MAX_PACIENTES_POR_ARCHIVO` en exchange-file). */
+const MAX_EXPORTACION = 500;
+/** Tope por petición de admin-console (`MAX_LIMIT`). */
+const PASO_EXPORTACION = 100;
+
 const fullName = (row: AdminPatientRow) =>
   [row.names, row.middleName, row.lastName].filter(Boolean).join(" ");
 
@@ -52,6 +57,19 @@ export default function AdminPatients() {
   const [draft, setDraft] = useState<AdminFilterState>(EmptyAdminFilters);
   const [applied, setApplied] = useState<AdminFilterState>(EmptyAdminFilters);
   const [page, setPage] = useState(0);
+  /**
+   * Periodo del archivo de intercambio.
+   *
+   * Es propio del archivo y no de la búsqueda: el filtro "Registro" se retiró
+   * de esta vista por inservible, así que `applied.from`/`applied.to` ya no
+   * pueden llenarse. Sin este control, el archivo tomaría siempre la primera
+   * consulta histórica de cada paciente mientras el texto prometía un periodo.
+   * Vacío significa, y ahora sí dice, "sin acotar".
+   */
+  const [exportRange, setExportRange] = useState<{ from: string; to: string }>({
+    from: "",
+    to: "",
+  });
 
   const patients = useQuery({
     queryKey: ["admin-patients", applied, page],
@@ -77,13 +95,39 @@ export default function AdminPatients() {
    * formato del renglón vive en un único lugar y no hay que replicar la
    * especificación GIIS en el cliente.
    */
+  const hayPeriodo = Boolean(exportRange.from || exportRange.to);
+
   const exchange_file_mutation = useMutation({
     mutationFn: async () => {
-      const patientIds = rows.map((row) => row._id);
+      // Se recorre la búsqueda completa, no la página. `rows` son 25 registros;
+      // exportar eso con una etiqueta que dice "resultados" entregaría un
+      // archivo incompleto que parece correcto. admin-console tope 100 por
+      // petición, así que se pagina hasta el límite del backend.
+      const patientIds: string[] = [];
+      for (let skip = 0; skip < MAX_EXPORTACION; skip += PASO_EXPORTACION) {
+        const pagina = await feathersFetchCC<AdminPatientsResponse>(
+          await Search_Admin_Patients({
+            ...applied,
+            $limit: PASO_EXPORTACION,
+            $skip: skip,
+          }),
+        );
+        if (pagina.type === "error") throw new Error("admin-patients-error");
+        patientIds.push(...pagina.data.rows.map((row) => row._id));
+        if (
+          pagina.data.rows.length < PASO_EXPORTACION ||
+          patientIds.length >= pagina.data.total
+        ) {
+          break;
+        }
+      }
+
+      if (!patientIds.length) throw new Error("sin-pacientes");
+
       const response = await feathersFetchCC<ExchangeFileBatch>(
-        await Generate_Exchange_File(patientIds, {
-          from: applied.from,
-          to: applied.to,
+        await Generate_Exchange_File(patientIds.slice(0, MAX_EXPORTACION), {
+          from: exportRange.from,
+          to: exportRange.to,
         }),
       );
       if (response.type === "error") throw new Error("exchange-file-error");
@@ -92,7 +136,9 @@ export default function AdminPatients() {
     onSuccess: (data) => {
       if (!data.total) {
         toast.error(
-          "Ningún paciente de la lista tiene consultas en el periodo",
+          hayPeriodo
+            ? "Ningún paciente de la lista tiene consultas en el periodo"
+            : "Ningún paciente de la lista tiene consultas registradas",
         );
         return;
       }
@@ -113,7 +159,9 @@ export default function AdminPatients() {
       // de los esperados debe notarse antes de entregarlo.
       if (data.omitted.length) {
         toast.warning(
-          `${data.total} pacientes en el archivo · ${data.omitted.length} sin consultas en el periodo`,
+          `${data.total} pacientes en el archivo · ${data.omitted.length} sin consultas${
+            hayPeriodo ? " en el periodo" : " registradas"
+          }`,
         );
       } else {
         toast.success(`Archivo generado con ${data.total} pacientes`);
@@ -161,15 +209,49 @@ export default function AdminPatients() {
           </div>
         </div>
         <div className="admin-head-actions">
-          <ActionButton
-            variant="primary"
-            disabled={!rows.length || exchange_file_mutation.isPending}
-            onClick={() => exchange_file_mutation.mutate()}
-          >
-            {exchange_file_mutation.isPending
-              ? "Generando…"
-              : `Archivo de intercambio (${miles(rows.length)})`}
-          </ActionButton>
+          <div className="admin-export">
+            <span className="admin-export-label">
+              Periodo del archivo de intercambio
+            </span>
+            <div className="admin-export-row">
+              <input
+                type="date"
+                aria-label="Desde"
+                value={exportRange.from}
+                onChange={(event) =>
+                  setExportRange((prev) => ({
+                    ...prev,
+                    from: event.target.value,
+                  }))
+                }
+              />
+              <input
+                type="date"
+                aria-label="Hasta"
+                value={exportRange.to}
+                onChange={(event) =>
+                  setExportRange((prev) => ({ ...prev, to: event.target.value }))
+                }
+              />
+              <ActionButton
+                variant="primary"
+                disabled={!total || exchange_file_mutation.isPending}
+                onClick={() => exchange_file_mutation.mutate()}
+              >
+                {exchange_file_mutation.isPending
+                  ? "Generando…"
+                  : `Generar archivo (${miles(Math.min(total, MAX_EXPORTACION))})`}
+              </ActionButton>
+            </div>
+            <small className="admin-export-hint">
+              {hayPeriodo
+                ? "Primera consulta de cada paciente dentro del periodo."
+                : "Sin periodo: se toma la primera consulta registrada de cada paciente."}
+              {total > MAX_EXPORTACION
+                ? ` Se exportarán los primeros ${miles(MAX_EXPORTACION)} de ${miles(total)}.`
+                : ""}
+            </small>
+          </div>
           <div className="admin-count">
             <b>{miles(total)}</b>
             <span>resultados</span>
@@ -180,8 +262,11 @@ export default function AdminPatients() {
       {exchange_file_mutation.isPending ? (
         <div className="admin-exchange-progress" aria-live="polite">
           <span className="admin-exchange-bar" />
-          Generando el archivo de intercambio… cada paciente se resuelve por
-          separado, puede tardar.
+          Generando el archivo de intercambio de los {miles(
+            Math.min(total, MAX_EXPORTACION),
+          )}{" "}
+          pacientes de la búsqueda… cada uno se resuelve por separado, puede
+          tardar.
         </div>
       ) : null}
 

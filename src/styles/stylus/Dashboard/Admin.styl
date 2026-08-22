@@ -1071,9 +1071,44 @@
     .admin-head-actions
         display: flex
         flex-direction: row
-        align-items: center
+        align-items: flex-end
         gap: 16px
         flex-wrap: wrap
+
+    // El periodo pertenece al archivo, no a la búsqueda: se retiró el filtro
+    // "Registro" de esta vista, así que sin este control el archivo tomaría la
+    // primera consulta histórica mientras el texto prometía un periodo.
+    .admin-export
+        display: flex
+        flex-direction: column
+        gap: 6px
+
+    .admin-export-label
+        font-size: 0.63rem
+        letter-spacing: 0.12em
+        text-transform: uppercase
+        color: var(--dash-text-3)
+
+    .admin-export-row
+        display: flex
+        flex-direction: row
+        align-items: center
+        gap: 8px
+        flex-wrap: wrap
+
+        input[type="date"]
+            min-height: 38px
+            padding: 0 10px
+            color: var(--dash-text)
+            border: 1px solid var(--dash-line)
+            border-radius: 10px
+            background: var(--dash-card-bg)
+            font-size: 0.78rem
+
+    .admin-export-hint
+        max-width: 440px
+        font-size: 0.7rem
+        color: var(--dash-text-3)
 
     // Aviso de progreso: la ruta resuelve un paciente a la vez y puede tardar,
     // así que el botón deshabilitado por sí solo no explica la espera.
