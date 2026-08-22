@@ -26,7 +26,7 @@ export type AdminPatientsResponse = {
   total: number;
   limit: number;
   skip: number;
-  data: AdminPatientRow[];
+  rows: AdminPatientRow[];
 };
 
 export type AdminStatsResponse = {
@@ -65,5 +65,5 @@ export type AdminAgendasResponse = {
   total: number;
   /** Médicos presentes en el resultado; dan la leyenda y el color por dueño. */
   doctors: Array<{ _id: string; name: string }>;
-  data: AdminAppointment[];
+  rows: AdminAppointment[];
 };

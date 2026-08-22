@@ -59,7 +59,7 @@ export default function AdminPatients() {
     },
   });
 
-  const rows = patients.data?.data ?? [];
+  const rows = patients.data?.rows ?? [];
   const total = patients.data?.total ?? 0;
   const lastPage = Math.max(0, Math.ceil(total / PAGE_SIZE) - 1);
 

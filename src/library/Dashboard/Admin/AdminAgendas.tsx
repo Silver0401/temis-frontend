@@ -98,7 +98,7 @@ export default function AdminAgendas() {
   });
 
   const [year, month] = applied.month.split("-").map(Number);
-  const rows = useMemo(() => agendas.data?.data ?? [], [agendas.data]);
+  const rows = useMemo(() => agendas.data?.rows ?? [], [agendas.data]);
   const doctors = useMemo(() => agendas.data?.doctors ?? [], [agendas.data]);
 
   /** Color estable por médico: sigue al dueño, no al orden del resultado. */
