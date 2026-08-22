@@ -1,0 +1,624 @@
+@keyframes rotate {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+.InputCC-Container
+    position: relative
+    height: 35px
+    alignStuff(0,1,0,0)
+    width: 180px
+    border-radius: 7px
+    border: 2px solid transparent;
+    background-color: var(--lp-bg-mid-inverse)
+
+    .placeholderHider
+        position: absolute
+        width: 100%
+        height: 100%
+        z-index: 1
+        pointer-events: none
+        opacity: 1
+        background-color: var(--lp-bg-mid-inverse)
+
+    label
+        position: absolute
+        width: auto
+        left: 10px
+        font-size: 0.8rem
+        transition: transform 350ms
+        pointer-events: none
+        padding: 5px 15px
+        background-color: var(--lp-bg-mid-inverse)
+        transition: transform 350ms, color 300ms, background-color 1000ms
+        color: var(--bg)
+        z-index: 2
+
+    
+
+    &:focus-within 
+        border: 2px solid var(--tertiary);
+
+
+    .InputCC
+        position: absolute
+        width: 98%
+        height: 100%
+        border-radius: 7px
+        padding-left: 10px
+        outline: none
+        border: none
+        transition: background-color 250ms;
+        cursor pointer
+        font-family: "Poppins", sans-serif;
+        z-index: 1
+
+
+    .InputCC
+        background-color: transparent
+        color: var(--bg)
+
+        &::placeholder
+            color: var(--silver) 
+
+    .InputCC:-webkit-autofill,
+    .InputCC:-webkit-autofill:hover, 
+    .InputCC:-webkit-autofill:focus, 
+    .InputCC:-webkit-autofill:active{
+        -webkit-box-shadow: 0 0 0 30px var(--grey) inset 
+        -webkit-text-fill-color: var(--dual) 
+    }
+
+    // .InputCC-Select
+
+        
+    .InputCCTypefile
+        border: 4px solid green
+        opacity: 0
+
+    .InputCCTypedisabled
+        color: var(--silver) !important
+        cursor: not-allowed 
+
+    .InputCCTypedate
+        padding-right: 5px
+
+    .InputCCTypenumber::-webkit-outer-spin-button,
+    .InputCCTypenumber::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+    .InputCCTypenumber[type="number"] 
+            -moz-appearance: textfield;
+
+
+    &:hover
+        .filesContainer
+            opacity: 1
+            transition: opacity 250ms 
+
+    .filesContainer
+        position: relative
+        fillSpace(0,1,0,0)
+        alignStuff(0,1,0,0)
+        border-radius: 10px
+        opacity: 0.7
+        transition: opacity 250ms 
+        overflow-x: auto
+        z-index: 1
+
+        .innerFilesContainer
+            z-index: 5
+            position: relative
+            display: inline-flex
+            flex-direction: row
+            width: auto
+            height: 100%
+
+            .fileDiv
+                position: relative
+                width: 120px
+                height: 90%
+                margin: 10px
+                background-color: var(--bg)
+                border-radius: 10px
+                alignStuff(0,1,0,0)
+                color: var(--white)
+
+                .xButton
+                    position: absolute
+                    top: -5px
+                    right: -5px
+                    width: 20px
+                    height: 20px
+                    background-color: var(--red)
+                    border-radius: 50%
+                    cursor: pointer
+                    display: grid
+                    place-items: center
+                    opacity: 0.6
+                    transition: opacity 300ms
+
+                    &:hover
+                        opacity: 1
+                        transition: opacity 300ms
+
+                    svg
+                        position: relative
+                        width: 80%
+                        height: 80%
+                        color: var(--bg)
+
+                p
+                    font-size: 0.7rem
+                    margin: 0px 5px
+                    text-align: center
+
+        .defaultContainer
+            position: relative
+            alignStuff(0,1,0,0)
+            fillSpace()
+
+            p
+                position: relative
+                color: #bbf3d8
+                text-align: center
+                margin: 0px 15px
+
+    .inputQrCodeButton
+        position: absolute !important
+        top: 10px !important
+        left: 10px !important
+        z-index: 6 !important
+
+
+
+    .InputCC-Icon
+        position: absolute !important
+        right: 2px
+        overflow: hidden
+        width: 25px
+        height: 25px
+        alignStuff(0,1,0,0)
+        border-radius: 5px
+        z-index: 4
+        border: 1px solid var(--white)
+        background-color: var(--bg)
+
+        .closedLock
+            fill: var(--red)
+
+        .openLock
+            fill: var(--green)
+
+        .loadingInputIcon
+            animation: rotate 2s linear infinite
+
+        svg
+            color: var(--primary)
+            cursor: pointer
+            width: 60%
+            height: 60%
+            fill: var(--primary)
+
+        .closedLock
+            fill: var(--red)
+
+        .openLock
+            fill: var(--green)
+
+        .CorrectCheck
+            fill: var(--green)
+            width: 17px
+            height: 17px
+
+        .ErrorCross
+            fill: var(--red)
+            width: 17px
+            height: 17px
+
+    
+    .InputCCIconTypedate
+        pointer-events: none    
+
+    .InputCCIconTypedisabled
+        svg
+            color: var(--red) !important
+
+    .InputCC-Suggestion
+        position: absolute
+        bottom: calc(100% + 5px)
+        right: 0
+        display: flex
+        align-items: center
+        gap: 5px
+        cursor: pointer
+        padding: 3px 9px
+        border-radius: 20px
+        background-color: rgba(136, 226, 138, 0.1)
+        border: 1px solid rgba(136, 226, 138, 0.3)
+        transition: background-color 200ms
+        width: fit-content
+        z-index: 10
+
+        &:hover
+            background-color: rgba(136, 226, 138, 0.22)
+            transition: background-color 200ms
+
+        svg
+            width: 14px
+            height: 14px
+            fill: var(--green)
+            flex-shrink: 0
+
+        span
+            font-size: 0.72rem
+            color: var(--white)
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+            max-width: 160px
+
+
+
+.InputCC-Schema-day
+    // background-color: var(--grey) !important
+
+    .placeholderHider
+        background-color: var(--grey) !important
+
+    label
+        background-color: var(--grey) !important
+        color: var(--bg) !important
+
+
+    .InputCC
+        background-color: transparent
+        // color: var(--bg) !important
+
+        &::placeholder
+            color: var(--white) !important 
+
+    .InputCC:-webkit-autofill,
+    .InputCC:-webkit-autofill:hover, 
+    .InputCC:-webkit-autofill:focus, 
+    .InputCC:-webkit-autofill:active{
+        -webkit-box-shadow: 0 0 0 30px var(--grey) inset !important;
+        -webkit-text-fill-color: var(--dual) !important !important;
+    }
+
+    .filesContainer
+        border: 3px dashed var(--secondary) !important
+        background-color: var(--transparency) !important
+        .innerFilesContainer
+            .fileDiv
+                background-color: var(--bg) !important
+                color: var(--white)
+
+        .defaultContainer
+            p
+                color: var(--secondary) !important
+
+
+    .InputCC-Icon
+        // border: 1px solid var(--white) !important
+        // background-color: var(--bg) !important
+
+        svg
+            color: var(--primary) !important
+
+        .closedLock
+            fill: var(--red) !important
+
+        .openLock
+            fill: var(--green) !important
+
+
+
+
+.InputCC-Schema-night
+    // background-color: var(--silver) !important
+
+    .placeholderHider
+        background-color: var(--silver) !important
+
+    label
+        background-color: var(--silver)
+        color: var(--white)
+
+    #InputCC-Selected
+        label
+            color: var(--bg) !important
+
+    .InputCC
+        background-color: transparent
+        // color: var(--white) !important
+
+        &::placeholder
+            color: var(--bg) !important 
+
+
+    .InputCC:-webkit-autofill,
+    .InputCC:-webkit-autofill:hover, 
+    .InputCC:-webkit-autofill:focus, 
+    .InputCC:-webkit-autofill:active{
+        -webkit-box-shadow: 0 0 0 30px var(--silver) inset !important;
+         -webkit-text-fill-color: var(--white) !important;
+    }
+
+    .filesContainer
+        border: 3px dashed var(--primary) !important
+        background-color: var(--transparency) !important
+        .innerFilesContainer
+            .fileDiv
+                background-color: var(--white) !important
+                color: var(--bg)
+
+        .defaultContainer
+            p
+                color: var(--primary) !important
+
+    .InputCC-Icon
+        // border: 1px solid var(--bg) !important
+        // background-color: var(--white) !important
+
+        svg
+            color: var(--secondary) !important
+
+        .closedLock
+            fill: var(--green) !important
+
+        .openLock
+            fill: var(--red) !important
+
+.InputCC-Checkbox
+    position: relative
+    height: 35px
+    width: 180px
+    alignStuff(0,1,0,0)
+    justify-content: flex-start
+    cursor: pointer
+    cursor: pointer
+
+    .InputCC
+        width: 40px
+        height: 20px
+
+    label
+        margin-left: 15px
+        color: var(--white)
+        pointer-events: none
+        user-select: none
+        font-size: 0.9rem
+
+        .InputCC-CheckboxLink-Text
+            margin-left: 4px
+            color: var(--primary)
+            text-decoration: underline
+            cursor: pointer
+            pointer-events: all
+            transition: opacity 200ms
+
+            &:hover
+                opacity: 0.7
+                transition: opacity 200ms
+
+.InputCCTypecheckBoxLink
+    width: 40px
+    height: 20px
+
+.InputCC-Textarea
+    resize: none
+    fillSpace()
+    padding: 10px
+    font-size: 0.8rem
+
+// type="custom": wrapper only holds children (e.g. AfiliacionesCheckGroup).
+// Drop the generic input box (fixed 35px, 180px, grey bg) so children set the
+// size — otherwise a grey input shows behind and the box overlaps the field below.
+.InputCC-Container.InputCC-Custom
+    height: auto
+    width: 100%
+    background-color: transparent
+    border: none
+    display: block
+
+    &:focus-within
+        border: none
+
+.InputCC-Container[data-direction="horizontal"]
+    flex-direction: row
+    align-items: center
+    width: auto
+    min-width: 105px
+    max-width: 155px
+    height: 36px
+    padding: 0 8px
+    border-radius: 7px
+
+    .placeholderHider
+        display: none
+
+    label
+        position: static
+        background: transparent !important
+        font-size: 0.72rem
+        padding: 0
+        padding-right: 5px
+        white-space: nowrap
+        color: var(--white)
+        transform: none !important
+        transition: none !important
+        z-index: 0
+
+    .InputCC
+        position: static
+        flex: 1
+        min-width: 40px
+        height: 100%
+        padding-left: 4px
+        text-align: center
+        font-size: 0.85rem
+        width: auto
+
+    .InputCC-Icon
+        display: none
+
+
+#InputCC-Selected
+    label
+        transition: transform 350ms, color 300ms, background-color 100ms
+        color: var(--white) !important
+        transform: translate(-15px, -27px)
+        background-color: transparent !important 
+
+    .placeholderHider
+        opacity: 0
+        transition: opacity 350ms
+
+#InputCC-Selected-day
+    label
+        transition: transform 350ms, color 300ms, background-color 100ms
+        color: var(--white) !important
+        transform: translate(-15px, -27px)
+        background-color: transparent !important 
+
+    .placeholderHider
+        opacity: 0
+        transition: opacity 350ms
+
+#InputCC-Selected-night
+    label
+        transition: transform 350ms, color 300ms, background-color 100ms
+        color: var(--bg) !important
+        transform: translate(-15px, -27px)
+        background-color: transparent !important 
+
+    .placeholderHider
+        opacity: 0
+        transition: opacity 350ms
+
+.InputCC-Container[data-validation="valid"]
+    border-color: var(--green) !important
+    transition: border-color 200ms
+
+.InputCC-Container[data-validation="error"]
+    border-color: var(--red) !important
+    transition: border-color 200ms
+
+.fakeHideInputCC
+    height: 0px
+    visibility: hidden
+    position: absolute
+    pointer-events: none
+
+.InputCC-PasswordStrength
+    position: absolute
+    right: 30px
+    top: 50%
+    transform: translateY(-50%)
+    display: flex
+    align-items: center
+    gap: 5px
+    z-index: 3
+
+    .InputCC-PasswordStrength-Dot
+        width: 9px
+        height: 9px
+        border-radius: 50%
+        flex-shrink: 0
+        background-color: rgba(255,255,255,0.08)
+        border: 1.5px solid rgba(255,255,255,0.13)
+        transition: all 0.4s ease
+
+        &:nth-child(1)[data-active="true"]
+            background-color: var(--red-inverted)
+            border-color: var(--red-inverted)
+            box-shadow: 0 0 7px 2px rgba(238,158,158,0.44), inset 0 0 3px rgba(238,158,158,0.25)
+
+        &:nth-child(2)[data-active="true"]
+            background-color: var(--yellow-inverted)
+            border-color: var(--yellow-inverted)
+            box-shadow: 0 0 7px 2px rgba(244,235,106,0.44), inset 0 0 3px rgba(244,235,106,0.25)
+
+        &:nth-child(3)[data-active="true"]
+            background-color: var(--green-inverted)
+            border-color: var(--green-inverted)
+            box-shadow: 0 0 7px 2px rgba(136,226,138,0.44), inset 0 0 3px rgba(136,226,138,0.25)
+
+    .InputCC-PasswordStrength-Divider
+        width: 1px
+        height: 12px
+        background-color: rgba(255,255,255,0.1)
+        border-radius: 1px
+        flex-shrink: 0
+
+    .InputCC-PasswordStrength-Label
+        margin: 0
+        font-size: 9px
+        font-weight: 700
+        letter-spacing: 0.07em
+        text-transform: uppercase
+        transition: all 0.4s ease
+
+    &[data-level="1"] .InputCC-PasswordStrength-Label
+        color: var(--red-inverted)
+        text-shadow: 0 0 8px rgba(238,158,158,0.56)
+
+    &[data-level="2"] .InputCC-PasswordStrength-Label
+        color: var(--yellow-inverted)
+        text-shadow: 0 0 8px rgba(244,235,106,0.56)
+
+    &[data-level="3"] .InputCC-PasswordStrength-Label
+        color: var(--green-inverted)
+        text-shadow: 0 0 8px rgba(136,226,138,0.56)
+
+// ── Icon tooltip (hover over the input icon) ────────────────────────────────
+// The icon clips its overflow; reveal it on hover so the tooltip can escape.
+.InputCC-Icon
+    &:hover
+        overflow: visible
+
+    .InputCC-IconTooltip
+        // Always above the icon; body grows inward (left, into the input) so it
+        // never spills past the input's right edge.
+        position: absolute
+        bottom: calc(100% + 8px)
+        right: 0
+        left: auto
+        min-width: 160px
+        max-width: 240px
+        display: none
+        flex-direction: column
+        gap: 3px
+        padding: 8px 10px
+        border-radius: 8px
+        background-color: var(--white)
+        color: var(--bg)
+        font-size: 0.72rem
+        line-height: 1.2
+        text-align: left
+        box-shadow: 5px 5px 5px 1px var(--translucid)
+        z-index: 20
+        pointer-events: none
+        white-space: normal
+
+        span
+            display: block
+
+        // Arrow sits at the tooltip's right, pointing down to the icon.
+        &::after
+            content: ""
+            position: absolute
+            top: 100%
+            right: 8px
+            border: 6px solid transparent
+            border-top-color: var(--tertiary)
+
+    &:hover .InputCC-IconTooltip
+        display: flex

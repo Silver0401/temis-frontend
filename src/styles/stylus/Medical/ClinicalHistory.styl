@@ -1,0 +1,1429 @@
+// ════════════════════════════════════════════════════════════════════════
+// LP-13 · ClinicalHistory — Bento Jerárquico + Expand Fullscreen
+// Tokens --dash-* (espejo de SchemaSwitch-CC.tsx / globals.css). Sin hardcodes.
+// ════════════════════════════════════════════════════════════════════════
+
+.ClinicalHistoryContainer
+    position: absolute
+    top: 0
+    right: 0
+    height: 100%
+    z-index: var(--globalZ3)
+    background radial-gradient(ellipse 80% 60% at 10% 10%, var(--dash-glow-a) 0%, transparent 60%),
+             radial-gradient(ellipse 60% 50% at 90% 30%, var(--dash-glow-b) 0%, transparent 55%),
+             radial-gradient(ellipse 70% 60% at 50% 80%, var(--dash-glow-c) 0%, transparent 60%),
+             radial-gradient(ellipse 100% 100% at 50% 50%, var(--lp-bg-mid) 0%, var(--lp-bg-from) 100%)
+    width: 100%
+    padding: 18px
+    padding-left: calc(var(--sider) * var(--siderMultiplier))
+    padding-top: 14px
+    opacity: 0
+    color: var(--dash-text)
+    // App solo usa 2 fonts: Poppins (base) y Audiowide (--font, decorativo)
+    font-family: "Poppins", sans-serif
+
+    button
+        font-family: "Poppins", sans-serif
+
+    // ════════════ GENERIC (bento) ════════════
+    .GenericContainer
+        position: relative
+        fillSpace()
+        display: flex
+        flex-direction: column
+        gap: 6px
+        transition: opacity 250ms
+
+        // ── BARRA SUPERIOR PACIENTE ──
+        .ch-top
+            position: relative
+            z-index: 5
+            flex-shrink: 0
+            display: flex
+            align-items: center
+            gap: 14px
+            padding: 11px 16px
+            background: var(--dash-card-bg)
+            border: 1px solid var(--dash-line)
+            border-radius: 16px
+            backdrop-filter: blur(28px) saturate(160%)
+            -webkit-backdrop-filter: blur(28px) saturate(160%)
+
+            .patient-chip
+                display: flex
+                align-items: center
+                gap: 12px
+
+                .p-photo
+                    width: 44px
+                    height: 44px
+                    border-radius: 13px
+                    flex-shrink: 0
+                    overflow: hidden
+                    border: 1px solid var(--dash-line-hi)
+                    background: linear-gradient(155deg, var(--dash-blue), var(--dash-purple))
+                    display: grid
+                    place-items: end center
+
+                    .face
+                        width: 36px
+                        height: 36px
+                        fill: rgba(255,255,255,0.9)
+                        margin-bottom: -2px
+
+                .p-meta
+                    .pn
+                        font-size: 0.98rem
+                        font-weight: 700
+                        letter-spacing: -0.02em
+                        color: var(--dash-text)
+                        line-height: 1.1
+
+                    .ps
+                        font-size: 0.7rem
+                        color: var(--dash-text-2)
+                        margin-top: 4px
+                        display: flex
+                        align-items: center
+                        gap: 7px
+
+                        .p-sex-dot
+                            width: 7px
+                            height: 7px
+                            border-radius: 50%
+                            background: var(--dash-sex-m)
+
+                            &[data-sex="Femenino"]
+                                background: var(--dash-sex-f)
+
+                        .p-badge
+                            font-family: "Poppins", sans-serif
+                            font-size: 0.64rem
+                            padding: 4px 9px
+                            border-radius: 8px
+                            background: var(--dash-chip-bg)
+                            border: 1px solid var(--dash-line)
+                            color: var(--dash-text-2)
+
+            .ch-top-spacer
+                flex: 1
+
+            // CH-07: botón que despliega la ficha de identificación
+            .pd-toggle
+                display: flex
+                align-items: center
+                gap: 8px
+                height: 34px
+                padding: 0 14px
+                border-radius: 9px
+                background: var(--dash-card-bg-2)
+                border: 1px solid var(--dash-line)
+                color: var(--dash-text-2)
+                font-size: 0.72rem
+                cursor: pointer
+                transition: border-color 160ms, color 160ms
+
+                &:hover
+                    border-color: var(--dash-line-hi)
+                    color: var(--dash-cyan)
+
+                svg
+                    width: 14px
+                    height: 14px
+                    fill: none
+                    stroke: currentColor
+                    stroke-width: 2
+                    transition: transform 240ms var(--ease-out-ui, ease-out)
+
+                &.open
+                    border-color: var(--dash-line-hi)
+                    color: var(--dash-cyan)
+
+                    svg
+                        transform: rotate(180deg)
+
+            .ExitButton
+                position: relative
+                flex-shrink: 0
+                width: 40px
+                height: 40px
+                margin-right: 20px
+
+        // CH-07: panel de identificación desplegable (empuja el stage hacia abajo)
+        .patient-details
+            flex-shrink: 0
+            display: grid
+            grid-template-rows: 0fr
+            overflow: hidden
+            transition: grid-template-rows 280ms var(--ease-out-ui, ease-out)
+
+            .pd-inner
+                min-height: 0
+                overflow: hidden
+
+            &.open
+                grid-template-rows: 1fr
+
+                .pd-inner
+                    border: 1px solid var(--dash-line)
+                    border-radius: 14px
+                    background: var(--dash-card-bg)
+                    backdrop-filter: blur(28px) saturate(160%)
+                    -webkit-backdrop-filter: blur(28px) saturate(160%)
+
+            .pd-grid
+                display: grid
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))
+                gap: 10px
+                padding: 14px 16px
+
+                .pd-item
+                    display: flex
+                    flex-direction: column
+                    gap: 3px
+                    padding: 9px 12px
+                    border-radius: 10px
+                    background: var(--dash-card-bg-2)
+                    border: 1px solid var(--dash-line)
+
+                    .pd-k
+                        font-size: 0.56rem
+                        letter-spacing: 0.06em
+                        text-transform: uppercase
+                        color: var(--dash-text-3)
+
+                    .pd-v
+                        font-size: 0.82rem
+                        color: var(--dash-text)
+                        word-break: break-word
+
+        // ════════════ STAGE ════════════
+        .stage
+            position: relative
+            z-index: 2
+            flex: 1
+            min-height: 0
+            display: grid
+            // Izquierda: nota de evolución expandida. Derecha: línea de tiempo.
+            grid-template-columns: 1.42fr minmax(300px, 0.58fr)
+            gap: 12px
+
+            // ╔══ IZQUIERDA · MODELO ══╗
+            .model-card
+                position: relative
+                background: var(--dash-card-bg)
+                border: 1px solid var(--dash-line)
+                border-radius: 20px
+                backdrop-filter: blur(30px) saturate(160%)
+                -webkit-backdrop-filter: blur(30px) saturate(160%)
+                overflow: hidden
+                display: flex
+                flex-direction: column
+                min-height: 0
+
+                .model-shine
+                    position: absolute
+                    top: 0
+                    left: 0
+                    right: 0
+                    height: 90px
+                    background: var(--dash-shine)
+                    pointer-events: none
+                    z-index: 1
+
+
+                .model-body
+                    position: relative
+                    flex: 1
+                    min-height: 0
+                    overflow: hidden
+
+                .model-foot
+                    position: relative
+                    z-index: 2
+                    display: flex
+                    align-items: center
+                    justify-content: space-between
+                    gap: 10px
+                    padding: 11px 16px
+                    border-top: 1px solid var(--dash-line)
+                    flex-shrink: 0
+
+                    // CH-03: leyenda de riesgo (reemplaza el nombre de dx)
+                    .model-legend
+                        display: flex
+                        align-items: center
+                        flex-wrap: wrap
+                        gap: 12px
+                        min-width: 0
+
+                        .ml-item
+                            display: flex
+                            align-items: center
+                            gap: 6px
+                            font-size: 0.62rem
+                            color: var(--dash-text-3)
+
+                            .ml-dot
+                                width: 8px
+                                height: 8px
+                                border-radius: 50%
+
+                                &.high
+                                    background: var(--dash-risk-high)
+                                    box-shadow: 0 0 6px var(--dash-risk-high)
+                                &.mid
+                                    background: var(--dash-risk-mid)
+                                    box-shadow: 0 0 6px var(--dash-risk-mid)
+                                &.low
+                                    background: var(--dash-risk-low)
+                                    box-shadow: 0 0 6px var(--dash-risk-low)
+                                &.ok
+                                    background: var(--dash-risk-ok)
+                                    box-shadow: 0 0 6px var(--dash-risk-ok)
+
+                    .mf-edit
+                        display: flex
+                        align-items: center
+                        gap: 6px
+                        flex-shrink: 0
+                        padding: 6px 11px
+                        border-radius: 9px
+                        border: 1px solid var(--dash-line)
+                        background: var(--dash-card-bg-2)
+                        color: var(--dash-text-2)
+                        font-size: 0.66rem
+                        cursor: pointer
+                        transition: border-color 160ms, color 160ms
+
+                        &:hover
+                            border-color: var(--dash-line-hi)
+                            color: var(--dash-cyan)
+
+                        svg
+                            width: 14px
+                            height: 14px
+                            fill: none
+                            stroke: currentColor
+                            stroke-width: 1.8
+
+            // ╔══ DERECHA · BENTO ══╗
+            .data-card
+                position: relative
+                background: var(--dash-card-bg)
+                border: 1px solid var(--dash-line)
+                border-radius: 20px
+                backdrop-filter: blur(30px) saturate(160%)
+                -webkit-backdrop-filter: blur(30px) saturate(160%)
+                overflow: hidden
+                display: flex
+                flex-direction: column
+                min-height: 0
+
+                .data-head
+                    position: relative
+                    z-index: 6
+                    display: flex
+                    flex-direction: column
+                    align-items: center
+                    justify-content: center
+                    gap: 4px
+                    min-height: 74px
+                    padding: 13px 18px
+                    border-bottom: 1px solid var(--dash-line-hi)
+                    flex-shrink: 0
+                    background-color: var(--dash-card-bg-2)
+                    background-image: unquote("radial-gradient(120% 140% at 50% -40%, color-mix(in srgb, var(--accent, var(--dash-cyan)) 22%, transparent), transparent 70%)")
+
+                    // CH-01: nombre del diagnóstico prominente, alto contraste sobre superficie oscura
+                    .dt
+                        alignStuff(0,1,0,0)
+                        font-family: "Poppins", sans-serif !important;
+                        font-size: 1.35rem
+                        font-weight: 800
+                        letter-spacing: -0.01em
+                        line-height: 1.12
+                        color: var(--dash-text)
+                        text-align: center
+                        text-wrap: balance
+                        width: 100%
+
+                    .dc
+                        display: inline-flex
+                        align-items: center
+                        font-size: 0.7rem
+                        font-weight: 600
+                        letter-spacing: 0.02em
+                        padding: 2px 9px
+                        border-radius: 999px
+                        color: var(--accent, var(--dash-cyan))
+                        background: unquote("color-mix(in srgb, var(--accent, var(--dash-cyan)) 16%, transparent)")
+                        border: 1px solid unquote("color-mix(in srgb, var(--accent, var(--dash-cyan)) 32%, transparent)")
+                        font-family: "Poppins", sans-serif
+
+                // grid bento
+                .data-scroll
+                    position: relative
+                    z-index: 2
+                    flex: 1
+                    min-height: 0
+                    overflow-y: auto
+                    overflow-x: hidden
+                    padding: 13px
+                    display: grid
+                    grid-template-columns: repeat(4, 1fr)
+                    grid-auto-rows: 116px
+                    gap: 11px
+                    align-content: start
+                    grid-auto-flow: row dense
+                    scroll-behavior: smooth
+
+                    &::-webkit-scrollbar
+                        width: 9px
+                    &::-webkit-scrollbar-track
+                        background: transparent
+                    &::-webkit-scrollbar-thumb
+                        background: var(--dash-line)
+                        border-radius: 5px
+                        border: 2px solid transparent
+                        background-clip: content-box
+
+                    // tamaños bento
+                    .bento-summary
+                        grid-column: 1 / -1
+                        grid-row: span 1
+                    .bento-full
+                        grid-column: 1 / -1
+                        grid-row: span 1
+                    .bento-lg
+                        grid-column: span 2
+                        grid-row: span 2
+                    .bento-md
+                        grid-column: span 2
+                        grid-row: span 1
+                    .bento-sm
+                        grid-column: span 1
+                        grid-row: span 1
+                    .sec-ph
+                        visibility: hidden
+
+                    // enfoque al expandir: difumina las demás
+                    &.has-expanded
+                        .sec-card:not(.is-expanded),
+                        .summary-bar
+                            filter: blur(6px) brightness(0.78)
+                            opacity: 0.5
+                            pointer-events: none
+
+                    // barra de resumen
+                    .summary-bar
+                        display: flex
+                        align-items: stretch
+                        gap: 10px
+                        transition: filter 340ms ease, opacity 340ms ease
+
+                        .kpi
+                            flex: 1
+                            position: relative
+                            display: flex
+                            flex-direction: column
+                            justify-content: center
+                            gap: 3px
+                            padding: 10px 13px
+                            border-radius: 13px
+                            background: var(--dash-card-bg-2)
+                            border: 1px solid var(--dash-line)
+                            overflow: hidden
+
+                            &::after
+                                content: ''
+                                position: absolute
+                                left: 0
+                                top: 0
+                                bottom: 0
+                                width: 3px
+                                background: var(--kc, var(--accent, var(--dash-cyan)))
+                                opacity: 0.8
+
+                            .kk
+                                font-size: 0.58rem
+                                letter-spacing: 0.08em
+                                text-transform: uppercase
+                                color: var(--dash-text-3)
+                                font-family: "Poppins", sans-serif
+
+                            .kv
+                                font-size: 1.02rem
+                                font-weight: 700
+                                color: var(--dash-text)
+                                display: flex
+                                align-items: baseline
+                                gap: 5px
+
+                                small
+                                    font-size: 0.62rem
+                                    color: var(--dash-text-3)
+                                    font-weight: 500
+
+                    // tarjeta de sección
+                    .sec-card
+                        position: relative
+                        background: var(--dash-card-bg-2)
+                        border: 1px solid var(--dash-line)
+                        border-radius: 15px
+                        padding: 12px 14px
+                        display: flex
+                        flex-direction: column
+                        min-width: 0
+                        min-height: 0
+                        overflow: hidden
+                        transition: border-color 200ms, box-shadow 200ms, filter 340ms ease, opacity 340ms ease
+                        animation: secIn 420ms cubic-bezier(0.22,0.9,0.3,1) both
+
+                        &::before
+                            content: ''
+                            position: absolute
+                            top: 0
+                            left: 0
+                            right: 0
+                            height: 42px
+                            background: var(--dash-shine)
+                            pointer-events: none
+                        &::after
+                            content: ''
+                            position: absolute
+                            left: 0
+                            top: 0
+                            bottom: 0
+                            width: 3px
+                            background: linear-gradient(var(--accent, var(--dash-cyan)), transparent)
+                            opacity: 0.5
+
+                        &:hover
+                            border-color: var(--dash-line-hi)
+                        &.focused
+                            border-color: var(--dash-line-hi)
+                            box-shadow: inset 0 0 0 1px var(--dash-line-hi)
+
+                        // animación de expansión (FLIP)
+                        &.expanding
+                            transition: top .42s cubic-bezier(0.23,1,0.32,1), left .42s cubic-bezier(0.23,1,0.32,1), width .42s cubic-bezier(0.23,1,0.32,1), height .42s cubic-bezier(0.23,1,0.32,1)
+                            animation: none
+                            box-shadow: var(--dash-shadow)
+                        &.is-expanded
+                            border-color: var(--dash-line-hi)
+                            border-radius: 18px
+                            background: var(--dash-glass-solid)
+                            backdrop-filter: blur(30px) saturate(160%)
+                            -webkit-backdrop-filter: blur(30px) saturate(160%)
+
+                        .sec-head
+                            display: flex
+                            align-items: center
+                            gap: 10px
+                            position: relative
+                            z-index: 2
+                            flex-shrink: 0
+
+                            .sec-ic
+                                width: 30px
+                                height: 30px
+                                border-radius: 9px
+                                background: unquote("color-mix(in srgb, var(--accent, var(--dash-cyan)) 14%, transparent)")
+                                border: 1px solid unquote("color-mix(in srgb, var(--accent, var(--dash-cyan)) 34%, transparent)")
+                                display: grid
+                                place-items: center
+                                color: var(--accent, var(--dash-cyan))
+                                flex-shrink: 0
+
+                                svg
+                                    width: 16px
+                                    height: 16px
+                                    fill: currentColor
+
+                            .sec-tt
+                                flex: 1
+                                min-width: 0
+
+                                .t
+                                    // CH-06: títulos de tarjeta en Poppins
+                                    font-family: "Poppins", sans-serif
+                                    font-size: 0.84rem
+                                    font-weight: 700
+                                    letter-spacing: -0.01em
+                                    color: var(--dash-text)
+                                    white-space: nowrap
+                                    overflow: hidden
+                                    text-overflow: ellipsis
+                                .s
+                                    font-size: 0.6rem
+                                    color: var(--dash-text-3)
+                                    margin-top: 1px
+
+                            .sec-count
+                                font-family: "Poppins", sans-serif
+                                font-size: 0.62rem
+                                font-weight: 700
+                                color: var(--accent, var(--dash-cyan))
+                                background: unquote("color-mix(in srgb, var(--accent, var(--dash-cyan)) 12%, transparent)")
+                                border: 1px solid unquote("color-mix(in srgb, var(--accent, var(--dash-cyan)) 28%, transparent)")
+                                padding: 3px 8px
+                                border-radius: 7px
+                                flex-shrink: 0
+
+                            .sec-exp
+                                width: 27px
+                                height: 27px
+                                border-radius: 8px
+                                border: 1px solid var(--dash-line)
+                                background: transparent
+                                color: var(--dash-text-3)
+                                display: grid
+                                place-items: center
+                                cursor: pointer
+                                flex-shrink: 0
+                                transition: border-color 150ms, color 150ms
+
+                                &:hover
+                                    border-color: var(--dash-line-hi)
+                                    color: var(--dash-cyan)
+
+                                svg
+                                    width: 14px
+                                    height: 14px
+                                    fill: none
+                                    stroke: currentColor
+                                    stroke-width: 1.9
+
+                                .i-compress
+                                    display: none
+
+                        &.is-expanded .sec-exp
+                            border-color: var(--dash-line-hi)
+                            color: var(--dash-cyan)
+
+                            .i-expand
+                                display: none
+                            .i-compress
+                                display: block
+
+                        .sec-body
+                            position: relative
+                            z-index: 2
+                            margin-top: 11px
+                            flex: 1
+                            min-height: 0
+                            overflow: hidden
+
+                            .ParcialDxDisplay
+                                position: relative
+                                width: 100%
+                                height: 100%
+                                overflow: hidden
+
+                            .tmn-mock
+                                font-size: 0.8rem
+                                line-height: 1.6
+                                color: var(--dash-text-2)
+
+                            // CH-05: estado vacío
+                            .empty-card
+                                display: grid
+                                place-items: center
+                                height: 100%
+                                min-height: 48px
+                                padding: 10px
+                                text-align: center
+                                font-size: 0.74rem
+                                font-style: italic
+                                color: var(--dash-text-3)
+
+                        &.is-expanded .sec-body
+                            overflow-y: auto
+
+                            .ParcialDxDisplay
+                                overflow-y: auto
+
+                            &::-webkit-scrollbar
+                                width: 8px
+                            &::-webkit-scrollbar-thumb
+                                background: var(--dash-line-hi)
+                                border-radius: 4px
+
+// keyframes bento
+@keyframes secIn
+    from
+        opacity: 0
+        transform: translateY(10px)
+    to
+        opacity: 1
+        transform: translateY(0)
+
+
+// ════════════════════════════════════════════════════════════════════════
+// LP-13 · variantes compactas de los componentes CC dentro de las tarjetas
+// (colapsado = mini · is-expanded = versión amplia). Tokens --dash-*.
+// ════════════════════════════════════════════════════════════════════════
+.ClinicalHistoryContainer .sec-card .sec-body
+    .LineGraphCC
+        height: 150px
+        margin: 8px 0
+        background-color: transparent
+        border-bottom: 1px solid var(--dash-line)
+
+        .topCont
+            padding: 6px 0 6px 12px
+            margin: 4px auto
+
+    .PrescriptionCC,
+    .OrderCC
+        width: 100%
+        height: 150px
+        margin: 0 0 10px
+        background-color: var(--dash-card-bg-2)
+        border: 1px solid var(--dash-line)
+
+    .CardCC
+        margin: 6px
+        border: 1px solid var(--dash-line)
+        background-color: var(--dash-card-bg-2)
+
+    .ClinicalTextArea .LeftContainer
+        padding-bottom: 10px
+
+.ClinicalHistoryContainer .sec-card.is-expanded .sec-body
+    .LineGraphCC
+        height: 230px
+        margin: 14px 0
+
+    .PrescriptionCC,
+    .OrderCC
+        height: 250px
+
+
+@media (prefers-reduced-motion: reduce)
+    .ClinicalHistoryContainer .sec-card
+        animation: none
+        opacity: 1
+        transform: none
+
+
+// ════════════════════════════════════════════════════════════════════════
+// VISTA DE SECCIÓN COMPLETA (selectedSection) + AddNewDocForm — sin cambios
+// ════════════════════════════════════════════════════════════════════════
+.ClinicalHistoryContainer
+    .SectionsContainer
+        position: relative
+        fillSpace()
+
+        .ReturnButton
+            position: absolute
+            right: 1.5px
+            top: 5px
+
+        .SectionWrapper
+            position: relative
+            fillSpace()
+            display: flex
+            flex-wrap: wrap
+            overflow-x: hidden
+            z-index: var(--globalZ1)
+
+            section
+                position: relative
+                height: 100%
+                fillSpace()
+
+            .GabinetImgsDisplay
+                position: relative
+                alignStuff(0,1,0,1)
+
+                .ImagesDisplayContainer
+                    position: relative
+                    width: 100%
+                    height: 90%
+                    alignStuff(0,1,0,0)
+                    overflow-x: scroll
+
+                    .gImgContainer
+                        position: absolute
+                        border: 2px solid var(--white)
+                        border-radius: 10px
+                        background-color: var(--transparency)
+                        alignStuff(0,1,0,0)
+                        width: 500px
+                        height: 90%
+                        transition: all 350ms
+                        overflow: hidden
+                        justify-content: center
+                        backdrop-filter: blur(7px)
+
+                        .TrashIcon
+                            position: absolute
+                            top: 10px
+                            right: 10px
+                            cursor: pointer
+                            z-index: 10
+
+                        .innerContainer
+                            position: relative
+                            fillSpace()
+                            alignStuff(0,1,0,1)
+                            cursor: pointer
+
+                        .gImg
+                            position: absolute
+                            width 100% !important
+                            height: auto !important
+                            z-index: 0
+
+                        h2
+                            z-index: 1
+                            position: absolute
+                            top: 0
+                            width: 100%
+                            padding: 15px 0px
+                            color: var(--bg)
+                            background-color: var(--white)
+                            alignStuff(0,1,0,1)
+                            text-align: center
+                            font-size: 1.2rem
+
+                        h4
+                            z-index: 1
+                            position: absolute
+                            bottom: 0
+                            right: 0
+                            padding: 10px
+                            border-radius: 5px
+                            color: var(--bg)
+                            background-color: var(--white)
+                            alignStuff(0,1,0,1)
+                            text-align: center
+                            font-size: 0.7rem
+
+                    .LeftClickBox
+                        position: absolute
+                        left: 0
+                        width: calc(50% - 250px)
+                        height: 100%
+                        z-index: 25
+
+                    .RightClickBox
+                        position: absolute
+                        right: 0
+                        width: calc(50% - 250px)
+                        height: 100%
+                        z-index: 25
+
+                .TimelineContainer
+                    position: relative
+                    width: 100%
+                    height: 10%
+
+            #GraphsSectionContainer
+                position: relative
+
+                .GraphModalWrapper
+                    display: flex
+                    flex-direction: column
+                    justify-content: center
+                    align-items: center
+
+                    .titleCal, .subtitleCal
+                        color: var(--bg)
+
+                    .subtitleCal
+                        padding: 15px 25px
+                        text-align: center
+
+                .GraphsContainer
+                    position: relative
+                    width: 100%
+                    height: 100%
+                    overflow-y: scroll
+                    overflow-x: hidden
+                    background-color: var(--bg)
+
+                    .NoGraphsContainer
+                        fillSpace()
+
+                    .TopContainer
+                        position: relative
+                        width: 100%
+                        height: 30%
+                        alignStuff(0,1,0,1)
+
+                        .titleCont
+                            position: relative
+                            alignStuff(0,1,0,0)
+                            width: auto
+
+                            .AddNewGraphButton
+                                position: relative
+
+                            h2
+                                position: relative
+                                color: var(--white)
+
+                        .SearchDataInput
+                            position: relative
+
+                    .BottomContainer
+                        position: relative
+                        width: 100%
+                        height: auto
+                        display: flex
+                        flex-wrap: wrap
+
+                        .LinearAddNewData
+                            position: relative
+                            height: 300px
+                            width: 95%
+                            margin: 0px auto
+                            margin-bottom: 100px
+
+            .HistoryVersions
+                alignStuff(0,1,0,0)
+
+                .TextContainer
+                    position: relative
+                    width 50%
+                    height 100%
+                    alignStuff(0,1,0,0)
+
+                    .inputCheckDiagnosBox
+                        position: absolute
+                        bottom: 100px
+                        right: 0px
+                        alignStuff(0,1,0,0)
+                        border-radius: 5px
+                        background-color: var(--bg)
+                        border: 2px solid var(--primary)
+                        padding-left: 10px
+                        z-index: 1
+
+                .VersionsContainer
+                    width: 300px
+                    height: 70%
+                    position: relative
+                    border-radius: 30px
+                    transition: transform 350ms
+
+                    h3
+                        width: 100%
+                        display: grid
+                        place-items: center
+                        text-align: center
+                        color: var(--white)
+                        padding: 20px 10px
+
+                    .BottomContainer
+                        position: relative
+                        height: auto
+                        width: 100%
+                        alignStuff(0,1,0,0)
+
+                        .TimelineContainer
+                            position: relative
+                            width: 20%
+                            height: auto
+                            alignStuff(0,1,0,1)
+
+                            .rail
+                                background-color: var(--silver)
+                                position: relative
+                                height: 25px
+                                width: 3px
+
+                            .train
+                                top: 0px
+                                position: absolute
+                                height: 24px
+                                margin: 0.5px
+                                width: 3px
+                                background-color: var(--primary)
+                                border-radius: 15px
+                                transition: transform 250ms
+
+                        .LinesContainer
+                            position: relative
+                            width: 80%
+                            height: auto
+
+                            .versionLine
+                                position: relative
+                                height: 25px
+                                display: grid
+                                place-items: center left
+
+                                p
+                                    padding-left: 10px
+                                    cursor: pointer
+                                    font-size: 0.7rem
+                                    color: var(--white)
+
+                    .ButtonConatiner
+                        position: relative
+                        width: 100%
+                        height: auto
+                        margin-top: 50px
+                        alignStuff(0,1,0,0)
+
+            .NutritionalIntervention
+                fillSpace()
+                alignStuff(0,1,0,0)
+
+                .SomasNutriFormContainer
+                    position: relative
+                    width: 20%
+                    height: 50%
+                    alignStuff(0,1,0,1)
+                    align-items: flex-start
+
+                .MainNutriSection
+                    position: relative
+                    height: 100%
+                    width: 75%
+                    alignStuff(0,1,0,1)
+
+                    h2
+                        color: var(--white)
+
+                    .InputsContainer
+                        width: 100%
+                        alignStuff(0,1,0,0)
+                        height: 10%
+
+                    .rest
+                        height: 70%
+                        width: 100%
+
+                        .nutriContainer
+                            position: relative
+                            width: 100%
+                            height: 100px
+
+                            h3
+                                background-color: var(--white)
+                                padding: 5px 10px
+                                alignStuff(0,1,0,0)
+                                color: var(--bg)
+                                border-radius: 10px
+
+                            p
+                                color: var(--white)
+                                margin: 10px 0px
+                                alignStuff(0,1,0,0)
+
+
+.GabinetImgIndividual
+    position: relative
+    alignStuff(0,1,0,0)
+    fillSpace()
+    flex-direction: row-reverse
+
+    #expanedImgCont
+        width: 100%
+
+    #lowerImgCont
+        width: calc(100% - 350px)
+
+    .ImgContainer
+        position: absolute
+        right: 0
+        height: calc(100% - var(--nav))
+        margin-top: var(--nav)
+        overflow: hidden
+        background-color: var(--translucid)
+        display: flex
+        justify-content: center
+        align-items: center
+
+        .fullNextImgExpanded, img
+            width: 100% !important
+            height: auto !important
+            position: relative !important
+
+    .Topper
+        top: 0
+        position: absolute
+        background-color: var(--white)
+        width: 100%
+        height: var(--nav)
+        alignStuff(0,1,0,0)
+
+        .DescriptionButton
+            position: absolute
+            left: 0
+            padding: 9px 12px
+            font-size: 0.9rem
+            border-radius: 5px
+            cursor pointer
+            border: 1px solid var(--secondary)
+            margin-left: 20px
+            alignStuff(0,1,0,0)
+
+            svg
+                width: 13px
+                height: 13px
+                fill: var(--secondary)
+                margin-right: 10px
+
+            p
+                color: var(--bg)
+                font-size: 0.8rem
+
+    .InterpretationContainer
+        position: absolute
+        left: 0
+        width: 350px
+        height: calc(100% - var(--nav))
+        margin-top: var(--nav)
+        overflow: hidden
+        background-color: var(--white)
+        alignStuff(0,1,0,1)
+
+        h4
+            position: relative
+            color: var(--bg)
+            font-size: 1.4rem
+            height: 50px
+            width: 100%
+            alignStuff(0,1,0,0)
+            justify-content: flex-start
+            padding-left: 35px
+
+        .date
+            position: relative
+            color: var(--bg)
+            font-size: 0.8rem
+            width: 100%
+            justify-content: flex-end
+            padding-left: 35px
+
+        .interpretation
+            position: relative
+            color: var(--bg)
+            width: 100%
+            height: 85%
+            padding: 40px
+            font-size: 0.9rem
+
+    #toggled
+        transform: translateX(0px)
+
+    #notToggled
+        transform: translateX(-350px)
+
+
+@media (max-width: 1060px)
+    .ClinicalHistoryContainer .GenericContainer
+        .stage
+            grid-template-columns: 1fr
+
+            .model-card
+                min-height: 320px
+
+            .data-card .data-scroll
+                grid-template-columns: repeat(2, 1fr)
+
+                .bento-lg, .bento-md
+                    grid-column: span 2
+                .bento-lg
+                    grid-row: span 2
+
+@media (max-width: 800px)
+    .ClinicalHistoryContainer
+        width: 100%
+        height: auto
+
+        .GenericContainer
+            .ch-top
+                flex-wrap: wrap
+
+            .stage
+                .model-card
+                    min-height: 300px
+
+
+// ════════════════════════════════════════════════════════════════════════
+// Expediente sin modelo 3D: nota expandida a la izquierda y línea de tiempo
+// de notas de evolución a la derecha. Las tarjetas (`sec-card`) conservan
+// sus estilos; aquí solo se define el contenedor y el timeline.
+// ════════════════════════════════════════════════════════════════════════
+.ClinicalHistoryContainer .GenericContainer .stage
+    .note-detail
+        // Ancla del overlay: la tarjeta a pantalla completa se posiciona
+        // contra este panel, no contra la ventana.
+        position: relative
+
+        // Con una tarjeta a pantalla completa el título del panel estorba:
+        // queda debajo y deja de capturar clicks (el botón de contraer cae
+        // justo encima de él).
+        &:has(.sec-card.is-fullscreen) .data-head
+            z-index: 0
+            pointer-events: none
+
+        .data-scroll
+            // `static` a propósito: así el bloque contenedor de la tarjeta a
+            // pantalla completa es `.note-detail` y el overlay cubre también
+            // el encabezado, sin quedar recortado por este scroll.
+            position: static
+            // La nota expandida apila tarjetas que crecen al abrirse: el grid
+            // bento de alturas fijas las cortaría.
+            display: flex
+            flex-direction: column
+            gap: 11px
+            grid-template-columns: none
+            grid-auto-rows: auto
+
+            // Las tarjetas cuelgan de este wrapper, no del scroll: el `gap`
+            // tiene que vivir aquí o quedan pegadas una encima de otra.
+            .note-detail-body
+                display: flex
+                flex-direction: column
+                gap: 16px
+
+            .sec-card
+                min-height: 0
+
+            .note-copy-card .sec-body
+                overflow: hidden
+
+                // Textarea de solo lectura: conserva tal cual los espacios y
+                // los saltos de línea que escribió el médico.
+                .note-copy-text
+                    width: 100%
+                    min-height: 220px
+                    height: 100%
+                    padding: 0
+                    resize: none
+                    border: 0
+                    outline: none
+                    background: transparent
+                    color: var(--dash-text-2)
+                    font-family: "Poppins", sans-serif
+                    font-size: 0.82rem
+                    line-height: 1.65
+                    white-space: pre-wrap
+                    overflow-y: auto
+
+                    &::-webkit-scrollbar
+                        width: 8px
+                    &::-webkit-scrollbar-thumb
+                        background: var(--dash-line-hi)
+                        border-radius: 4px
+
+            // ── Tarjeta a pantalla completa sobre el panel izquierdo ──
+            .sec-card.is-fullscreen
+                position: absolute
+                top: 0
+                left: 0
+                right: 0
+                bottom: 0
+                // Por encima del `.data-head` del panel (z-index 6): si el
+                // título quedara arriba, taparía el botón de contraer y la
+                // tarjeta expandida no se podría cerrar.
+                z-index: 60
+                margin: 0
+                border-radius: 18px
+                background: var(--dash-glass-solid)
+                border-color: var(--dash-line-hi)
+                backdrop-filter: blur(30px) saturate(160%)
+                -webkit-backdrop-filter: blur(30px) saturate(160%)
+                box-shadow: var(--dash-shadow)
+
+                .sec-body
+                    flex: 1
+                    min-height: 0
+                    overflow-y: auto
+
+                    .ParcialDxDisplay
+                        height: auto
+                        overflow: visible
+
+                    .note-copy-text
+                        height: 100%
+
+                .sec-exp
+                    border-color: var(--dash-line-hi)
+                    color: var(--dash-cyan)
+                    transform: none
+
+                    .i-expand
+                        display: none
+                    .i-compress
+                        display: block
+
+            .note-section
+                .note-section-head
+                    width: 100%
+
+                    // El encabezado abre/cierra en línea; el botón de la
+                    // esquina expande a pantalla completa, así que van
+                    // separados y no anidados.
+                    .note-section-toggle
+                        flex: 1
+                        min-width: 0
+                        display: flex
+                        align-items: center
+                        gap: 10px
+                        padding: 0
+                        border: 0
+                        background: transparent
+                        color: inherit
+                        cursor: pointer
+                        text-align: left
+
+                &.is-open
+                    border-color: var(--dash-line-hi)
+
+                &.is-open .sec-exp
+                    color: var(--dash-cyan)
+                    transform: rotate(45deg)
+
+                .sec-body
+                    overflow: visible
+
+                    .ParcialDxDisplay
+                        height: auto
+                        overflow: visible
+
+            .note-loading
+                display: grid
+                place-items: center
+                min-height: 120px
+
+    // ╔══ DERECHA · LÍNEA DE TIEMPO ══╗
+    .notes-view
+        .note-head
+            align-items: flex-start
+            text-align: left
+
+            .note-total
+                margin-top: 3px
+                font-size: 0.66rem
+                color: var(--dash-text-3)
+
+        .note-empty
+            padding: 30px
+            color: var(--dash-text-3)
+            text-align: center
+
+        .notes-timeline
+            position: relative
+            flex: 1
+            min-height: 0
+            overflow-y: auto
+            margin: 0
+            padding: 14px 14px 14px 34px
+            list-style: none
+            display: flex
+            flex-direction: column
+            gap: 10px
+
+            &::-webkit-scrollbar
+                width: 9px
+            &::-webkit-scrollbar-track
+                background: transparent
+            &::-webkit-scrollbar-thumb
+                background: var(--dash-line)
+                border-radius: 5px
+                border: 2px solid transparent
+                background-clip: content-box
+
+            &::before
+                content: ''
+                position: absolute
+                left: 20px
+                top: 22px
+                bottom: 18px
+                width: 1px
+                background: linear-gradient(var(--dash-cyan), var(--dash-line-hi))
+
+            .timeline-entry
+                position: relative
+                transition: opacity 240ms ease
+
+                &[data-muted="true"]
+                    opacity: 0.62
+
+                .timeline-dot
+                    position: absolute
+                    left: -19px
+                    top: 20px
+                    width: 10px
+                    height: 10px
+                    border: 2px solid var(--dash-card-bg-2)
+                    border-radius: 50%
+                    background: var(--dash-text-3)
+
+                &[data-expanded="true"]
+                    opacity: 1
+
+                    .timeline-dot
+                        background: var(--dash-cyan)
+                        box-shadow: 0 0 10px var(--dash-cyan)
+
+                    .timeline-card
+                        border-color: var(--dash-cyan)
+                        background: var(--dash-card-bg-2)
+
+                .timeline-card
+                    border: 1px solid var(--dash-line)
+                    border-radius: 15px
+                    background: var(--dash-card-bg)
+                    overflow: hidden
+                    transition: border-color 200ms ease, background 200ms ease
+
+                    &:hover
+                        border-color: var(--dash-line-hi)
+
+                .timeline-summary
+                    position: relative
+                    width: 100%
+                    padding: 13px 15px
+                    display: grid
+                    gap: 3px
+                    color: inherit
+                    border: 0
+                    background: transparent
+                    text-align: left
+                    cursor: pointer
+
+                    &:focus-visible
+                        outline: 2px solid var(--dash-cyan)
+                        outline-offset: 3px
+
+                    .timeline-date
+                        font-size: 0.62rem
+                        color: var(--dash-text-3)
+
+                    .timeline-title
+                        font-family: "Poppins", sans-serif
+                        font-size: 0.82rem
+                        font-weight: 700
+                        color: var(--dash-text)
+
+                    .timeline-details
+                        font-size: 0.66rem
+                        color: var(--dash-text-2)
+
+                    .timeline-chevron
+                        position: absolute
+                        top: 13px
+                        right: 15px
+                        color: var(--dash-text-3)
+                        font-size: 0.9rem
+                        transition: transform 260ms ease
+
+                &[data-expanded="true"] .timeline-chevron
+                    color: var(--dash-cyan)
+                    transform: rotate(180deg)
+
+
+@media (max-width: 1060px)
+    .ClinicalHistoryContainer .GenericContainer .stage
+        .notes-view .notes-timeline
+            max-height: 340px

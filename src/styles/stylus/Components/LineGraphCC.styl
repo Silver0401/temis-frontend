@@ -1,0 +1,39 @@
+.LineGraphCC
+    position: relative
+    width: 100%
+    height: 300px
+    border-bottom: 1px solid var(--grey)
+    background-color: var(--bg)
+    margin: 20px 0px
+
+    .topCont
+        width: 95%
+        margin: 10px auto
+        border-radius: 10px
+        text-align: start
+        padding:10px 0px 
+        padding-left: 40px
+        border: 1px solid var(--white)
+        transition: background-color 150ms, color 150ms
+        alignStuff(0,1,0,0)
+        justify-content: space-between
+
+        h3
+            color: var(--white)
+
+        .TopAddLabButton
+            margin-right: 20px
+
+    
+    .lineCont
+        width: 100%
+        height: 100%
+
+    &:hover 
+        .topCont
+            background-color: var(--grey)
+
+            h3
+                color: var(--bg)
+
+

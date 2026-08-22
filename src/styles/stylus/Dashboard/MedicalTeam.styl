@@ -1,0 +1,233 @@
+.MedicalTeamContainer
+  height 100%
+  padding clamp(20px, 4vw, 50px)
+  overflow auto
+  color var(--dash-text)
+
+.medical-team-head
+  margin-bottom 26px
+  display flex
+  align-items flex-end
+  justify-content space-between
+  gap 24px
+
+  > div > p,
+  > div > span
+    color var(--dash-text-3)
+
+  > div > p
+    margin-bottom 8px
+    color var(--dash-cyan)
+    font-size .65rem
+    font-weight 800
+    letter-spacing .14em
+    text-transform uppercase
+
+  h1
+    margin 0 0 8px
+    font-size clamp(1.8rem, 4vw, 3rem)
+
+.medical-team-metrics
+  margin-bottom 22px
+  display grid
+  grid-template-columns repeat(3, minmax(0, 1fr))
+  gap 12px
+
+  article
+    padding 18px 20px
+    border 1px solid var(--dash-line)
+    border-radius 17px
+    background var(--dash-card-bg)
+
+  span,
+  strong
+    display block
+
+  span
+    color var(--dash-text-3)
+    font-size .7rem
+
+  strong
+    margin-top 5px
+    font-size 1.45rem
+
+  article[data-tone="active"] strong
+    color var(--green)
+
+  article[data-tone="roles"] strong
+    color var(--dash-cyan)
+
+.medical-team-filters
+  width fit-content
+  margin-bottom 17px
+  padding 4px
+  display flex
+  gap 3px
+  border 1px solid var(--dash-line)
+  border-radius 12px
+  background var(--dash-card-bg)
+
+.medical-team-grid
+  display grid
+  grid-template-columns repeat(2, minmax(0, 1fr))
+  gap 15px
+
+.medical-team-member
+  padding 20px
+  border 1px solid var(--dash-line)
+  border-radius 19px
+  background var(--dash-card-bg)
+
+  &[data-status="suspended"]
+    opacity .68
+
+.medical-team-member-main
+  display grid
+  grid-template-columns 54px minmax(0, 1fr) auto
+  align-items center
+  gap 13px
+
+  h2,
+  p
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+
+  h2
+    margin 0 0 4px
+    font-size .94rem
+
+  p
+    margin 0
+    color var(--dash-text-3)
+    font-size .73rem
+
+.medical-team-avatar
+  width 54px
+  height 54px
+  display grid
+  place-items center
+  color var(--dash-cyan)
+  border 1px solid var(--dash-line-hi)
+  border-radius 16px
+  background var(--dash-chip-bg)
+  font-size .8rem
+  font-weight 800
+
+.medical-team-status
+  padding 5px 9px
+  color var(--green)
+  border 1px solid var(--dash-line)
+  border-radius 999px
+  font-size .62rem
+
+.medical-team-member[data-status="suspended"] .medical-team-status
+  color var(--yellow)
+
+.medical-team-member-meta
+  margin-top 17px
+  padding-top 15px
+  display flex
+  justify-content space-between
+  gap 10px
+  color var(--dash-text-3)
+  border-top 1px solid var(--dash-line)
+  font-size .68rem
+
+  span:first-child
+    color var(--dash-cyan)
+    font-weight 800
+
+.medical-team-actions
+  margin-top 14px
+  display flex
+  flex-wrap wrap
+  gap 7px
+
+.medical-team-empty
+  padding 32px
+  color var(--dash-text-3)
+  border 1px dashed var(--dash-line-hi)
+  border-radius 18px
+  text-align center
+
+.medical-team-assignment-modal
+  width min(560px, 90vw)
+  padding 26px
+  color var(--dash-text)
+
+  > p,
+  > span
+    color var(--dash-text-3)
+
+  > p
+    color var(--dash-cyan)
+    font-size .62rem
+    text-transform uppercase
+
+  h2
+    margin 6px 0
+
+  > label
+    margin 20px 0 7px
+    display block
+    font-size .72rem
+
+  > input
+    width 100%
+    min-height 44px
+    padding 0 12px
+    color var(--dash-text)
+    border 1px solid var(--dash-line)
+    border-radius 10px
+    background var(--dash-card-bg)
+
+.medical-team-patient-list
+  max-height 300px
+  margin-top 12px
+  overflow auto
+  display grid
+  gap 7px
+
+  > label
+    padding 11px
+    display flex
+    align-items center
+    gap 10px
+    border 1px solid var(--dash-line)
+    border-radius 10px
+
+  strong,
+  small
+    display block
+
+  small
+    margin-top 3px
+    color var(--dash-text-3)
+
+.medical-team-assignment-actions
+  margin-top 18px
+  display flex
+  justify-content flex-end
+  gap 8px
+
+@media (max-width 900px)
+  .medical-team-metrics,
+  .medical-team-grid
+    grid-template-columns repeat(2, minmax(0, 1fr))
+
+@media (max-width 600px)
+  .MedicalTeamContainer
+    padding 18px 14px 90px
+
+  .medical-team-head
+    align-items stretch
+    flex-direction column
+
+  .medical-team-metrics,
+  .medical-team-grid
+    grid-template-columns 1fr
+
+  .medical-team-filters
+    width 100%
+    overflow auto

@@ -1,0 +1,541 @@
+
+
+.DashboardWrapper
+    position: relative
+    width: 100vw
+    min-height: 100vh
+    background: var(--dash-app-bg)
+    overflow: hidden
+
+    // Glows de ambiente (para que el glass de las cards se lea)
+    &::before
+        content: ""
+        position: absolute
+        inset: 0
+        z-index: 0
+        pointer-events: none
+        background: radial-gradient(580px 360px at 12% 10%, var(--dash-glow-a), transparent 60%), radial-gradient(680px 420px at 88% 80%, var(--dash-glow-b), transparent 62%), radial-gradient(420px 300px at 60% 40%, var(--dash-glow-c), transparent 60%)
+
+    // Grid sutil con máscara radial
+    &::after
+        content: ""
+        position: absolute
+        inset: 0
+        z-index: 0
+        pointer-events: none
+        opacity: 0.5
+        background-image: linear-gradient(var(--dash-line) 1px, transparent 1px), linear-gradient(90deg, var(--dash-line) 1px, transparent 1px)
+        background-size: 46px 46px
+        -webkit-mask-image: radial-gradient(circle at 50% 35%, #000, transparent 80%)
+        mask-image: radial-gradient(circle at 50% 35%, #000, transparent 80%)
+
+    .DashboardSection
+        position: relative
+        z-index: 1
+        width: 100%
+        padding: 14px 14px 14px 0
+        padding-left: var(--siderExpanded)
+        transition: padding-left 320ms cubic-bezier(0.4, 0, 0.2, 1)
+
+        // Content card glass encapsulado
+        .DashboardTransitioner
+            position: relative
+            width: 100%
+            height: calc(100vh - 28px)
+            background: var(--dash-card-bg)
+            backdrop-filter: var(--dash-blur-card)
+            -webkit-backdrop-filter: var(--dash-blur-card)
+            border: 1px solid var(--dash-line)
+            border-radius: 22px
+            overflow: hidden
+
+            &::before
+                content: ""
+                position: absolute
+                top: 0
+                left: 0
+                right: 0
+                height: 120px
+                background: var(--dash-shine)
+                pointer-events: none
+                z-index: 1
+
+            section
+                position: relative
+                overflow: hidden
+                fillSpace()
+                alignStuff(0,1,0,1)
+
+                #cosoTitle
+                    color: var(--dash-text)
+                    text-align: center
+                    font-size: clamp(1.3rem, 2vw, 1.5rem)
+                    margin: 0px 40px
+
+
+            .NewPatientTransitioner
+                position: relative
+                fillSpace()
+                transform: translate(0px, 0px)
+
+                .NewPatientContainer
+                    position: relative
+                    alignStuff(0,1,0,1)
+                    height: 100%
+                    overflow: auto
+                    noScrollbar()
+                    justify-content: center
+
+                    .NewDocformContainer
+                        height: 600px
+
+                    .SearchPatientToAddDoc
+                        fillSpace()
+                        alignStuff(0,1,0,1)
+                        justify-content: center
+
+
+                        .topCont
+                            position: relative
+                            height: auto
+                            width: 300px
+                            alignStuff(0,1,0,1)
+
+                            .sptitle
+                                color: var(--white)
+                                font-size: 1.5rem
+                                text-align: center
+
+
+                            .spsubtitle
+                                color: var(--grey)
+                                font-size: 0.8rem
+                                padding: 40px 10px
+                                text-align: center
+
+                        .miniPatient
+                            position: relative
+                            margin-top: 50px
+                            width: 500px
+                            height: 300px
+                            border: 2px solid var(--white)
+                            border-radius: 15px
+                            alignStuff(0,1,0,0)
+                            justify-content: center
+
+                            .miniDiagnosis
+                                position: relative
+                                width: 200px
+                                height: 100%
+                                border-right: 1px solid var(--primary)
+                                display: block
+
+                                h4
+                                    position: relative
+                                    width: 100%
+                                    height: 50px
+                                    color: var(--Primary)
+                                    font-size: 1.3rem
+                                    text-align: center
+                                    alignStuff(0,1,0,0)
+                                    color: var(--white)
+
+                                p
+                                    position: relative
+                                    width: calc(100% - 20px)
+                                    height: 30px
+                                    font-size: 0.7rem
+                                    text-align: start
+                                    margin: 10px 10px
+                                    height: auto
+                                    padding: 5px
+                                    color: var(--white)
+                                    border-radius: 10px
+
+                                #High
+                                    background-color: rgba(255, 67, 67, 0.4)
+
+                        
+                                #Low
+                                    background-color: rgba(255, 242, 67, 0.4)
+                        
+                        
+                                #Medium
+                                    background-color: rgba(255, 120, 67, 0.4)
+                        
+                                    
+                                #Controlled
+                                    background-color: rgba(67, 255, 158, 0.4)
+                        
+                            .miniPatientModelCont
+                                position: relative
+                                width: 300px 
+                                height: 100% 
+                                alignStuff(0,1,0,1)
+                                justify-content: center
+
+                                .nameContainer
+                                    position: absolute
+                                    font-size: 0.7rem
+                                    top: 0px
+                                    margin: 0px auto
+                                    padding: 10px
+                                    background-color: var(--transparency)
+                                    border-radius: 10px
+                                    color: var(--white)
+                                    margin-top: 10px
+
+                                .miniPatientModel
+                                    height: 260px !important
+                                    margin-top: 40px
+
+
+            .MyAgendaContainer
+                position: relative
+                width: 100%
+                height: 100%
+                padding: 20px
+                overflow: hidden
+                display: flex
+                flex-direction: column
+                gap: 16px
+
+                // ── Barra superior: título + toggle de vista ──
+                .AgendaTopBar
+                    display: flex
+                    align-items: flex-end
+                    justify-content: space-between
+                    flex-shrink: 0
+                    width: 100%
+                    max-width: 1700px
+                    margin-inline: auto
+
+                    .v-title
+                        display: flex
+                        flex-direction: column
+                        gap: 2px
+
+                        h2
+                            font-size: 1.4rem
+                            font-weight: 700
+                            letter-spacing: -0.02em
+                            color: var(--dash-text)
+
+                        .sub
+                            font-size: 0.78rem
+                            color: var(--dash-text-3)
+
+                    .cal-view-toggle
+                        display: flex
+                        background: var(--dash-chip-bg)
+                        border: 1px solid var(--dash-line)
+                        border-radius: 9px
+                        padding: 3px
+
+                        button
+                            border: none
+                            background: transparent
+                            color: var(--dash-text-3)
+                            font-size: 0.72rem
+                            font-family: inherit
+                            padding: 5px 13px
+                            border-radius: 6px
+                            cursor: pointer
+                            transition: background 180ms var(--ease-out), color 180ms var(--ease-out), transform 120ms var(--ease-out)
+
+                            &:hover
+                                color: var(--dash-text-2)
+
+                            &:active
+                                transform: scale(0.96)
+
+                            &.on
+                                background: var(--dash-glass-lite)
+                                color: var(--dash-cyan)
+
+                // ── Layout de dos paneles: grid mes + agenda del día ──
+                .AgendaLayout
+                    flex: 1
+                    min-height: 0
+                    width: 100%
+                    max-width: 1700px
+                    margin-inline: auto
+                    display: grid
+                    grid-template-columns: 1.5fr 1fr
+                    gap: 14px
+
+                    @media (max-width: 920px)
+                        grid-template-columns: 1fr
+                        overflow-y: auto
+
+                .CalendarContainer
+                    position: relative
+                    min-height: 0
+                    height: 100%
+                    background: var(--dash-card-bg)
+                    border: 1px solid var(--dash-line)
+                    border-radius: 16px
+                    padding: 16px
+                    overflow: hidden
+
+                    .eventClicker
+                        position: absolute
+                        top: 0
+                        left: 0
+                        width: 100%
+                        height: 100%
+                        background-color: transparent
+
+                    .trashCont
+                        position: absolute !important
+                        bottom: 5px
+                        right: 5px
+                        width: 23px
+                        height: 23px
+                        border-radius: 7px
+                        border: 1px solid var(--dash-line-hi)
+                        display: grid
+                        place-items: center
+
+                        svg
+                            fill: var(--dash-text-2)
+                            width: 75%
+                            height: 75%
+
+                // ── Panel lateral: agenda del día ──
+                .AgendaSide
+                    min-height: 0
+                    background: var(--dash-card-bg)
+                    border: 1px solid var(--dash-line)
+                    border-radius: 16px
+                    padding: 18px
+                    overflow-y: auto
+
+                    // Re-anima al cambiar de día (key={selectedDay} remonta)
+                    .AgendaSideInner
+                        animation: agendaSwap 260ms var(--ease-out) both
+
+                    .agenda-head
+                        display: flex
+                        align-items: center
+                        gap: 10px
+                        margin-bottom: 16px
+
+                        .t
+                            font-size: 0.95rem
+                            font-weight: 600
+                            color: var(--dash-text)
+                            flex: 1
+
+                        .badge
+                            font-family: monospace
+                            font-size: 0.62rem
+                            color: var(--dash-cyan)
+                            background: var(--dash-chip-bg)
+                            padding: 3px 8px
+                            border-radius: 6px
+                            border: 1px solid var(--dash-line)
+
+                        .addAppt
+                            width: 26px
+                            height: 26px
+                            border-radius: 8px
+                            border: 1px solid var(--dash-line-hi)
+                            background: transparent
+                            color: var(--dash-cyan)
+                            font-size: 1.1rem
+                            line-height: 1
+                            cursor: pointer
+                            display: grid
+                            place-items: center
+                            transition: background 150ms var(--ease-out), transform 120ms var(--ease-out)
+
+                            &:hover
+                                background: var(--dash-glass-lite)
+
+                            &:active
+                                transform: scale(0.92)
+
+                    .agenda-list
+                        display: flex
+                        flex-direction: column
+                        gap: 9px
+
+                    .agenda-empty
+                        font-size: 0.74rem
+                        color: var(--dash-text-3)
+                        padding: 6px 2px
+
+                    .appt
+                        display: flex
+                        gap: 12px
+                        padding: 11px
+                        border-radius: 12px
+                        background: var(--dash-glass-lite)
+                        border: 1px solid var(--dash-line)
+                        position: relative
+                        overflow: hidden
+                        cursor: pointer
+                        transition: border-color 180ms var(--ease-out), background 180ms var(--ease-out), transform 140ms var(--ease-out)
+                        animation: apptIn 300ms var(--ease-out) both
+
+                        for i in 1 2 3 4 5 6 7 8
+                            &:nth-child({i})
+                                animation-delay: (i - 1) * 45ms
+
+                        &:hover
+                            border-color: var(--dash-line-hi)
+                            background: var(--dash-chip-bg)
+                            transform: translateX(2px)
+
+                        &:active
+                            transform: scale(0.99)
+
+                        .appt-time
+                            font-family: monospace
+                            font-size: 0.64rem
+                            color: var(--dash-text-3)
+                            width: 40px
+                            flex-shrink: 0
+                            padding-top: 2px
+
+                        .appt-bar
+                            width: 3px
+                            border-radius: 2px
+                            flex-shrink: 0
+                            background: var(--dash-blue)
+
+                            &.b
+                                background: var(--dash-blue)
+                            &.c
+                                background: var(--dash-cyan)
+                            &.p
+                                background: var(--dash-purple)
+
+                        .appt-body
+                            flex: 1
+                            min-width: 0
+
+                            .at
+                                font-size: 0.78rem
+                                font-weight: 600
+                                color: var(--dash-text)
+                                white-space: nowrap
+                                overflow: hidden
+                                text-overflow: ellipsis
+
+                            .as
+                                font-size: 0.64rem
+                                color: var(--dash-text-2)
+                                margin-top: 2px
+
+                        .apptTrash
+                            width: 22px
+                            height: 22px
+                            border-radius: 7px
+                            border: 1px solid var(--dash-line)
+                            display: grid
+                            place-items: center
+                            flex-shrink: 0
+                            color: var(--dash-text-3)
+                            transition: color 150ms var(--ease-out), border-color 150ms var(--ease-out), transform 120ms var(--ease-out)
+
+                            &:hover
+                                color: var(--dash-risk-high)
+                                border-color: var(--dash-risk-high)
+
+                            &:active
+                                transform: scale(0.88)
+
+                            svg
+                                width: 60%
+                                height: 60%
+
+                    .agenda-divider
+                        display: flex
+                        align-items: center
+                        gap: 10px
+                        margin: 20px 0 12px
+
+                        .ln
+                            flex: 1
+                            height: 1px
+                            background: var(--dash-line)
+
+                        .lb
+                            font-family: monospace
+                            font-size: 0.6rem
+                            text-transform: uppercase
+                            letter-spacing: 0.06em
+                            color: var(--dash-text-3)
+
+                .CalendarModalWrapper
+                    display: flex
+                    flex-direction: column
+                    justify-content: center
+                    align-items: center
+
+                    .titleCal, .subtitleCal
+                        color: var(--bg)
+
+
+                    .subtitleCal
+                        padding: 15px 25px
+                        text-align: center
+
+
+
+
+@media (max-width: 800px) 
+    .DashboardSection
+        width: 100% !important
+        padding: 10px !important
+
+        .DashboardTransitioner
+            height: auto !important
+
+            .NewPatientTransitioner
+                padding-top: 50px
+
+                .NewPatientContainer
+                    height: auto !important
+
+                    .HeadersContainer
+
+                        .SubHeader
+                            margin: 15px
+
+
+// ── Animación de entrada de citas (agenda lateral) ──
+@keyframes apptIn
+    from
+        opacity: 0
+        transform: translateY(8px)
+    to
+        opacity: 1
+        transform: translateY(0)
+
+// ── Swap del panel lateral al cambiar de día (blur enmascara el cambio) ──
+@keyframes agendaSwap
+    from
+        opacity: 0
+        transform: translateY(6px)
+        filter: blur(4px)
+    to
+        opacity: 1
+        transform: translateY(0)
+        filter: blur(0)
+
+// Accesibilidad: respetar reduced-motion (kowalski/impeccable)
+@media (prefers-reduced-motion: reduce)
+    .MyAgendaContainer .appt,
+    .MyAgendaContainer .AgendaSideInner
+        animation: none
+
+    .MyAgendaContainer .appt,
+    .MyAgendaContainer .appt:hover,
+    .MyAgendaContainer .appt:active,
+    .MyAgendaContainer .cal-view-toggle button:active,
+    .MyAgendaContainer .AgendaSide .addAppt:active,
+    .MyAgendaContainer .AgendaSide .apptTrash:active
+        transform: none

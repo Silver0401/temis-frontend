@@ -1,0 +1,47 @@
+.Prescriber
+    position: relative
+    fillSpace()
+    overflow-y: scroll
+
+    .title
+        font-size: 1.5rem
+        margin-top: 50px
+        text-align: center
+
+    .subtitle
+        font-size: 0.8rem
+        margin: 25px 0px
+        text-align: center
+
+    .DxChooser
+        width: 100%
+        padding: 50px 0px
+        border-top: 1px solid var(--silver)
+        border-bottom: 1px solid var(--silver)
+
+    .DrugPrescCont
+        position: relative
+        width: 100%;
+        height: auto
+        margin: 40px 0px
+
+        .fillerBar
+            left: 0
+            top: 20px
+            width: 100%
+            height: 20px
+            margin-bottom: 10px 
+            position: absolute
+
+
+.Prescriber-day
+    .title, .subtitle
+        color: var(--white)
+    .fillerBar
+        background-color: var(--grey)
+
+.Prescriber-night
+    .title, .subtitle
+        color: var(--bg)
+    .fillerBar
+        background-color: var(--lightgrey)

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="CronosMD">
+  <defs>
+    <linearGradient id="cronosLogoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#18d7ff"/>
+      <stop offset="1" stop-color="#2b6dff"/>
+    </linearGradient>
+  </defs>
+  <!-- Tapas -->
+  <line x1="28" y1="15" x2="72" y2="15" stroke="url(#cronosLogoGrad)" stroke-width="7" stroke-linecap="round"/>
+  <line x1="28" y1="85" x2="72" y2="85" stroke="url(#cronosLogoGrad)" stroke-width="7" stroke-linecap="round"/>
+  <!-- Contorno reloj de arena -->
+  <path d="M33 20 L67 20 L50 50 L67 80 L33 80 L50 50 Z" fill="none" stroke="url(#cronosLogoGrad)" stroke-width="4.5" stroke-linejoin="round"/>
+  <!-- Arena acumulada + hilo cayendo -->
+  <path d="M40 80 L60 80 L50 67 Z" fill="#18d7ff"/>
+  <line x1="50" y1="50" x2="50" y2="63" stroke="#18d7ff" stroke-width="3" stroke-linecap="round"/>
+</svg>

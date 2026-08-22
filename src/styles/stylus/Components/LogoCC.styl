@@ -1,0 +1,74 @@
+// ─────────────────────────────────────────────────────────────
+//  Logo de marca CronosMD — LP-16
+//  Componente: src/components/Logo-CC.tsx
+//
+//  Responsivo al ANCHO DEL CONTENEDOR PADRE vía container queries.
+//  El slot que lo aloja (sbBrand, hub-hero-logo, .Logo) define ancho,
+//  font-size y color; el Logo se adapta:
+//    · contenedor amplio  → icono + CRONOS + MD
+//    · contenedor medio   → icono + CRONOS
+//    · contenedor mínimo  → solo icono (ej. SideNav colapsada)
+//
+//  El tamaño escala con `font-size` (todo en em). El color del texto
+//  hereda del slot (currentColor); el gradiente del símbolo usa los
+//  tokens theme-aware --hub-cyan / --hub-glow.
+// ─────────────────────────────────────────────────────────────
+
+.CronosLogo
+  container-type: inline-size
+  display: inline-flex
+  align-items: center
+  gap: 0.45em
+  width: 100%
+  min-width: 0
+  overflow: hidden
+  font-family: "Audiowide", sans-serif
+  line-height: 1
+  color: currentColor
+  text-decoration: none
+  user-select: none
+
+  .clMark
+    flex-shrink: 0
+    height: 1.85em
+    width: 1.85em
+    overflow: visible
+    filter: drop-shadow(0 0 6px var(--hub-glow-mid))
+
+  .clWord
+    display: inline-flex
+    align-items: flex-start
+    min-width: 0
+    overflow: hidden
+    white-space: nowrap
+    letter-spacing: 0.18em
+
+  .clName
+    font-size: 1em
+    color: inherit
+
+  // «MD» superíndice — gradiente de marca cian→azul
+  .clMd
+    font-size: 0.46em
+    line-height: 1
+    letter-spacing: 0.04em
+    margin-left: 0.22em
+    background: linear-gradient(100deg, var(--hub-cyan), var(--hub-glow))
+    -webkit-background-clip: text
+    background-clip: text
+    -webkit-text-fill-color: transparent
+    color: transparent
+
+// ── Contenedor estrecho: ocultar «MD» (queda icono + CRONOS) ──
+@container (max-width: 168px)
+  .CronosLogo .clMd
+    display: none
+
+// ── Contenedor mínimo: ocultar texto (queda solo el icono, centrado) ──
+//   El centrado se aplica sobre .clMark (descendiente que sí consulta a
+//   .CronosLogo); margin auto en flex item lo centra al ocultarse el texto.
+@container (max-width: 112px)
+  .CronosLogo .clWord
+    display: none
+  .CronosLogo .clMark
+    margin-inline: auto

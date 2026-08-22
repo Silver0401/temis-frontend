@@ -1,0 +1,398 @@
+// ─────────────────────────────────────────────────────────────
+// Hero rediseñado — atmósfera estilo Hubtown adaptada a producto
+// médico: el cuerpo humano resplandeciente flota centrado sobre un
+// piso reflejante (3D), con glow radial + partículas + viñeta y un
+// marco/líneas de encuadre. Texto centrado abajo, nav vertical de
+// sistemas a la izquierda. Aislado: clases .hub-* (no .lp-hero*).
+// Tipografía: grotesk bold (títulos) + monospace (labels).
+// Colores controlados por SchemaSwitch-CC via CSS custom properties.
+// ─────────────────────────────────────────────────────────────
+
+hub-grotesk = "Space Grotesk", "Surgena", sans-serif
+hub-mono = "Space Mono", "Commit Mono", monospace
+
+.hub-hero
+  position relative
+  height 320vh
+  background var(--hub-ink)
+  color var(--hub-text)
+  &::after
+    content ""
+    position absolute
+    bottom 0
+    left 0
+    right 0
+    height 220px
+    background linear-gradient(to bottom, transparent, var(--lp-bg-mid))
+    pointer-events none
+    z-index 0
+
+.hub-hero-stage
+  position sticky
+  top 0
+  height 100vh
+  width 100%
+  overflow hidden
+  background var(--hub-stage-bg)
+  &::after
+    content ""
+    position absolute
+    z-index 6
+    inset 20px
+    border 1px solid var(--hub-line)
+    clip-path polygon(14px 0%, calc(100% - 14px) 0%, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0% calc(100% - 14px), 0% 14px)
+    pointer-events none
+
+// Ticks de esquina del marco
+.hub-hero-frame
+  position absolute
+  z-index 6
+  inset 20px
+  pointer-events none
+  span
+    position absolute
+    width 10px
+    height 10px
+    border 1px solid var(--hub-text)
+    opacity 0.7
+  span:nth-child(1)
+    top -1px
+    left -1px
+    border-right none
+    border-bottom none
+  span:nth-child(2)
+    top -1px
+    right -1px
+    border-left none
+    border-bottom none
+  span:nth-child(3)
+    bottom -1px
+    left -1px
+    border-right none
+    border-top none
+  span:nth-child(4)
+    bottom -1px
+    right -1px
+    border-left none
+    border-top none
+
+// Esquinas decorativas del stage (corte diagonal en la esquina exterior)
+.hub-stage-corners
+  position absolute
+  z-index 8
+  inset 0
+  pointer-events none
+  span
+    position absolute
+    width 32px
+    height 32px
+    border 1.5px solid var(--hub-text)
+    opacity 0.55
+    background transparent
+  span:nth-child(1)
+    top 0
+    left 0
+    clip-path polygon(14px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 14px)
+  span:nth-child(2)
+    top 0
+    right 0
+    clip-path polygon(0% 0%, calc(100% - 14px) 0%, 100% 14px, 100% 100%, 0% 100%)
+  span:nth-child(3)
+    bottom 0
+    left 0
+    clip-path polygon(0% 0%, 100% 0%, 100% 100%, 14px 100%, 0% calc(100% - 14px))
+  span:nth-child(4)
+    bottom 0
+    right 0
+    clip-path polygon(0% 0%, 100% 0%, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0% 100%)
+
+// ════════════ AMBIENTE (overlay) ════════════
+.hub-env
+  position absolute
+  inset 0
+  overflow hidden
+  pointer-events none
+
+// Halo del cuerpo resplandeciente (DETRÁS del canvas 3D, centro-alto).
+.hub-env-glow
+  position absolute
+  z-index 1
+  left 50%
+  top 38%
+  width 42vw
+  height 42vw
+  transform translate(-50%, -50%)
+  background radial-gradient(circle, var(--hub-glow-center) 0%, var(--hub-glow-mid) 38%, transparent 70%)
+  filter blur(24px)
+  animation hub-breathe 6s ease-in-out infinite
+
+// Partículas / destellos sobre el piso reflejante (densas, con deriva lenta).
+.hub-env-dots
+  position absolute
+  z-index 4
+  left -10%
+  right -10%
+  bottom 0
+  height 56vh
+  background-image radial-gradient(2px 2px at 20% 30%, var(--hub-particle) 0, transparent 100%), radial-gradient(1.5px 1.5px at 70% 50%, var(--hub-particle) 0, transparent 100%), radial-gradient(2px 2px at 45% 70%, var(--hub-particle) 0, transparent 100%), radial-gradient(1.5px 1.5px at 85% 20%, var(--hub-particle) 0, transparent 100%), radial-gradient(1.5px 1.5px at 12% 60%, var(--hub-particle) 0, transparent 100%), radial-gradient(2px 2px at 60% 85%, var(--hub-particle) 0, transparent 100%), radial-gradient(1.5px 1.5px at 33% 42%, var(--hub-particle) 0, transparent 100%), radial-gradient(2px 2px at 78% 78%, var(--hub-particle) 0, transparent 100%), radial-gradient(1.5px 1.5px at 5% 88%, var(--hub-particle) 0, transparent 100%), radial-gradient(1.5px 1.5px at 92% 64%, var(--hub-particle) 0, transparent 100%), radial-gradient(2px 2px at 52% 18%, var(--hub-particle) 0, transparent 100%), radial-gradient(1.5px 1.5px at 27% 92%, var(--hub-particle) 0, transparent 100%)
+  background-size 38% 38%, 30% 30%, 46% 46%
+  -webkit-mask-image linear-gradient(to top, #000 30%, transparent 100%)
+  mask-image linear-gradient(to top, #000 30%, transparent 100%)
+  filter var(--hub-particle-shadow)
+  animation hub-twinkle 4s ease-in-out infinite, hub-drift 26s linear infinite
+
+.hub-env-vignette
+  position absolute
+  z-index 1
+  inset 0
+  background radial-gradient(130% 110% at 50% 36%, transparent 60%, rgba(0, 1, 0, 0.55) 100%)
+
+// ════════════ MODELO 3D ════════════
+.hub-hero-canvas-wrap
+  position absolute
+  inset 0
+  z-index 2
+
+.hub-hero-canvas
+  width 100% !important
+  height 100% !important
+
+// ════════════ NAV SUPERIOR ════════════
+.hub-hero-nav
+  position absolute
+  z-index 7
+  top 0
+  left 0
+  right 0
+  display flex
+  align-items center
+  justify-content space-between
+  padding clamp(22px, 3vw, 40px) clamp(22px, 4vw, 56px)
+
+// Slot del logo de marca (LogoCC) — ancho determina cuánto se muestra
+.hub-hero-logo
+  display flex
+  align-items center
+  width clamp(150px, 42vw, 200px)
+  font-size 18px
+  color var(--hub-text)
+  text-decoration none
+
+.hub-hero-navlinks
+  display flex
+  align-items center
+  gap 10px
+  button
+    display inline-flex
+    align-items center
+    gap 8px
+    font-family hub-mono
+    font-size 10px
+    letter-spacing 0.16em
+    text-transform uppercase
+    color var(--hub-text)
+    background var(--hub-btn-bg)
+    border 1px solid var(--hub-btn-border)
+    border-radius 10px
+    padding 9px 17px
+    cursor pointer
+    backdrop-filter blur(8px)
+    transition all 0.25s var(--lp-ease)
+    &:hover
+      border-color var(--hub-cyan)
+      color var(--hub-cyan)
+  .hub-hero-menu
+    background var(--hub-menu-bg)
+    color var(--hub-menu-color)
+    border-color var(--hub-menu-bg)
+    &:hover
+      background var(--hub-cyan)
+      border-color var(--hub-cyan)
+      color var(--hub-ink)
+
+.hub-pill-ico
+  font-size 9px
+  opacity 0.85
+
+// ════════════ NAV VERTICAL SISTEMAS (izq) ════════════
+.hub-hero-systems
+  position absolute
+  z-index 6
+  left clamp(22px, 4vw, 56px)
+  top 50%
+  transform translateY(-50%)
+  list-style none
+  margin 0
+  padding 0
+  display flex
+  flex-direction column
+  gap 16px
+  opacity 0
+  transition opacity 0.8s var(--lp-ease) 0.3s
+  &[data-ready="true"]
+    opacity 1
+
+.hub-hero-system
+  display flex
+  align-items center
+  gap 12px
+  font-family hub-mono
+  font-size 10px
+  letter-spacing 0.24em
+  text-transform uppercase
+  color var(--hub-system-inactive)
+  transition all 0.4s var(--lp-ease)
+  &[data-active="true"]
+    color var(--hub-text)
+    transform translateX(4px)
+  &[data-passed="true"]
+    color var(--hub-system-passed)
+
+.hub-hero-system-dot
+  width 7px
+  height 7px
+  background var(--hub-dot-inactive)
+  transition all 0.4s var(--lp-ease)
+  .hub-hero-system[data-active="true"] &
+    background var(--hub-cyan)
+    box-shadow 0 0 12px var(--hub-cyan)
+  .hub-hero-system[data-passed="true"] &
+    background var(--hub-glow)
+
+// ════════════ COPY CENTRADO ════════════
+.hub-hero-overlay
+  position absolute
+  z-index 5
+  left 50%
+  bottom clamp(70px, 14vh, 150px)
+  transform translateX(-50%)
+  width min(760px, 86vw)
+  text-align center
+  opacity 0
+  transition opacity 1s var(--lp-ease) 0.35s, transform 1s var(--lp-ease) 0.35s
+  &[data-ready="true"]
+    opacity 1
+
+.hub-hero-title
+  font-size clamp(32px, 5.4vw, 43px)
+  line-height 0.98
+  letter-spacing -0.01em
+  font-weight 700
+  margin 0
+  text-transform uppercase
+  color var(--hub-text)
+  text-shadow 0 0 40px var(--hub-glow-mid)
+
+.hub-hero-title-em
+  background linear-gradient(100deg, var(--hub-cyan), var(--hub-glow))
+  -webkit-background-clip text
+  background-clip text
+  color transparent
+
+.hub-hero-sub
+  font-family "Poppins", sans-serif
+  font-size clamp(11px, 1.3vw, 14px)
+  line-height 1.6
+  color var(--hub-fade)
+  margin 22px auto 30px
+  max-width 480px
+
+.hub-hero-cta
+  display inline-flex
+  align-items center
+  gap 10px
+  font-family hub-mono
+  font-weight 700
+  font-size 10px
+  letter-spacing 0.16em
+  text-transform uppercase
+  color var(--hub-menu-color)
+  background var(--hub-menu-bg)
+  border 1px solid var(--hub-menu-bg)
+  border-radius 10px
+  padding 13px 29px
+  cursor pointer
+  transition all 0.25s var(--lp-ease)
+  &:hover
+    border-color var(--hub-cyan)
+    color var(--hub-cyan)
+    box-shadow 0 12px 40px var(--hub-glow-center)
+    transform translateY(-2px)
+
+// ════════════ ESQUINAS ════════════
+.hub-hero-corner
+  position absolute
+  z-index 6
+  bottom clamp(20px, 3vh, 34px)
+  display inline-flex
+  align-items center
+  gap 5px
+  font-family hub-mono
+  font-size 9px
+  letter-spacing 0.2em
+  text-transform uppercase
+  color var(--hub-fade)
+  opacity 0
+  transition opacity 0.8s var(--lp-ease) 0.4s
+  &[data-ready="true"]
+    opacity 1
+
+.hub-corner-l
+  left clamp(22px, 4vw, 56px)
+
+.hub-corner-r
+  right clamp(22px, 4vw, 56px)
+
+.hub-corner-ico
+  font-size 11px
+  color var(--hub-cyan)
+
+// ════════════ ANIMACIONES ════════════
+@keyframes hub-breathe
+  0%, 100%
+    opacity 0.85
+    transform translate(-50%, -50%) scale(1)
+  50%
+    opacity 1
+    transform translate(-50%, -50%) scale(1.06)
+
+@keyframes hub-shimmer
+  0%, 100%
+    opacity 0.7
+  50%
+    opacity 1
+
+@keyframes hub-twinkle
+  0%, 100%
+    opacity 0.5
+  50%
+    opacity 0.9
+
+@keyframes hub-drift
+  from
+    background-position 0 0, 0 0, 0 0
+  to
+    background-position 60px -30px, -50px -20px, 40px -40px
+
+@media (max-width 720px)
+  .hub-hero
+    height 100vh
+  .hub-hero-nav
+    padding 16px 18px
+  .hub-hero-logo
+    font-size 15px
+  .hub-hero-navlinks
+    gap 6px
+    button
+      padding 7px 10px
+      font-size 9px
+      letter-spacing 0.08em
+  .hub-hero-overlay
+    width min(340px, 90vw)
+    bottom clamp(48px, 10vh, 90px)
+  .hub-hero-title
+    font-size clamp(24px, 8vw, 31px)
+  .hub-hero-systems
+    display none
+  .hub-hero-corner
+    display none

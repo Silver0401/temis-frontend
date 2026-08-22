@@ -1,0 +1,140 @@
+// ─────────────────────────────────────────────────────────────
+// FullCalendar reskin — LP-11. Concordante con el dashboard glass.
+// Texto y acentos por tokens --dash-* (con fallback a --white para
+// contextos fuera del dashboard).
+// ─────────────────────────────────────────────────────────────
+
+.fc-toolbar-title, .fc-col-header-cell-cushion, .fc-timegrid-slot-label-cushion, .fc-daygrid-day-number
+    color: var(--dash-text, var(--white))
+
+.fc .fc-list-table td i
+    color: var(--dash-text, var(--white))
+
+.fc-list-event-time
+    color: var(--dash-text-2, var(--white))
+
+.fc-direction-ltr .fc-daygrid-event.fc-event-end
+    color: var(--dash-text, var(--white))
+
+// ── Botones del toolbar: estilo glass ──
+.fc-direction-ltr .fc-button-group > .fc-button
+    border-radius: 11px
+    font-size: 0.8rem
+
+.fc .fc-button-primary
+    background: var(--dash-card-bg-2)
+    border: 1px solid var(--dash-line)
+    color: var(--dash-text-2)
+    border-radius: 11px
+    text-transform: capitalize
+    transition: border-color 160ms var(--ease-out), color 160ms var(--ease-out), background 160ms var(--ease-out), transform 120ms var(--ease-out)
+
+    &:hover
+        background: var(--dash-glass-lite)
+        border-color: var(--dash-line-hi)
+        color: var(--dash-text)
+
+    &:not(:disabled):active
+        transform: scale(0.96)
+
+    &:not(:disabled):active, &:not(:disabled).fc-button-active
+        background: unquote("color-mix(in srgb, var(--dash-cyan) 14%, transparent)")
+        border-color: var(--dash-line-hi)
+        color: var(--dash-cyan)
+
+.fc .fc-button-group
+    gap: 4px
+
+// ── Bordes de la grilla más sutiles ──
+.fc .fc-scrollgrid, .fc .fc-scrollgrid td, .fc .fc-scrollgrid th
+    border-color: var(--dash-line)
+
+.fc .fc-timegrid-slot, .fc .fc-daygrid-day
+    border-color: var(--dash-line)
+
+// ── Eventos: pill con acento ──
+.fc-event, .fc-event-main
+    border-radius: 8px
+    border: none
+
+.fc-timegrid-event, .fc-daygrid-event
+    background: unquote("color-mix(in srgb, var(--dash-blue) 22%, transparent)")
+    border: 1px solid var(--dash-line-hi)
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18)
+
+.fc .fc-timegrid-slot-label-cushion
+    font-family: "Poppins", sans-serif !important
+
+.fc .fc-toolbar-title
+    font-size: 1.4rem
+    font-weight: 700
+    letter-spacing: -0.02em
+
+.fc .fc-col-header-cell-cushion
+    font-size: 0.85rem
+    text-transform: uppercase
+    letter-spacing: 0.04em
+    color: var(--dash-text-3)
+
+.fc .fc-timegrid-slot-label-cushion
+    font-size: 0.78rem
+    color: var(--dash-text-3)
+
+.fc-event-main
+    overflow: hidden
+
+// Indicador de "ahora"
+.fc .fc-timegrid-now-indicator-line
+    border-color: var(--dash-cyan)
+
+.fc .fc-timegrid-now-indicator-arrow
+    border-color: var(--dash-cyan)
+    color: var(--dash-cyan)
+
+// ─────────────────────────────────────────────────────────────
+// Vista MES (dayGridMonth) — grid con dots de color, estilo LP-11.
+// ─────────────────────────────────────────────────────────────
+
+.fc .fc-daygrid-day
+    border-radius: 10px
+    transition: background 150ms
+
+    &:hover
+        background: var(--dash-glass-lite)
+
+// Día de hoy: gradiente diagonal + número cyan (sobrescribe --fc-today-bg)
+.fc .fc-daygrid-day.fc-day-today
+    background: linear-gradient(140deg, var(--dash-glow-b), transparent) !important
+
+    .fc-daygrid-day-number
+        color: var(--dash-cyan)
+        font-weight: 700
+
+.fc .fc-daygrid-day-number
+    font-size: 0.78rem
+    color: var(--dash-text-2)
+
+// Eventos en mes → solo el dot/barra de color, sin chrome de FC
+.fc-daygrid-event.fc-event
+    background: transparent !important
+    border: none !important
+    box-shadow: none !important
+    padding: 0
+    margin: 1px 4px
+
+.fc-daygrid-event .fc-event-main
+    padding: 0
+
+.cal-ev
+    display: block
+    height: 4px
+    width: 100%
+    border-radius: 2px
+    background: var(--dash-blue)
+
+    &.b
+        background: var(--dash-blue)
+    &.c
+        background: var(--dash-cyan)
+    &.p
+        background: var(--dash-purple)

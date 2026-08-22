@@ -1,0 +1,57 @@
+.CardsDisplayCC
+    position: relative
+    fillSpace()
+    alignStuff(0,1,0,1)
+    justify-content: center
+
+    .titlesContainer
+        height: 150px
+        position: relative
+        alignStuff(0,1,0,1)
+
+        .CDtitle
+            font-size: 1.5rem
+            position: relative
+            color: var(--white)
+
+        .CDsubtitle
+            font-size: 0.9rem
+            position: relative
+            text-align: center
+            padding: 10px 20px
+            color: var(--white)
+
+    .cardsContainer
+        position: relative
+        display: flex
+        flex-wrap: wrap
+        height: auto
+        width: 100%
+        justify-content: center
+        align-items: center
+
+
+.schema-day
+    .CDtitle
+        color: var(--bg) !important
+
+    .CDsubtitle
+        color: var(--bg) !important
+
+.schema-night
+    .CDtitle
+        color: var(--white) !important
+
+    .CDsubtitle
+        color: var(--white) !important
+
+
+@media (max-width: 700px)
+    .CardsDisplayCC
+        .titlesContainer
+            .CDtitle
+                margin: 0px 5px
+
+            .CDsubtitle
+                margin: 0px 20px
+

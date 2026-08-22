@@ -1,0 +1,20 @@
+{
+  "identificacion.nombreCompleto": { "acroFieldName": "Nombres" },
+  "identificacion.edad": { "acroFieldName": "Edad" },
+  "identificacion.fechaNacimiento": { "acroFieldName": "Día" },
+  "padecimientoActual": {
+    "acroFieldName": "Padecimiento actual principales signos síntomas y detalles de evolución"
+  },
+  "resumenEvolucion": { "acroFieldName": "Detalle de evolución" },
+  "diagnosticos[].cie": { "acroFieldName": "Código ICD" },
+  "diagnosticos[].nombre": {
+    "acroFieldName": "Diagnóstico indicando si es unilateral o bilateral derecho o izquierdo"
+  },
+  "diagnosticos[].fechaInicio": { "acroFieldName": "Día_3" },
+  "tratamientoActual": {
+    "acroFieldName": "Tratamiento propuesto quirúrgico no quirúrgico"
+  },
+  "medicoTratante.nombre": { "acroFieldName": "Nombre" },
+  "medicoTratante.cedula": { "acroFieldName": "Cédula profesional" },
+  "medicoTratante.especialidad": { "acroFieldName": "Especialidad" }
+}

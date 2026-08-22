@@ -1,0 +1,635 @@
+.MyPatientsContainer
+    position: relative
+    fillSpace()
+    display: flex
+    flex-direction: column
+    padding: 18px 20px 0
+
+    .PatientsLoaderContainer
+        position: relative
+        height: 100%
+        width: 100%
+
+    .PatientsMiniLoaderContainer
+        position: relative
+        height: 60vh
+        width: 100%
+
+    .topFolderButtonsCont
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        height: 40px
+
+    // ── Barra superior: doctor + buscador + acciones ──
+    .dashTopNav
+        position: relative
+        display: flex
+        align-items: center
+        gap: 12px
+        width: 100%
+        flex-shrink: 0
+        padding-bottom: 16px
+        border-bottom: 1px solid var(--dash-line)
+
+        .docChip
+            display: flex
+            align-items: center
+            gap: 10px
+            flex-shrink: 0
+
+            .docAvatar
+                width: 40px
+                height: 40px
+                border-radius: 12px
+                flex-shrink: 0
+                overflow: hidden
+                background: linear-gradient(140deg, var(--dash-purple), var(--dash-blue))
+                border: 1px solid var(--dash-line-hi)
+                display: grid
+                place-items: center
+                color: var(--dual)
+                font-weight: 700
+                font-size: 0.8rem
+
+                img
+                    width: 100%
+                    height: 100%
+                    object-fit: cover
+
+            .docMeta
+                alignStuff(0,1,0,1)
+                align-items:flex-start
+
+                .docName
+                    font-size: 0.84rem
+                    font-weight: 600
+                    color: var(--dash-text)
+                    line-height: 1.15
+                    white-space: nowrap
+
+                .docCedula
+                    font-family: "Space Mono", monospace
+                    font-size: 0.62rem
+                    color: var(--dash-text-3)
+                    white-space: nowrap
+
+        .headSpacer
+            flex: 1
+
+        .headActions
+            display: flex
+            flex-direction: row
+            gap: 8px
+            flex-shrink: 0
+
+        // Icon buttons glass cuadrados
+        .ButtonCC
+            background: var(--dash-card-bg-2)
+            border: 1px solid var(--dash-line)
+            border-radius: 11px
+            width: 40px
+            height: 40px
+            min-width: 40px
+            padding: 0
+            transition: border-color 160ms, background 160ms
+
+            &:hover
+                border-color: var(--dash-line-hi)
+                background: var(--dash-glass-lite)
+
+            .ButtonCC-Icon
+                margin-left: 0 !important
+
+                svg
+                    fill: var(--dash-text-2)
+                    color: var(--dash-text-2)
+                    width: 18px
+                    height: 18px
+
+        // Glass pill: toggle global + input
+        .searchInputsContainer
+            position: relative
+            flex: 1
+            min-width: 0
+            max-width: 380px
+            display: flex
+            flex-direction: row
+            align-items: center
+            gap: 6px
+            background: var(--dash-card-bg-2)
+            border: 1px solid var(--dash-line)
+            border-radius: 12px
+            padding: 4px 8px
+            margin-left: 6px
+
+            .searchGlobalButton
+                margin-right: 0
+                width: 32px
+                height: 32px
+                min-width: 32px
+                border-radius: 9px
+                background: transparent
+                border: none
+
+                &:hover
+                    background: var(--dash-glass-lite)
+                    border: none
+
+                .ButtonCC-Icon svg
+                    width: 16px
+                    height: 16px
+                    fill: var(--dash-text-3)
+                    color: var(--dash-text-3)
+
+            .InputCC-Container
+                background-color: transparent
+                border: 2px solid transparent
+                flex: 1
+                min-width: 0
+                width: auto
+
+                .placeholderHider
+                    background-color: transparent
+
+                label
+                    background-color: transparent
+                    color: var(--dash-text-3)
+
+                .InputCC
+                    background-color: transparent
+                    color: var(--dash-text)
+
+                    &::placeholder
+                        color: var(--dash-text-3)
+
+                &:focus-within
+                    border: 2px solid transparent
+
+    // ── Título grande + conteo ──
+    .viewTitleRow
+        display: flex
+        align-items: center
+        justify-content: space-between
+        width: 100%
+        flex-shrink: 0
+        padding: 22px 0 18px
+
+        .viewTitleText
+            display: flex
+            flex-direction: row
+            align-items: center
+            gap: 10px
+
+            .titleTextBlock
+                display: flex
+                flex-direction: column
+
+                h2
+                    font-size: 1.7rem
+                    font-weight: 700
+                    letter-spacing: -0.03em
+                    line-height: 1
+                    color: var(--dash-text)
+
+                p
+                    font-size: 0.72rem
+                    color: var(--dash-text-3)
+                    margin-top: 6px
+
+        // Botón regresar (izquierda del título)
+        .folderBackBtn
+            width: 40px
+            height: 40px
+            min-width: 40px
+            flex-shrink: 0
+            background: var(--dash-card-bg-2)
+            border: 1px solid var(--dash-line)
+            border-radius: 11px
+            padding: 0
+            transition: border-color 160ms, background 160ms
+
+            &:hover
+                border-color: var(--dash-line-hi)
+                background: var(--dash-glass-lite)
+
+            .ButtonCC-Icon
+                margin-left: 0 !important
+
+                svg
+                    fill: var(--dash-text-2)
+                    width: 18px
+                    height: 18px
+
+        // Botón eliminar carpeta (derecha del título)
+        .folderDeleteBtn
+            width: 40px
+            height: 40px
+            min-width: 40px
+            flex-shrink: 0
+            background: var(--dash-card-bg-2)
+            border: 1px solid var(--dash-line)
+            border-radius: 11px
+            padding: 0
+            transition: border-color 160ms, background 160ms
+
+            &:hover
+                border-color: unquote("color-mix(in srgb, var(--dash-risk-high) 50%, transparent)")
+                background: unquote("color-mix(in srgb, var(--dash-risk-high) 10%, transparent)")
+
+                .ButtonCC-Icon svg
+                    fill: var(--dash-risk-high)
+                    color: var(--dash-risk-high)
+
+            .ButtonCC-Icon
+                margin-left: 0 !important
+
+                svg
+                    fill: var(--dash-text-3)
+                    width: 18px
+                    height: 18px
+
+
+    .displayPatientsContainer
+        position: relative
+        flex: 1
+        width: 100%
+        overflow-y: auto
+        noScrollbar()
+
+        .DisplayOptionsButton
+            position: absolute
+            top: 10px
+            right: 20px        
+
+        .patientsContainer
+            position: realtive
+            border-radius: 15px
+            width: 100%
+            overflow: scroll
+            noScrollbar()
+            padding-bottom: 50px
+            transition: opacity 500ms
+
+            // Divider de sección: label mono a la izquierda + línea
+            .RecentlyTitle
+                position: relative
+                width: 100%
+                height: auto
+                display: flex
+                flex-direction: row-reverse
+                align-items: center
+                gap: 12px
+                margin: 16px 0 12px
+
+                p
+                    position: relative
+                    color: var(--dash-text-3)
+                    font-family: "Space Mono", monospace
+                    font-size: 0.58rem
+                    letter-spacing: 0.18em
+                    text-transform: uppercase
+                    padding: 0
+                    background: transparent
+                    white-space: nowrap
+
+                .line
+                    position: relative
+                    flex: 1
+                    width: auto
+                    height: 1px
+                    background: var(--dash-line)
+                    opacity: 1
+                    border-radius: 0
+
+            .foldersContainer
+                position: relative
+                width: 100%
+                height: auto
+                overflow-x: auto
+                overflow-y: hidden
+                noScrollbar()
+                padding-bottom: 6px
+
+                .foldersInnerContainer
+                    position: relative
+                    width: auto
+                    height: auto
+                    display: inline-flex
+                    flex-direction: row
+                    align-items: center
+                    gap: 7px
+
+                    // Botón "+" como pill dashed (ButtonCC icon-only)
+                    .plusSearchButton
+                        margin: 0
+                        width: 32px
+                        height: 32px
+                        min-width: 32px
+                        padding: 0
+                        background: transparent
+                        border: 1px dashed var(--dash-line-hi)
+                        border-radius: 9px
+
+                        .ButtonCC-Icon
+                            margin-left: 0 !important
+
+                            svg
+                                fill: var(--dash-cyan)
+                                color: var(--dash-cyan)
+                                width: 16px
+                                height: 16px
+
+                    .foldersLoader
+                        position: relative
+                        height: 32px
+                        width: 160px
+                        display: grid
+                        place-items: center
+
+                    .noFoldersText
+                        font-size: 0.7rem
+                        position: relative
+                        height: 32px
+                        display: grid
+                        place-items: center
+                        text-align: center
+                        color: var(--dash-text-3)
+                        padding: 0 12px
+
+                    // Carpeta = pill chip glass
+                    .groupFolder
+                        position: relative
+                        margin: 0
+                        border-radius: 9px
+                        width: auto
+                        height: 32px
+                        background: var(--dash-chip-bg)
+                        border: 1px solid var(--dash-line)
+                        display: flex
+                        flex-direction: row
+                        align-items: center
+                        padding: 0 12px
+                        cursor: pointer
+                        opacity: 1
+                        transition: border-color 160ms, background 160ms
+
+                        &:hover
+                            border-color: var(--dash-line-hi)
+                            background: var(--dash-glass-lite)
+
+                        p
+                            font-size: 0.72rem
+                            color: var(--dash-text-2)
+                            white-space: nowrap
+                            cursor: pointer
+
+                            &::after
+                                content: none
+
+
+            
+            .SquareDisplay
+                position: relative
+                background-color: var(--transparency)
+                box-shadow: 1px 1px 3px var(--grey)
+                cursor: pointer
+                overflow: hidden
+                opacity: 0.9
+
+                #LinearP
+                    color: var(--white)
+                    font-size: clamp(0.75rem, 1vw, 0.85rem)
+
+            // ── LinearDisplay — LP-11: card glass con foto/selfie ──
+            .LinearDisplay
+                position: relative
+                width: 100%
+                margin-bottom: 8px
+                min-height: 70px
+                background: var(--dash-card-bg-2)
+                border: 1px solid var(--dash-line)
+                border-radius: 14px
+                display: flex
+                align-items: stretch
+                overflow: hidden
+                cursor: pointer
+                opacity: 1
+                transition: border-color 160ms, transform 160ms, background 160ms
+
+                &:hover
+                    border-color: var(--dash-line-hi)
+                    transform: translateX(3px)
+                    background: var(--dash-card-bg)
+
+                #LinearP
+                    color: var(--dash-text)
+
+                .px-bar
+                    width: 3px
+                    flex-shrink: 0
+
+                    &.m
+                        background: linear-gradient(var(--dash-cyan), var(--dash-blue))
+
+                    &.f
+                        background: linear-gradient(var(--dash-sex-f), var(--dash-purple))
+
+                .PatientLineDotsDropdown
+                    position: absolute !important
+                    right: 15px
+                    top: 50%
+                    transform: translateY(-50%)
+
+                .innerBox
+                    position: relative
+                    flex: 1
+                    display: flex
+                    align-items: center
+                    gap: 13px
+                    padding: 12px 60px 12px 14px
+                    min-width: 0
+                    overflow: visible
+
+                    .px-photo
+                        width: 50px
+                        height: 50px
+                        flex-shrink: 0
+                        border-radius: 13px
+                        overflow: hidden
+                        position: relative
+                        border: 1px solid var(--dash-line-hi)
+                        background: linear-gradient(155deg, var(--dash-blue), var(--dash-purple))
+                        display: grid
+                        place-items: end center
+
+                        &.f
+                            background: linear-gradient(155deg, var(--dash-sex-f), var(--dash-purple))
+
+                        .face
+                            width: 42px
+                            height: 42px
+                            fill: var(--dual)
+                            opacity: 0.9
+                            margin-bottom: -3px
+
+                        .px-cam
+                            position: absolute
+                            right: 3px
+                            bottom: 3px
+                            width: 15px
+                            height: 15px
+                            border-radius: 5px
+                            z-index: 2
+                            background: var(--dash-app-bg)
+                            border: 1px solid var(--dash-line-hi)
+                            display: grid
+                            place-items: center
+
+                            svg
+                                width: 9px
+                                height: 9px
+                                fill: var(--dash-cyan)
+
+                    .px-info
+                        flex: 1
+                        min-width: 0
+
+                        .Name
+                            font-size: 0.88rem
+                            font-weight: 600
+                            color: var(--dash-text)
+                            white-space: nowrap
+                            overflow: hidden
+                            text-overflow: ellipsis
+
+                        .SelectedName
+                            color: var(--dash-cyan) !important
+
+                        .px-sub
+                            font-size: 0.68rem
+                            color: var(--dash-text-3)
+                            margin-top: 3px
+                            display: flex
+                            align-items: center
+                            gap: 6px
+
+                            .px-sex-dot
+                                width: 7px
+                                height: 7px
+                                border-radius: 50%
+                                flex-shrink: 0
+
+                                &.m
+                                    background: var(--dash-sex-m)
+
+                                &.f
+                                    background: var(--dash-sex-f)
+
+                    .px-badge
+                        font-family: "Space Mono", monospace
+                        font-size: 0.64rem
+                        white-space: nowrap
+                        flex-shrink: 0
+                        padding: 5px 11px
+                        border-radius: 9px
+                        background: var(--dash-chip-bg)
+                        border: 1px solid var(--dash-line)
+                        color: var(--dash-text-2)
+
+            .SquareDisplay
+                max-width: 250px
+                height: 200px
+                border-radius: 10px
+                flex: 1 1 350px
+                margin: 20px
+
+                .Name
+                    position: absolute !important
+                    bottom: 0
+                    font-size: 0.8rem
+                    width: 100%
+                    alignStuff(0,1,0,0)
+                    height: 50px
+                    background-color: var(--transparency)
+                    backdrop-filter: blur(20px)
+                    
+
+                .Birthplace
+                    font-size: 0.5rem
+                    position: absolute
+                    top: 50px
+                    right: 20px
+
+                .Age
+                    font-size: 0.7rem
+                    position: absolute
+                    top: 25px
+                    right: 20px
+
+                .IdBox
+                    position: absolute !important
+                    left: 30px
+                    top: 10px
+                    width: 25px
+                    height: 25px
+                    alignStuff(0,1,0,0)
+                    overflow: hidden
+
+                    img
+                        fillSpace()
+
+                .Box
+                    position: absolute
+                    left: 0
+                    width: 10px
+                    height: 100%
+                    transition: width 200ms
+
+                .Masc
+                    background-color: rgb(0, 188, 116)
+
+                .Fem
+                    background-color: rgb(255, 123, 178)
+
+
+                &:hover
+
+                    opacity: 1
+
+                    .Box
+                        width: 25px
+                        
+
+        
+        #LinearFlex
+            display: block
+            padding-top: 8px
+
+        #SquareFlex 
+            display: flex
+            flex-wrap: wrap
+            justify-content: space-around
+            align-items: flex-start
+
+
+
+
+    .newGroupModalFormContainer
+        fillSpace()
+        margin: 40px
+
+@media (max-width: 800px)
+    .MyPatientsContainer
+
+        .PatientsLoaderContainer
+            height: 600px
+
+        .searchContainer
+            height: 200px
+
+        .clinicalHistoryModal
+            height: auto
+            top: 0
+
+

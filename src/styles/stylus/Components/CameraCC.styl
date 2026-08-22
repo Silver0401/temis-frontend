@@ -1,0 +1,111 @@
+.CameraCC
+    position: relative
+    alignStuff(0,1,0,1)
+    justify-content: center
+
+    .InnerContainer
+        position: relative
+        width: 100%
+        height:calc(100% - 80px)
+        overflow: hidden
+        alignStuff(0,1,0,1)
+        border-top-right-radius: 20px
+        border-top-left-radius: 20px
+
+        .camera
+            position: absolute
+            width: 100%
+            height: 100%
+
+            .TakenImg
+                position: absolute
+                fillSpace()
+
+        
+    .Borders
+        position: absolute
+        fillSpace()
+        border-radius: 10px
+        pointer-events: none
+
+        span
+            position: absolute
+            width: 35px
+            height: 35px
+        
+        .b1
+            top: 0
+            left: 0
+            border-top-left-radius: 20px
+            border-left: 3px solid var(--white)
+            border-top: 3px solid var(--white)
+
+        .b2
+            top: 0
+            right: 0
+            border-top-right-radius: 20px
+            border-right: 3px solid var(--white)
+            border-top: 3px solid var(--white)
+
+        .b3
+            bottom: 0
+            left: 0
+            border-bottom-left-radius: 20px
+            border-left: 3px solid var(--white)
+            border-bottom: 3px solid var(--white)
+
+        .b4
+            bottom: 0
+            right: 0
+            border-bottom-right-radius: 20px
+            border-bottom: 3px solid var(--white)
+            border-right: 3px solid var(--white)
+
+    .ButtonContainer
+        position: relative
+        bottom: 0
+        width: 100%
+        height: 80px
+        border: 2px solid var(--white)
+        backdrop-filter: blur(2px)
+        border-bottom-right-radius: 20px
+        border-bottom-left-radius: 20px
+        background-color: var(--translucid)
+        alignStuff(0,1,0,0)
+
+        .ButtonsInnerContainer
+            fillSpace()
+            position: absolute
+            alignStuff(0,1,0,0)
+
+        .TakePhoto
+            position: absolute
+            width: 40px
+            height: 40px
+            background-color: var(--white)
+            border-radius: 50%
+            cursor pointer
+            outline: 3px solid var(--white)
+            border: 3px solid var(--bg)
+
+        .SwitchCamera
+            position: absolute
+            width: 40px
+            height: 40px
+            right: 7%
+            background-color: var(--bg)
+            border-radius: 50%
+            alignStuff(0,1,0,0)
+            cursor pointer
+
+            svg
+                width: 70%
+                height: 70%
+                fill: var(--white)
+
+
+
+
+@media (max-width: 800px)
+    .CameraCC
+        height: calc(90vh - var(--nav))

@@ -1,0 +1,990 @@
+// ═══════════════ Vistas de administración de plataforma ═══════════════
+// Tablero, buscador de pacientes y agendas. Las tres comparten encabezado,
+// barra de filtros y chips: se leen como una sola sección.
+
+// `Dashboard.styl` impone a TODA `section` dentro de .DashboardTransitioner:
+//   overflow: hidden · height: 100% · align-items: center · space-evenly
+// Eso deja el contenido encogido en una columna centrada y sin scroll. Se anula
+// con la misma cadena de selectores (misma especificidad + una clase), que es
+// lo mínimo para ganarle sin recurrir a !important ni tocar la regla global,
+// que gobierna las demás secciones del dashboard.
+.DashboardWrapper .DashboardSection .DashboardTransitioner section.AdminSectionContainer
+    display: flex
+    flex-direction: column
+    align-items: stretch
+    justify-content: flex-start
+    width: 100%
+    height: 100%
+    overflow-y: auto
+    overflow-x: hidden
+
+.AdminSectionContainer
+    position: relative
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: stretch
+    gap: 16px
+    padding: clamp(18px, 2.2vw, 30px)
+    // El scroll vive aquí: la sección crece con su contenido.
+    scrollbar-width: thin
+
+    // Los hijos directos nunca se encogen. `.admin-hero` lleva `overflow: hidden`
+    // (para recortar el resplandor y las esquinas), y por spec eso pone su
+    // tamaño mínimo automático en 0: como la sección es un flex column con
+    // `height: 100%`, el contenido sobraba y el navegador aplastaba justo ese
+    // bloque hasta desaparecerlo. Las gráficas se salvaban por no tener
+    // `overflow: hidden`. El scroll de la sección se encarga del resto.
+    > *
+        flex-shrink: 0
+
+    &::-webkit-scrollbar
+        width: 10px
+
+    &::-webkit-scrollbar-thumb
+        background: var(--dash-line)
+        border-radius: 99px
+
+    // ── Encabezado ────────────────────────────────────────────────────
+    .admin-head
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: flex-end
+        gap: 20px
+        flex-wrap: wrap
+
+        .eyebrow
+            margin: 0 0 6px
+            font-size: 0.69rem
+            letter-spacing: 0.16em
+            text-transform: uppercase
+            color: var(--dash-text-3)
+
+        h1
+            margin: 0
+            font-size: 1.68rem
+            letter-spacing: 0.02em
+
+        .admin-sub
+            margin-top: 6px
+            font-size: 0.82rem
+            color: var(--dash-text-2)
+
+        .admin-live
+            display: flex
+            flex-direction: row
+            align-items: center
+            gap: 8px
+            font-size: 0.75rem
+            color: var(--dash-text-2)
+
+        .admin-dot
+            width: 7px
+            height: 7px
+            border-radius: 50%
+            background: var(--dash-cyan)
+            box-shadow: 0 0 12px var(--dash-cyan)
+
+        .admin-count
+            display: flex
+            flex-direction: row
+            align-items: baseline
+            gap: 7px
+
+            b
+                font-family: "Audiowide"
+                font-weight: 200
+                font-size: 1.85rem
+                color: var(--dash-cyan)
+
+            span
+                font-size: 0.69rem
+                letter-spacing: 0.12em
+                text-transform: uppercase
+                color: var(--dash-text-3)
+
+    // ── Barra de filtros ──────────────────────────────────────────────
+    .admin-filters
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+        align-items: flex-end
+        gap: 10px
+        padding: 12px
+        border-radius: var(--lp-r-card)
+        border: 1px solid var(--dash-line)
+        background: var(--dash-card-bg)
+        backdrop-filter: var(--dash-blur-card)
+        -webkit-backdrop-filter: var(--dash-blur-card)
+        box-shadow: var(--dash-shadow)
+
+        .admin-filter
+            display: flex
+            flex-direction: column
+            gap: 5px
+            flex: 1 1 200px
+            min-width: 0
+
+            > span
+                font-size: 0.63rem
+                letter-spacing: 0.12em
+                text-transform: uppercase
+                color: var(--dash-text-3)
+
+            input, select
+                height: 38px
+                padding: 0 12px
+                border-radius: 11px
+                border: 1px solid var(--dash-line)
+                background: var(--dash-chip-bg)
+                color: var(--dash-text)
+                font-family: inherit
+                font-size: 0.82rem
+
+                &:focus
+                    outline: none
+                    border-color: var(--dash-line-hi)
+                    box-shadow: 0 0 0 3px rgba(90, 222, 164, 0.08)
+
+            select option
+                background: var(--dash-glass-solid)
+
+        // Fila propia: el buscador es la acción principal de la pantalla.
+        .admin-search-row
+            flex: 1 1 100%
+            display: flex
+            flex-direction: row
+            align-items: flex-end
+            gap: 10px
+            flex-wrap: wrap
+
+        .admin-filter-main
+            flex: 1 1 320px
+
+        .admin-search-box
+            position: relative
+            display: flex
+            flex-direction: row
+            align-items: center
+            gap: 9px
+            height: 46px
+            padding: 0 13px
+            border-radius: 11px
+            border: 1px solid var(--dash-line)
+            background: var(--dash-chip-bg)
+
+            &:focus-within
+                border-color: var(--dash-line-hi)
+                box-shadow: 0 0 0 3px rgba(90, 222, 164, 0.08)
+
+            svg
+                flex: 0 0 auto
+                width: 17px
+                height: 17px
+                opacity: 0.55
+
+            input
+                height: 100%
+                flex: 1
+                min-width: 0
+                padding: 0
+                border: 0
+                background: transparent
+                box-shadow: none
+                font-size: 0.9rem
+
+                &:focus
+                    border: 0
+                    box-shadow: none
+
+                &::-webkit-search-cancel-button
+                    -webkit-appearance: none
+
+        .admin-search-btn
+            height: 46px
+            padding: 0 22px
+
+        .admin-filter-clues
+            flex: 1 1 240px
+
+            .GeneralSearchCCContainer
+                width: 100%
+
+        // Conmutador de meses: navegación, no formulario.
+        .admin-filter-months
+            flex: 0 0 auto
+
+        .month-switch
+            display: flex
+            flex-direction: row
+            gap: 4px
+            padding: 4px
+            border-radius: 11px
+            border: 1px solid var(--dash-line)
+            background: var(--dash-chip-bg)
+
+            button
+                padding: 5px 11px
+                border: 0
+                border-radius: 8px
+                background: transparent
+                color: var(--dash-text-2)
+                font-family: inherit
+                font-size: 0.75rem
+                cursor: pointer
+                transition: background 120ms ease, color 120ms ease
+
+                &:hover
+                    color: var(--dash-text)
+
+                &[data-on="true"]
+                    background: var(--dash-cyan)
+                    color: #02180c
+                    font-weight: 600
+
+            .month-step
+                padding: 5px 9px
+                opacity: 0.6
+
+        .admin-filter-actions
+            display: flex
+            flex-direction: row
+            gap: 8px
+            margin-left: auto
+
+    // ── Chips de filtro activo ────────────────────────────────────────
+    .admin-chips
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+        gap: 8px
+        align-items: center
+
+    .admin-chip
+        display: inline-flex
+        flex-direction: row
+        align-items: center
+        gap: 7px
+        padding: 5px 10px
+        border-radius: 999px
+        border: 1px solid var(--dash-line-hi)
+        background: rgba(90, 222, 164, 0.08)
+        color: var(--dash-text)
+        font-family: inherit
+        font-size: 0.72rem
+        cursor: pointer
+
+        i
+            font-style: normal
+            color: var(--dash-text-3)
+
+        b
+            font-weight: 400
+            max-width: 220px
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+
+        span
+            opacity: 0.5
+
+        &:hover span
+            opacity: 1
+
+    .admin-empty
+        margin: 0
+        padding: 26px
+        text-align: center
+        border-radius: 14px
+        border: 1px dashed var(--dash-line)
+        color: var(--dash-text-2)
+        font-size: 0.85rem
+
+    .admin-mono
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace
+        font-size: 0.72rem
+        color: var(--dash-text-2)
+
+    .admin-soft
+        font-size: 0.75rem
+        color: var(--dash-text-2)
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
+
+// ═══════════════════════ Tablero (estadísticas) ═══════════════════════
+.AdminDashboard
+    .admin-hero
+        display: grid
+        // La cifra guía se lleva un ancho fijo generoso y las métricas el resto:
+        // con `fr` en la primera columna, en pantalla ancha el número quedaba
+        // nadando y las métricas apretadas.
+        grid-template-columns: minmax(290px, 24%) 1fr
+        gap: 0
+        border-radius: var(--lp-r-card)
+        border: 1px solid var(--dash-line)
+        background: linear-gradient(135deg, var(--dash-card-bg-2), var(--dash-card-bg))
+        box-shadow: var(--dash-shadow)
+        overflow: hidden
+
+    .admin-hero-main
+        position: relative
+        display: flex
+        flex-direction: column
+        justify-content: center
+        padding: 26px 30px
+        border-right: 1px solid var(--dash-line)
+
+        // Resplandor de apoyo, por debajo del contenido.
+        &::after
+            content: ""
+            position: absolute
+            inset: auto -40% -70% -10%
+            height: 150px
+            background: radial-gradient(closest-side, var(--dash-glow-a), transparent)
+            pointer-events: none
+
+        .label
+            font-size: 0.63rem
+            letter-spacing: 0.14em
+            text-transform: uppercase
+            color: var(--dash-text-3)
+
+        .big
+            position: relative
+            z-index: 1
+            margin: 10px 0 8px
+            font-family: "Audiowide"
+            font-weight: 200
+            font-size: clamp(3rem, 4.4vw, 4.6rem)
+            line-height: 1
+            color: var(--dash-cyan)
+            text-shadow: 0 0 34px rgba(90, 222, 164, 0.3)
+            font-variant-numeric: tabular-nums
+            white-space: nowrap
+
+        .delta
+            font-size: 0.75rem
+            color: var(--dash-text-2)
+
+            i
+                font-style: normal
+                color: var(--dash-risk-high)
+
+                &[data-up="true"]
+                    color: var(--dash-cyan)
+
+    .admin-hero-side
+        // Seis cifras en 3x2: caben las cuatro de siempre más consultas y
+        // medicamentos sin dejar columnas de 90px donde el número no cabe.
+        display: grid
+        grid-template-columns: repeat(3, 1fr)
+        align-items: stretch
+
+        article
+            display: flex
+            flex-direction: column
+            justify-content: center
+            min-width: 0
+            padding: 20px 22px
+            border-left: 1px solid var(--dash-line)
+            border-top: 1px solid var(--dash-line)
+
+            // Primera columna y primera fila no llevan línea: la del contenedor
+            // y la del `hero-main` ya cierran ese lado.
+            &:nth-child(3n + 1)
+                border-left: 0
+
+            &:nth-child(-n + 3)
+                border-top: 0
+
+        .k
+            font-size: 0.66rem
+            letter-spacing: 0.1em
+            text-transform: uppercase
+            color: var(--dash-text-3)
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+
+        .v
+            margin-top: 8px
+            font-family: "Audiowide"
+            font-weight: 200
+            font-size: clamp(1.6rem, 2.1vw, 2.3rem)
+            line-height: 1.05
+            color: var(--dash-text)
+            font-variant-numeric: tabular-nums
+
+    .metric-spark
+        display: flex
+        flex-direction: row
+        align-items: flex-end
+        gap: 3px
+        height: 24px
+        margin-top: 12px
+
+        i
+            flex: 1
+            background: var(--dash-line-hi)
+            border-radius: 2px 2px 0 0
+
+    .admin-pies
+        display: grid
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr))
+        gap: 16px
+
+    .admin-year-head
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: flex-start
+        gap: 20px
+        flex-wrap: wrap
+
+    .admin-year-total
+        display: flex
+        flex-direction: column
+        align-items: flex-end
+
+        b
+            font-family: "Audiowide"
+            font-weight: 200
+            font-size: 1.35rem
+            color: var(--dash-cyan)
+            font-variant-numeric: tabular-nums
+
+        span
+            font-size: 0.68rem
+            color: var(--dash-text-3)
+
+.admin-chart
+    padding: 20px 22px
+    border-radius: var(--lp-r-card)
+    border: 1px solid var(--dash-line)
+    background: var(--dash-card-bg)
+    backdrop-filter: var(--dash-blur-card)
+    -webkit-backdrop-filter: var(--dash-blur-card)
+    box-shadow: var(--dash-shadow)
+
+    h2
+        margin: 0
+        font-size: 0.95rem
+        letter-spacing: 0.02em
+
+.admin-chart-sub
+    margin: 5px 0 16px
+    font-size: 0.72rem
+    color: var(--dash-text-3)
+
+// ── Pastel ────────────────────────────────────────────────────────────
+.PieChartCC
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    align-items: center
+    gap: 20px
+
+    .pie-donut
+        position: relative
+        flex: 0 0 auto
+
+        path
+            transition: opacity 120ms ease
+
+    .pie-center
+        position: absolute
+        inset: 0
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        pointer-events: none
+
+        b
+            font-family: "Audiowide"
+            font-weight: 200
+            font-size: 1.4rem
+            font-variant-numeric: tabular-nums
+
+        span
+            margin-top: 2px
+            max-width: 120px
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+            font-size: 0.63rem
+            letter-spacing: 0.08em
+            text-transform: uppercase
+            color: var(--dash-text-3)
+
+    .pie-tip
+        position: absolute
+        top: 14px
+        right: -6px
+        transform: translateX(100%)
+        z-index: 4
+        padding: 8px 11px
+        border-radius: 10px
+        border: 1px solid var(--dash-line-hi)
+        background: var(--dash-glass-solid)
+        box-shadow: var(--dash-shadow)
+        white-space: nowrap
+        pointer-events: none
+
+        b
+            display: block
+            margin-bottom: 2px
+            font-weight: 400
+            font-size: 0.78rem
+
+        span
+            font-size: 0.72rem
+            color: var(--dash-cyan)
+
+    .pie-legend
+        flex: 1 1 190px
+        display: flex
+        flex-direction: column
+        gap: 9px
+        margin: 0
+        padding: 0
+        list-style: none
+        font-size: 0.78rem
+
+        li
+            display: grid
+            grid-template-columns: 9px 1fr auto 46px
+            align-items: center
+            gap: 9px
+            transition: opacity 120ms ease
+
+            &[data-muted="true"]
+                opacity: 0.4
+
+        .pie-swatch
+            width: 9px
+            height: 9px
+            border-radius: 3px
+
+        .pie-legend-label
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+
+        strong
+            font-weight: 400
+            color: var(--dash-text-2)
+            font-variant-numeric: tabular-nums
+
+        em
+            font-style: normal
+            text-align: right
+            color: var(--dash-text-3)
+            font-variant-numeric: tabular-nums
+
+// ── Barras por mes ────────────────────────────────────────────────────
+.MonthBarsCC
+    .month-bars-plot
+        display: grid
+        grid-template-columns: repeat(12, 1fr)
+        align-items: end
+        gap: 9px
+        height: 200px
+        border-bottom: 1px solid var(--dash-line)
+
+    .month-bar
+        display: flex
+        flex-direction: column
+        justify-content: flex-end
+        align-items: center
+        height: 100%
+        gap: 6px
+
+        .month-bar-value
+            font-size: 0.66rem
+            color: var(--dash-text-3)
+            font-variant-numeric: tabular-nums
+            opacity: 0.55
+            transition: opacity 120ms ease, color 120ms ease
+
+            &[data-strong="true"]
+                opacity: 1
+
+        .month-bar-fill
+            width: 100%
+            border-radius: 5px 5px 0 0
+            background: rgba(99, 201, 146, 0.18)
+            transition: background 120ms ease
+
+        .month-bar-label
+            padding-top: 7px
+            font-size: 0.66rem
+            color: var(--dash-text-3)
+
+        &:hover .month-bar-fill
+            background: rgba(99, 201, 146, 0.32)
+
+        // Énfasis: un tono para el mes elegido, el resto es contexto.
+        &[data-current="true"]
+            .month-bar-fill
+                background: linear-gradient(180deg, var(--dash-cyan), rgba(90, 222, 164, 0.35))
+                box-shadow: 0 0 26px rgba(90, 222, 164, 0.35)
+
+            .month-bar-value
+                color: var(--dash-cyan)
+                font-weight: 600
+
+            .month-bar-label
+                color: var(--dash-text)
+                font-weight: 600
+
+// ═══════════ Buscador de pacientes y agendas (misma piel) ═══════════
+.AdminSearchView
+    .admin-results
+        border-radius: var(--lp-r-card)
+        border: 1px solid var(--dash-line)
+        background: var(--dash-card-bg)
+        backdrop-filter: var(--dash-blur-card)
+        -webkit-backdrop-filter: var(--dash-blur-card)
+        box-shadow: var(--dash-shadow)
+        overflow: hidden
+
+    .admin-results-head
+        position: sticky
+        top: 0
+        z-index: 2
+        display: grid
+        grid-template-columns: 1.7fr 0.95fr 0.5fr 0.7fr 1fr 0.9fr
+        gap: 14px
+        padding: 12px 20px
+        border-bottom: 1px solid var(--dash-line)
+        background: var(--dash-glass-solid)
+        backdrop-filter: blur(20px)
+        font-size: 0.63rem
+        letter-spacing: 0.12em
+        text-transform: uppercase
+        color: var(--dash-text-3)
+
+    // Sin scroll propio: la sección entera ya scrollea y anidar un segundo
+    // scroll obliga a atinarle al contenedor correcto con la rueda.
+    .admin-results-body
+        position: relative
+
+    .admin-row
+        display: grid
+        grid-template-columns: 1.7fr 0.95fr 0.5fr 0.7fr 1fr 0.9fr
+        gap: 14px
+        align-items: center
+        padding: 13px 20px
+        border-bottom: 1px solid rgba(99, 201, 146, 0.07)
+        font-size: 0.8rem
+
+        &:hover
+            background: rgba(99, 201, 146, 0.05)
+
+    .admin-who
+        display: flex
+        flex-direction: row
+        align-items: center
+        gap: 11px
+        min-width: 0
+
+    .admin-avatar
+        flex: 0 0 auto
+        width: 31px
+        height: 31px
+        border-radius: 9px
+        display: grid
+        place-items: center
+        font-size: 0.7rem
+        font-weight: 600
+        color: #02180c
+        background: var(--dash-sex-m)
+
+        &[data-sex="f"]
+            background: var(--dash-sex-f)
+
+    .admin-who-name
+        min-width: 0
+
+        b
+            display: block
+            font-weight: 400
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+
+        i
+            font-style: normal
+            font-size: 0.68rem
+            color: var(--dash-text-3)
+
+    .admin-clues
+        display: inline-flex
+        align-items: center
+        padding: 3px 9px
+        border-radius: 999px
+        border: 1px solid var(--dash-line)
+        background: var(--dash-chip-bg)
+        font-size: 0.68rem
+        color: var(--dash-text-2)
+        max-width: 100%
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
+
+    .admin-pager
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: center
+        padding: 12px 20px
+        border-top: 1px solid var(--dash-line)
+        font-size: 0.75rem
+        color: var(--dash-text-2)
+
+    .admin-pager-nav
+        display: flex
+        flex-direction: row
+        align-items: center
+        gap: 10px
+
+    // ── Agendas ───────────────────────────────────────────────────────
+    .admin-agenda-layout
+        display: grid
+        grid-template-columns: 1fr 330px
+        gap: 16px
+        align-items: start
+
+    .admin-calendar
+        padding: 18px 20px
+        border-radius: var(--lp-r-card)
+        border: 1px solid var(--dash-line)
+        background: var(--dash-card-bg)
+        backdrop-filter: var(--dash-blur-card)
+        -webkit-backdrop-filter: var(--dash-blur-card)
+        box-shadow: var(--dash-shadow)
+
+    .admin-calendar-head
+        display: flex
+        flex-direction: row
+        justify-content: center
+        align-items: center
+        margin-bottom: 14px
+
+        h2
+            margin: 0
+            font-size: 1.05rem
+
+    .admin-dow
+        display: grid
+        grid-template-columns: repeat(7, 1fr)
+        gap: 6px
+        margin-bottom: 6px
+
+        span
+            padding: 4px 0
+            text-align: center
+            font-size: 0.63rem
+            letter-spacing: 0.1em
+            text-transform: uppercase
+            color: var(--dash-text-3)
+
+    .admin-cal-grid
+        display: grid
+        grid-template-columns: repeat(7, 1fr)
+        gap: 6px
+
+    .admin-day
+        display: flex
+        flex-direction: column
+        align-items: stretch
+        gap: 4px
+        min-height: 88px
+        padding: 7px 8px
+        border-radius: 11px
+        border: 1px solid var(--dash-line)
+        background: rgba(0, 25, 11, 0.4)
+        color: inherit
+        font-family: inherit
+        text-align: left
+        cursor: pointer
+        transition: border-color 120ms ease, box-shadow 120ms ease
+
+        &[data-out="true"]
+            opacity: 0.3
+
+        &:hover
+            border-color: var(--dash-line-hi)
+
+        .admin-day-n
+            font-size: 0.72rem
+            color: var(--dash-text-2)
+            font-variant-numeric: tabular-nums
+
+        &[data-today="true"] .admin-day-n
+            color: var(--dash-text)
+            font-weight: 600
+
+        &[data-sel="true"]
+            border-color: var(--dash-cyan)
+            box-shadow: inset 0 0 0 1px rgba(90, 222, 164, 0.18), 0 0 26px rgba(90, 222, 164, 0.14)
+
+            .admin-day-n
+                color: var(--dash-cyan)
+                font-weight: 600
+
+    .admin-ev
+        padding: 2.5px 6px
+        border-radius: 6px
+        font-size: 0.63rem
+        font-weight: 500
+        color: #02180c
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
+
+    .admin-more
+        padding-left: 3px
+        font-size: 0.6rem
+        color: var(--dash-text-3)
+
+    // Leyenda de médicos: la identidad nunca depende solo del color.
+    .admin-doc-legend
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+        gap: 14px
+        margin-top: 14px
+        padding-top: 13px
+        border-top: 1px solid var(--dash-line)
+
+        span
+            display: inline-flex
+            flex-direction: row
+            align-items: center
+            gap: 7px
+            font-size: 0.7rem
+            color: var(--dash-text-2)
+
+        i
+            width: 9px
+            height: 9px
+            border-radius: 3px
+
+    .admin-agenda-side
+        position: sticky
+        top: 20px
+        display: flex
+        flex-direction: column
+        border-radius: var(--lp-r-card)
+        border: 1px solid var(--dash-line)
+        background: var(--dash-card-bg)
+        backdrop-filter: var(--dash-blur-card)
+        -webkit-backdrop-filter: var(--dash-blur-card)
+        box-shadow: var(--dash-shadow)
+
+    .admin-side-head
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: baseline
+        padding: 16px 18px 0
+
+        .t
+            font-family: "Audiowide"
+            font-weight: 200
+            font-size: 0.95rem
+            text-transform: capitalize
+
+        .b
+            font-size: 0.68rem
+            color: var(--dash-text-3)
+
+    .admin-appt-list
+        display: flex
+        flex-direction: column
+        gap: 9px
+        padding: 14px 18px 18px
+
+    .admin-appt
+        display: flex
+        flex-direction: row
+        align-items: flex-start
+        gap: 11px
+        padding: 11px 13px
+        border-radius: 11px
+        border: 1px solid var(--dash-line)
+        background: rgba(0, 25, 11, 0.45)
+
+    .admin-appt-bar
+        flex: 0 0 auto
+        width: 3px
+        align-self: stretch
+        border-radius: 99px
+
+    .admin-appt-hr
+        flex: 0 0 auto
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace
+        font-size: 0.72rem
+        color: var(--dash-cyan)
+
+    .admin-appt-info
+        flex: 1
+        min-width: 0
+
+        b
+            display: block
+            font-weight: 400
+            font-size: 0.8rem
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+
+        i
+            font-style: normal
+            font-size: 0.68rem
+            color: var(--dash-text-3)
+
+    .admin-readonly
+        margin: 0
+        padding: 10px 18px 16px
+        border-top: 1px solid var(--dash-line)
+        font-size: 0.68rem
+        color: var(--dash-text-3)
+
+@media (max-width: 1000px)
+    .AdminSearchView .admin-agenda-layout
+        grid-template-columns: 1fr
+
+    .AdminSearchView .admin-agenda-side
+        position: static
+
+@media (max-width: 900px)
+    .AdminDashboard .admin-hero
+        grid-template-columns: 1fr
+
+    .AdminDashboard .admin-hero-main
+        border-right: 0
+        border-bottom: 1px solid var(--dash-line)
+
+    .AdminDashboard .admin-hero-side
+        grid-template-columns: repeat(2, 1fr)
+
+@media (max-width: 800px)
+    .AdminSectionContainer
+        padding: 16px
+
+        .admin-head
+            flex-direction: column
+            align-items: flex-start
+
+    // La tabla no cabe: se scrollea en horizontal antes que apretar columnas.
+    .AdminSearchView .admin-results
+        overflow-x: auto
+
+    .AdminSearchView .admin-results-head,
+    .AdminSearchView .admin-row
+        min-width: 760px

@@ -1,0 +1,152 @@
+.PatientConsents
+    width: 100%
+    height: 100%
+    padding: 18px
+    overflow-y: auto
+    color: var(--white)
+
+    > header
+        display: flex
+        align-items: flex-end
+        justify-content: space-between
+        margin-bottom: 16px
+
+        p
+            margin: 0 0 4px
+            color: var(--grey)
+            font-size: 0.65rem
+            letter-spacing: 0.1em
+            text-transform: uppercase
+
+        h2
+            margin: 0
+            font-size: 1.25rem
+
+        > span
+            color: var(--grey)
+            font-size: 0.72rem
+
+    .patientConsentList
+        display: grid
+        gap: 12px
+
+        > article
+            padding: 16px
+            border: 1px solid var(--silver)
+            border-radius: 12px
+            background: var(--bg)
+
+            > button
+                min-height: 40px
+                margin-top: 14px
+                padding: 0 14px
+                border: 1px solid var(--primary)
+                border-radius: 9px
+                background: var(--primary)
+                color: var(--dual)
+                font: inherit
+                cursor: pointer
+
+            &[data-status="signed"] .patientConsentSummary > span
+                color: var(--green)
+
+            &[data-status="pending"] .patientConsentSummary > span
+                color: var(--yellow)
+
+    .patientConsentSummary
+        display: flex
+        align-items: flex-start
+        justify-content: space-between
+        gap: 12px
+
+        h3
+            margin: 0 0 3px
+            font-size: 0.94rem
+
+        p
+            margin: 0
+            color: var(--grey)
+            font-size: 0.7rem
+
+        > span
+            font-size: 0.7rem
+            font-weight: 700
+
+    dl
+        display: grid
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+        gap: 8px
+        margin: 14px 0
+
+        div
+            min-width: 0
+
+        dt
+            color: var(--grey)
+            font-size: 0.65rem
+            text-transform: uppercase
+
+        dd
+            margin: 3px 0 0
+            font-size: 0.76rem
+            overflow-wrap: anywhere
+
+    .patientConsentSignature
+        padding: 10px
+        border: 1px solid var(--silver)
+        border-radius: 9px
+
+        p
+            margin: 0 0 8px
+            color: var(--grey)
+            font-size: 0.68rem
+
+        img
+            display: block
+            width: min(100%, 280px)
+            max-height: 110px
+            object-fit: contain
+
+    .patientConsentAcceptance
+        padding: 10px
+        border-left: 3px solid var(--green)
+        color: var(--grey)
+        font-size: 0.76rem
+
+    details
+        margin-top: 12px
+
+        summary
+            color: var(--primary)
+            font-size: 0.75rem
+            cursor: pointer
+
+        code
+            display: block
+            margin-top: 10px
+            color: var(--grey)
+            font-size: 0.65rem
+            overflow-wrap: anywhere
+
+    .patientConsentBody
+        max-height: 280px
+        margin-top: 10px
+        padding: 12px
+        overflow-y: auto
+        border: 1px solid var(--silver)
+        border-radius: 8px
+
+        p
+            margin: 0 0 10px
+            font-size: 0.75rem
+            line-height: 1.55
+
+    .patientConsentsError
+        color: var(--red)
+
+@media (max-width: 560px)
+    .PatientConsents
+        padding: 12px
+
+        dl
+            grid-template-columns: 1fr

@@ -1,0 +1,192 @@
+.ClinicalTextArea
+    position: relative
+    fillSpace()
+    alignStuff(0,1,0,0)
+    justify-content: center
+
+    .LeftContainer
+        position: relative
+        height: 100%
+        width: 100%
+        alignStuff(0,1,0,1)
+
+        .SavePatientButton
+            margin-top: 30px
+
+        // Ranura entre el area de texto y el boton de guardar (buscador CIE).
+        .BelowTextSlot
+            position: relative
+            width: 100%
+            padding: 0 10px
+            margin-top: 14px
+
+            .DiagnosisPickerRow
+                display: flex
+                flex-direction: column
+                gap: 6px
+
+                label
+                    font-size: 0.75rem
+                    letter-spacing: 0.04em
+                    text-transform: uppercase
+                    opacity: 0.6
+
+                .MultiCIESearchContainer
+                    position: relative
+                    width: 100%
+                    display: flex
+                    flex-direction: column
+                    gap: 10px
+
+                    .SearchInputContainer
+                        width: 100%
+
+                    .CIEPillList
+                        display: flex
+                        flex-direction: row
+                        flex-wrap: wrap
+                        gap: 8px
+                        margin: 0
+                        padding: 0
+                        list-style: none
+
+                    .CIEPill
+                        display: inline-flex
+                        flex-direction: row
+                        align-items: center
+                        gap: 8px
+                        max-width: 100%
+                        padding: 6px 8px 6px 12px
+                        border-radius: 999px
+                        border: 1px solid var(--dash-line)
+                        background: var(--dash-card-bg)
+                        font-size: 0.82rem
+
+                        strong
+                            font-family: ui-monospace, SFMono-Regular, Menlo, monospace
+                            font-size: 0.78rem
+
+                        span
+                            overflow: hidden
+                            text-overflow: ellipsis
+                            white-space: nowrap
+                            max-width: 280px
+
+                        button
+                            display: inline-flex
+                            align-items: center
+                            justify-content: center
+                            width: 18px
+                            height: 18px
+                            padding: 0
+                            border: 0
+                            border-radius: 50%
+                            background: transparent
+                            color: inherit
+                            cursor: pointer
+                            opacity: 0.55
+
+                            &:hover
+                                opacity: 1
+
+                            svg
+                                width: 14px
+                                height: 14px
+
+                        // Fuera de los tres que viajan al archivo de intercambio.
+                        &[data-reportable="false"]
+                            border-style: dashed
+                            opacity: 0.6
+
+                    .CIEPillNote
+                        margin: 0
+                        font-size: 0.75rem
+                        opacity: 0.6
+
+        .TextBgContainer
+            position: relative
+            fillSpace()
+            // El textarea es la superficie de trabajo principal de la nota:
+            // se le da piso propio para que no quede aplastado por el flex.
+            min-height: 520px
+            alignStuff(0,1,0,0)
+            margin: 10px
+            border-radius: 10px
+            overflow: hidden
+
+            .Backdrop
+                position: absolute
+                width: 100%
+                height: 100%
+                overflow: auto
+                opacity: 1
+                overflow: auto
+                border-radius: 10px
+                /* Hide scrollbar for IE, Edge and Firefox */
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+
+
+                .Highlights
+                    position: relative
+                    display: inline-block
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                    padding: 11.5px 18px
+                    font-family: "Poppins", sans-serif;
+                    font-size: 0.8rem
+                    border-radius: 10px
+                    z-index: 2
+                    color: transparent !important
+
+                    mark
+                        background-color: var(--tertiary)
+                        color: transparent
+                        border-radius: 5px
+
+            #AiWordSheetTextArea
+                position: absolute
+                background-color: var(--transparency)
+                opacity: 1
+                overflow: scroll
+                z-index: 3
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+
+            .loadingCont
+                position: absolute
+                fillSpace()
+                border: 2pd solid blue
+                background-color: var(--transparency)
+                z-index: 5
+                backdrop-filter: blur(5px)
+
+    .RightContainer
+        position: relative
+        height: 35%
+        width: 25%
+        margin-left: 20px
+        alignStuff(0,1,0,0)
+
+    .loaderContainer
+            position: absolute
+            fillSpace()
+            background-color: var(--transparency)
+            backdrop-filter: blur(2px)
+
+
+
+@media (max-width: 800px)
+    .ClinicalTextArea
+        height: 90vh
+
+        .LeftContainer .TextBgContainer
+            min-height: 0

@@ -1,0 +1,137 @@
+.VerifyID
+    position: relative
+    fillSpace()
+    overflow: scroll
+    alignStuff(0,1,0,1)
+
+    .TopBox
+        position: realtive
+        width: 100%
+        height: 130px
+        alignStuff(0,1,0,1)
+        border-top-right-radius: 20px
+        border-top-left-radius: 20px
+        background: var(--secondary)
+
+        h2,p
+            color: var(--white)
+            text-align: center
+
+        h2
+            font-size: clamp(1.2rem, 3vw, 1.5rem)
+
+        p
+            font-size: clamp(0.8rem, 3vw, 1rem)
+
+    .BottomBox
+        position:relative
+        width: 100%
+        height: calc(100% - 130px)
+
+        .genericContainer
+            position: relative
+            fillSpace()
+            display: flex
+            flex-wrap: wrap
+
+            .cameraOuterContainer
+                position: relative
+                alignStuff(0,1,0,1)
+                fillSpace()
+
+                .successBadge
+                    width: 230px
+                    height: 230px
+
+                // .ButtonWrapper
+                //     width: 100%
+                //     alignStuff(0,1,0,0)
+
+                // .cameraInnerContainer
+                    // position: relative
+                    // width: 500px
+                    // height: 300px
+                    // overflow: visible
+                    // alignStuff(0,1,0,0)
+
+                    // .camera
+                    //     position: absolute
+                    //     width: 98%
+                    //     height: 98%
+
+                    //     .TakenImg
+                    //         position: absolute
+                    //         fillSpace()
+
+                    // .Borders
+                    //     position: absolute
+                    //     fillSpace()
+                    //     border-radius: 20px
+                    //     width: 106%
+                    //     height: 110%
+
+                    //     span
+                    //         position: absolute
+                    //         width: 35px
+                    //         height: 35px
+                        
+                    //     .b1
+                    //         top: 0
+                    //         left: 0
+                    //         border-top-left-radius: 20px
+                    //         border-left: 3px solid var(--bg)
+                    //         border-top: 3px solid var(--bg)
+
+                    //     .b2
+                    //         top: 0
+                    //         right: 0
+                    //         border-top-right-radius: 20px
+                    //         border-right: 3px solid var(--bg)
+                    //         border-top: 3px solid var(--bg)
+
+                    //     .b3
+                    //         bottom: 0
+                    //         left: 0
+                    //         border-bottom-left-radius: 20px
+                    //         border-left: 3px solid var(--bg)
+                    //         border-bottom: 3px solid var(--bg)
+
+                    //     .b4
+                    //         bottom: 0
+                    //         right: 0
+                    //         border-bottom-right-radius: 20px
+                    //         border-bottom: 3px solid var(--bg)
+                    //         border-right: 3px solid var(--bg)
+
+
+            .RightBox, .LeftBox
+                position: relative
+                flex: 1 1 300px
+
+
+            .RightBox
+                alignStuff(0,1,0,1)
+                justify-content:center
+
+                .subtitle
+                    padding: 0 40px
+                    margin-bottom: 50px
+                    text-align: center
+                    color: var(--bg)
+
+                .ComputerCamButton
+                    margin-top: 40px
+
+                .QRCodeContainer
+                    width: 200px
+                    height: 200px
+                    padding: 20px
+                    border-radius: 20px
+                    border: 2px solid var(--bg)
+                    background-color: var(--bg)
+                    alignStuff(0,1,0,0)
+
+            .LeftBox
+                alignStuff(0,1,0,1)
+                padding: 40px
+            

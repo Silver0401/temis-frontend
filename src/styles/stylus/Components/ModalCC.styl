@@ -1,0 +1,81 @@
+.Modal-CC-Container
+    top: 0
+    left: 0
+    z-index var(--globalZ5)
+    position: fixed !important
+    alignStuff(0,1,0,0)
+    overflow: hidden
+    // Backdrop frosted glass (uniforme day/night)
+    background: var(--translucid)
+    backdrop-filter: var(--lp-glass-blur-sm)
+    -webkit-backdrop-filter: var(--lp-glass-blur-sm)
+
+    .Modal-CC
+        position: relative
+        border-radius: 20px
+        alignStuff(0,1,0,0)
+        will-change: transform, opacity
+        transform-origin: center
+        backface-visibility: hidden
+        overflow: hidden
+        // Glass panel
+        background-image: var(--lp-glass-shine)
+        border: 1px solid var(--lp-glass-border)
+        backdrop-filter: var(--lp-glass-blur)
+        -webkit-backdrop-filter: var(--lp-glass-blur)
+        box-shadow: 0 16px 48px var(--lp-featured-shadow)
+
+        .xModalButton
+            position: absolute
+            top: 10px
+            right: 10px
+            width: 23px
+            height: 23px
+            cursor pointer
+            z-index: var(--globalZ5)
+            transition: color 0.2s var(--lp-ease)
+
+            svg
+                color: var(--white)
+
+            &:hover svg
+                color: var(--lp-accent)
+
+    #bottomSlideMod
+        position: absolute
+        bottom: 0
+        border-bottom-right-radius: 0px
+        border-bottom-left-radius: 0px
+
+
+    .fullModal-CC
+        position: absolute
+        fillSpace()
+        will-change: opacity
+        backface-visibility: hidden
+
+        .xModalButton
+            position: absolute
+            top: 0px
+            right: 20px
+            width: 23px
+            height: var(--nav)
+            cursor pointer
+            display: grid
+            place-items: center
+            transition: color 0.2s var(--lp-ease)
+
+            svg
+                color: var(--white)
+
+            &:hover svg
+                color: var(--lp-accent)
+
+
+.Schema-day
+    .Modal-CC, .fullModal-CC
+        background-color: var(--lp-bg-mid-inverse)
+
+.Schema-night
+    .Modal-CC, .fullModal-CC
+        background-color: var(--lp-bg-mid)

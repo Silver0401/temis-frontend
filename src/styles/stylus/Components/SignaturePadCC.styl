@@ -1,0 +1,65 @@
+.SignaturePadCC
+    width: 100%
+    display: grid
+    gap: 14px
+
+    .signatureCanvasFrame
+        position: relative
+        width: 100%
+        min-height: 220px
+        border: 1px solid var(--silver)
+        border-radius: 14px
+        overflow: hidden
+        background: var(--bg)
+
+        canvas
+            display: block
+            width: 100%
+            height: 220px
+            color: var(--white)
+            touch-action: none
+            cursor: crosshair
+
+        span
+            position: absolute
+            left: 14px
+            bottom: 10px
+            color: var(--grey)
+            font-size: 0.72rem
+            pointer-events: none
+
+    .signatureActions
+        display: flex
+        justify-content: flex-end
+        gap: 10px
+
+        button
+            min-height: 42px
+            padding: 0 18px
+            border: 1px solid var(--silver)
+            border-radius: 10px
+            background: var(--bg)
+            color: var(--white)
+            font: inherit
+            cursor: pointer
+
+            &:disabled
+                opacity: 0.45
+                cursor: not-allowed
+
+        .signatureConfirm
+            border-color: var(--primary)
+            background: var(--primary)
+            color: var(--dual)
+
+@media (max-width: 560px)
+    .SignaturePadCC
+        .signatureCanvasFrame
+            min-height: 180px
+
+            canvas
+                height: 180px
+
+        .signatureActions
+            display: grid
+            grid-template-columns: 1fr 1fr

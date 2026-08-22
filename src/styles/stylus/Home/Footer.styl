@@ -1,0 +1,142 @@
+// ═══════════════════════════════════════════════════════════════════════════════
+// FOOTER
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.lp-footer
+  position relative
+  z-index 1
+  border-top 1px solid var(--lp-footer-border)
+  background var(--lp-footer-bg)
+  backdrop-filter blur(20px)
+  overflow hidden
+
+.lp-foot-word
+  font-family "Surgena", var(--font), sans-serif
+  font-size clamp(54px, 13vw, 179px)
+  line-height 0.95
+  text-align center
+  letter-spacing 0.02em
+  color transparent
+  -webkit-text-stroke 1px var(--lp-footer-word-stroke)
+  user-select none
+  pointer-events none
+  padding 56px 0 8px
+  mask-image linear-gradient(180deg, black 30%, transparent 100%)
+
+  span
+    -webkit-text-stroke-color var(--lp-footer-word-stroke-accent)
+
+.lp-foot-main
+  display grid
+  grid-template-columns 2fr 1fr 1fr 1fr
+  gap 48px
+  padding 24px 0 48px
+
+.lp-foot-logo
+  display flex
+  align-items center
+  gap 10px
+  font-size 14px
+  font-weight 600
+  letter-spacing -0.02em
+  color var(--lp-footer-text-hover)
+  text-decoration none
+  white-space nowrap
+
+.lp-foot-logo-icon
+  width 24px
+  height 24px
+  border-radius 6px
+  background linear-gradient(135deg, var(--lp-footer-accent), var(--lp-accent-2))
+  display grid
+  place-items center
+  flex-shrink 0
+
+  svg
+    width 12px
+    height 12px
+    color #000f06
+
+.lp-foot-logo-accent
+  color var(--lp-footer-accent)
+
+.lp-foot-brand-desc
+  font-size 11px
+  font-weight 300
+  color var(--lp-footer-text)
+  margin-top 14px
+  line-height 1.75
+  max-width 240px
+
+.lp-foot-col-h
+  font-size var(--lp-t-micro)
+  font-weight 500
+  letter-spacing 0.2em
+  text-transform uppercase
+  color var(--lp-footer-accent)
+  margin-bottom 18px
+
+.lp-foot-links
+  list-style none
+  display flex
+  flex-direction column
+  gap 10px
+  padding 0
+
+  a
+    font-size 11px
+    font-weight 300
+    color var(--lp-footer-text)
+    text-decoration none
+    transition color 0.2s
+
+    &:hover
+      color var(--lp-footer-text-hover)
+
+.lp-foot-bottom
+  border-top 1px solid var(--lp-footer-border)
+  padding 20px 0
+  display flex
+  align-items center
+  justify-content space-between
+
+.lp-foot-copy
+  font-size 9px
+  color var(--lp-footer-text)
+  letter-spacing 0.04em
+
+.lp-foot-certs
+  display flex
+  gap 10px
+
+.lp-foot-cert
+  font-size 9px
+  font-weight 500
+  letter-spacing 0.12em
+  text-transform uppercase
+  color var(--lp-footer-text)
+  border 1px solid var(--lp-footer-border)
+  border-radius var(--lp-r-pill)
+  padding 4px 10px
+  transition border-color 0.2s, color 0.2s
+  cursor default
+
+  &:hover
+    border-color var(--lp-footer-border-hi)
+    color var(--lp-footer-accent)
+
+// ── Responsive ───────────────────────────────────────────────────────────────
+
+@media (max-width: 1024px)
+  .lp-foot-main
+    grid-template-columns 1fr 1fr
+    gap 32px
+
+@media (max-width: 640px)
+  .lp-foot-main
+    grid-template-columns 1fr
+
+  .lp-foot-bottom
+    flex-direction column
+    gap 12px
+    text-align center

@@ -1,0 +1,82 @@
+.AfiliacionesCheckGroup
+    position: relative
+    width: 100%
+    display: flex
+    flex-direction: column
+    gap: 8px
+    // Breathing room so the group doesn't crowd the inputs above/below.
+    padding: 10px 6px 12px
+
+    .AfiliacionesCheckGroupTitle
+        color: var(--bg)
+        font-size: 0.9rem
+        font-weight: 500
+        margin: 0
+
+    .AfiliacionesCheckGroupList
+        list-style: none
+        margin: 0
+        padding: 0
+        display: grid
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr))
+        gap: 6px
+
+        .AfiliacionesCheckGroupItem
+            position: relative
+            display: flex
+            align-items: center
+            // Same radius as InputCC.
+            border-radius: 7px
+            border: 2px solid transparent
+            background-color: var(--grey)
+            // padding: 2px 5px
+            transition: border-color 200ms, background-color 200ms
+
+            // Native checkbox visible when checked.
+            .InputCC
+                accent-color: var(--primary)
+
+            // Selected state: highlight the whole item so the pick reads clearly.
+            &:has(.InputCC:checked)
+                border-color: var(--primary)
+                background-color: var(--transparency)
+
+            // Blocked while an exclusive option (ninguna / se ignora) is picked.
+            &:has(.InputCC:disabled)
+                opacity: 0.4
+                cursor: not-allowed
+
+        .AfiliacionesCheckGroupEmpty
+            grid-column: 1 / -1
+            color: var(--grey)
+            font-size: 0.8rem
+            text-align: center
+            padding: 10px
+
+    .AfiliacionesCheckGroupClear
+        align-self: flex-end
+        background: transparent
+        border: none
+        color: var(--red)
+        font-size: 0.8rem
+        cursor: pointer
+        padding: 4px 8px
+
+        &:hover
+            text-decoration: underline
+
+// Title and checkbox labels follow the color schema, like InputCC labels.
+.AfiliacionesCheckGroup-Schema-day
+    .AfiliacionesCheckGroupTitle
+        color: var(--white)
+        font-family: "Poppins", sans-serif
+
+    .InputCC-Checkbox label
+        color: var(--bg)
+
+.AfiliacionesCheckGroup-Schema-night
+    .AfiliacionesCheckGroupTitle
+        color: var(--white)
+
+    .InputCC-Checkbox label
+        color: var(--white)

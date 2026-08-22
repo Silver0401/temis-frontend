@@ -1,0 +1,17 @@
+{
+  "identificacion.nombreCompleto": { "acroFieldName": "Nombre" },
+  "identificacion.edad": { "acroFieldName": "Edad" },
+  "identificacion.sexo": { "acroFieldName": "Genero" },
+  "identificacion.fechaNacimiento": { "acroFieldName": "Fecha Nacimiento" },
+  "padecimientoActual": { "acroFieldName": "Padecimiento actual" },
+  "antecedentesRelevantes": { "acroFieldName": "Antecedentes Patológicos" },
+  "diagnosticos[].cie": { "acroFieldName": "Código ICD" },
+  "diagnosticos[].nombre": { "acroFieldName": "Diagnóstico Definitivo" },
+  "diagnosticos[].fechaInicio": { "acroFieldName": "Fecha diagnóstico" },
+  "tratamientoActual": { "acroFieldName": "Tratamiento" },
+  "medicoTratante.nombre": {
+    "acroFieldName": "Nombres del médico tratante"
+  },
+  "medicoTratante.cedula": { "acroFieldName": "Cédula profesional" },
+  "medicoTratante.especialidad": { "acroFieldName": "Especialidad" }
+}

@@ -1,0 +1,200 @@
+.CardCC
+    position: relative
+    // overflow: hidden
+    flex: 1 1
+    border-radius: 10px
+    border: 2px solid var(--grey)
+    background-color: var(--transparency)
+    cursor: pointer
+    transition: transform 350ms, opacity 350ms
+    margin: 15px
+
+    .iconContainer
+        width: 40px
+        height: 40px
+        display: grid
+        place-items: center
+        position: absolute
+        left: 5px
+        top: 5px
+
+        svg
+            width: 80%
+            height: 80%
+            transition: filter 350ms
+
+    .xCorner
+        position: absolute
+        top: -5px
+        right: -5px
+        width: 25px
+        height: 25px
+        border-radius: 50%
+        alignStuff(0,1,0,0)
+        background-color: var(--red)
+
+        svg
+            width: 70%
+            height: 70%
+
+
+
+#lg
+    height: 400px
+    max-width: 350px
+    min-width: 300px
+    flex-basis: 400px
+    alignStuff(0,1,0,1)
+    justify-content: center
+
+
+    .cardCCTitle, .iconContainer, .cardCCSubtitle 
+        position: absolute
+
+    .iconContainer
+        z-index 1
+
+    .cardCCTitle
+        color: var(--white)
+        border-radius: 10px
+        font-size: 1.3rem
+        z-index 2
+        top: 30px
+
+    .cardCCSubtitle
+        bottom: 20px
+        font-size: 0.9rem
+        color: rgb(132, 132, 132)
+        padding: 5px 5px
+        margin: 0px 10px
+        z-index 2
+        text-align: center
+
+
+#md
+    height: 250px
+    max-width: 240px
+    flex-basis: 250px
+    alignStuff(0,1,0,1)
+    justify-content: center
+
+    .iconContainer
+        width: 72px
+        height: 72px
+
+    .cardCCTitle
+        color: var(--white)
+        border-radius: 10px
+        font-size: 1.3rem
+        z-index 2
+        width: 100%
+        alignStuff(0,1,0,0)
+        text-align: center
+        margin: 15px 10px
+
+
+    .cardCCSubtitle
+        bottom: 20px
+        font-size: 0.7rem
+        color: rgb(132, 132, 132)
+        margin: 0px 10px
+        z-index 2
+        padding: 0px 10px
+        font-size: 0.8rem
+        text-align: center
+
+
+#sm
+    height: 120px
+    max-width: 350px
+    min-width: 300px
+    flex-basis: 400px
+    alignStuff(0,1,0,1)
+    justify-content: center
+
+    .iconContainer
+        position: absolute
+        width: 50px
+        height: 50px
+        top: 15px
+        left: 20px
+
+    .cardCCTitle, p, svg
+        position: absolute
+
+    .cardCCTitle
+        color: var(--white)
+        border-radius: 10px
+        font-size: 1.1rem
+        z-index 2
+        top: 30px
+        width: 90%
+        height: 20px
+        alignStuff(0,1,0,0)
+        text-align: center
+
+    .cardCCSubtitle
+        bottom: 20px
+        font-size: 0.8rem
+        color: rgb(132, 132, 132)
+        padding: 5px 5px
+        margin: 0px 10px
+        z-index 2
+        text-align: center
+
+    svg
+        fill: var(--white)
+        width: 25px
+        height: 25px
+
+#mini
+    width: 200px
+    max-width: 250px
+    max-height: 80px
+    flex-basis: 200px
+    alignStuff(0,1,0,0)
+
+    .cardCCTitle, .cardCCSubtitle, svg
+        position: relative
+
+    .cardCCTitle
+        color: var(--white)
+        border-radius: 10px
+        font-size: 1rem
+        z-index 2
+        alignStuff(0,1,0,0)
+        text-align: start
+        margin: 10px
+
+
+    .cardCCSubtitle
+        bottom: 20px
+        font-size: 0.7rem
+        color: rgb(132, 132, 132)
+        margin: 0px 10px
+        z-index 2
+        padding: 0px 10px
+        font-size: 0.8rem
+        text-align: center
+        padding: 10px
+
+    svg
+        width: 20px
+        height: 20px
+
+.CardCC-day
+    border: 2px solid var(--silver)
+    background-color: var(--bg)
+
+    .xCorner
+        svg
+            fill: var(--bg)
+        
+
+.CardCC-night
+    border: 2px solid var(--grey) !important
+    background-color: var(--white) !important
+
+    .xCorner
+        svg
+            fill: var(--white) !important

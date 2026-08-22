@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "mac-qr-dev",
+      "problemMatcher": [],
+      "label": "npm: mac-qr-dev",
+      "detail": "node ./bundler/getLinuxQrCode.js"
+    }
+  ]
+}

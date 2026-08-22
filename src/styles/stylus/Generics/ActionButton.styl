@@ -1,0 +1,90 @@
+.ActionButton
+  min-height 40px
+  padding 0 13px
+  display inline-flex
+  align-items center
+  justify-content center
+  gap 7px
+  color var(--dash-text-2)
+  border 1px solid var(--dash-line)
+  border-radius 10px
+  background transparent
+  font inherit
+  cursor pointer
+  transition background-color 220ms ease, border-color 220ms ease, color 220ms ease
+
+  &[data-size="compact"]
+    min-height 36px
+    padding 0 10px
+    border-radius 9px
+
+  &[data-variant="secondary"]
+    background var(--dash-card-bg-2)
+
+  &[data-variant="filter"]
+    min-height 36px
+    padding 0 13px
+    color var(--dash-text-3)
+    border-color transparent
+    border-radius 9px
+
+  &[data-variant="primary"]
+    color var(--dash-app-bg)
+    border-color var(--dash-cyan)
+    background var(--dash-cyan)
+    font-weight 800
+
+  &[data-variant="danger"]
+    color var(--red)
+    background var(--dash-card-bg-2)
+
+  &:hover:not(:disabled)
+    color var(--dash-cyan)
+    border-color var(--dash-line-hi)
+    background var(--dash-chip-bg)
+
+  &[data-variant="primary"]:hover:not(:disabled)
+    color var(--dual)
+    border-color var(--primary)
+    background var(--primary)
+
+  &[data-variant="danger"]:hover:not(:disabled)
+    color var(--dual)
+    border-color var(--red)
+    background var(--red)
+
+  &[data-variant="filter"][data-active="true"]
+    color var(--dash-text)
+    background var(--dash-chip-bg)
+
+  &:focus-visible
+    outline 2px solid var(--dash-cyan)
+    outline-offset 2px
+
+  &:active:not(:disabled)
+    color var(--dash-cyan)
+    border-color var(--dash-cyan)
+    background var(--dash-app-bg)
+
+  &[data-variant="primary"]:active:not(:disabled)
+    color var(--dash-cyan)
+    border-color var(--dash-cyan)
+    background var(--dash-app-bg)
+
+  &[data-variant="danger"]:active:not(:disabled)
+    color var(--red)
+    border-color var(--red)
+    background var(--dash-app-bg)
+
+  &[data-variant="filter"]:active:not(:disabled)
+    color var(--dash-cyan)
+    border-color var(--dash-cyan)
+    background var(--dash-app-bg)
+
+  &:disabled
+    opacity .45
+    cursor not-allowed
+
+@media (prefers-reduced-motion reduce)
+  .ActionButton
+    transition none

@@ -1,0 +1,111 @@
+
+#DropdownCC
+    position: relative
+    width: 30px
+    height: 30px
+    border-radius: 50%
+    alignStuff(0,1,0,0)
+    cursor: pointer
+    z-index: var(--globalZ2)
+
+    .dotsIcon
+        position: absolute
+        width: 90%
+        height: 90%
+        transition: transform 200ms
+        cursor pointer
+
+    .itemsContainer
+        position: absolute
+        top: 30px
+        right: 0px
+        width: 200px
+        height: auto
+        overflow: hidden
+        border-radius: 10px
+        backdrop-filter: blur(15px)
+
+        .dropdownItem
+            width: 100%
+            alignStuff(0,1,0,0)
+            justify-content: space-between
+            cursor: pointer
+
+            p
+                font-size: 0.75rem
+                pointer-events: none
+                user-select: none
+                margin-right: 15px
+
+            svg
+                width: 20px
+                height: 20px
+                margin-left: 15px
+                transition: color 150ms
+
+            &:hover
+                svg
+                    color: var(--primary)
+
+.Dropdownopen
+    .dotsIcon
+        transform: rotate(90deg)
+
+    .itemsContainer
+        opacity: 1
+        transition: opacity 500ms
+
+        .dropdownItem
+            transition: height 350ms, opacity 300ms
+            height: 40px
+            opacity: 1
+
+.Dropdownclosed
+
+    .dotsIcon
+        transform: rotate(0deg)
+    
+    .itemsContainer
+        opacity: 0
+        transition: opacity 400ms
+        
+        .dropdownItem
+            transition: height 500ms, opacity 400ms
+            height: 0px
+            opacity: 0
+
+
+.DropdownCCBlue
+    background-color: var(--white)
+
+    .dotsIcon
+        fill: var(--bg)
+
+    .itemsContainer
+        .dropdownItem
+            background-color: var(--transparency)
+            border-bottom: 1px solid var(--bg)
+
+            p
+                color: var(--white)
+
+            svg
+                color: var(--white)
+
+.DropdownCCWhite
+    background-color: var(--bg)
+
+    .dotsIcon
+        fill: var(--white)
+
+    .itemsContainer
+        .dropdownItem
+            background-color: var(--translucid)
+            border-bottom: 1px solid var(--white)
+            
+            p
+                color: var(--bg)
+
+            svg
+                color: var(--bg)
+        

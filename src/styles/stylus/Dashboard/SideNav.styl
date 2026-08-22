@@ -1,0 +1,361 @@
+// ─────────────────────────────────────────────────────────────
+// SideNav — LP-11 redesign: panel glass flotante, colapsable
+// (expanded ↔ collapsed), labels + accent-bar en item activo.
+// Colores 100% por variables --dash-* (ver SchemaSwitch-CC).
+// ─────────────────────────────────────────────────────────────
+
+.SideNavContainer
+    position: fixed
+    left: 0
+    top: 0
+    height: 100vh
+    padding: 14px
+    z-index: var(--globalZ5)
+    transition: width 240ms var(--ease-drawer)
+
+    .SideNav
+        position: relative
+        width: 100%
+        height: 100%
+        background: var(--dash-sidebar-bg)
+        backdrop-filter: var(--dash-blur)
+        -webkit-backdrop-filter: var(--dash-blur)
+        border: 1px solid var(--dash-line)
+        border-radius: 20px
+        display: flex
+        flex-direction: column
+        padding: 18px 0 14px
+        overflow: hidden
+
+        .sbShine
+            position: absolute
+            top: 0
+            left: 0
+            right: 0
+            height: 80px
+            background: var(--dash-shine)
+            pointer-events: none
+
+        // ── Brand ──
+        // Slot del logo de marca (LogoCC) — el ancho de la sidebar decide
+        // cuánto se muestra: colapsada → solo icono · expandida → CRONOS + MD
+        .sbBrand
+            display: flex
+            align-items: center
+            padding: 0 18px
+            margin-bottom: 22px
+            cursor: pointer
+            overflow: hidden
+            flex-shrink: 0
+            font-size: 1rem
+            color: var(--dash-text)
+
+        // ── Section label ──
+        .sbSectionLabel
+            font-size: 0.55rem
+            letter-spacing: 0.2em
+            text-transform: uppercase
+            color: var(--dash-text-3)
+            padding: 0 22px
+            margin: 4px 0 8px
+            white-space: nowrap
+            overflow: hidden
+            transition: opacity 200ms ease-out
+
+        .ulWrapper + .sbSectionLabel
+            margin-top: 14px
+
+        // ── Nav list ──
+        .ulWrapper
+            width: 100%
+
+            ul
+                position: relative
+                width: 100%
+                padding: 0 12px
+                display: flex
+                flex-direction: column
+                gap: 3px
+                list-style: none
+
+        // ── Items (compartido nav + footer) ──
+        .sbItem
+            position: relative
+            display: flex
+            align-items: center
+            gap: 13px
+            height: 44px
+            border-radius: 13px
+            padding: 0 11px
+            cursor: pointer
+            white-space: nowrap
+            overflow: hidden
+            flex-shrink: 0
+            text-decoration: none
+            transition: background 160ms ease-out, transform 100ms ease-out
+
+            @media (hover: hover) and (pointer: fine)
+                &:hover
+                    background: var(--dash-glass-lite)
+
+            &:active
+                transform: scale(0.97)
+
+            .sbIcon
+                width: 22px
+                height: 22px
+                flex-shrink: 0
+                display: grid
+                place-items: center
+                color: var(--lp-sp-ribbon-text)
+                transition: color 180ms
+
+                svg
+                    width: 21px
+                    height: 21px
+                    fill: currentColor
+
+                .ExtraStroke
+                    stroke: currentColor
+
+            .sbLabel
+                flex: 1
+                font-size: 0.84rem
+                font-weight: 500
+                color: var(--dash-text-2)
+                transition: color 180ms, opacity 200ms ease-out
+
+            .sbCount
+                font-family: "Space Mono", monospace
+                font-size: 0.6rem
+                font-weight: 700
+                min-width: 22px
+                height: 20px
+                padding: 0 6px
+                border-radius: 7px
+                background: var(--dash-chip-bg)
+                color: var(--dash-cyan)
+                display: grid
+                place-items: center
+                flex-shrink: 0
+                transition: opacity 200ms ease-out
+
+        .selected
+            background: linear-gradient(100deg, var(--dash-glass-lite), transparent)
+
+            &::before
+                content: ""
+                position: absolute
+                left: 0
+                top: 50%
+                transform: translateY(-50%)
+                width: 3px
+                height: 22px
+                border-radius: 2px
+                background: linear-gradient(var(--dash-cyan), var(--dash-blue))
+                box-shadow: 0 0 12px var(--dash-cyan)
+                transition: opacity 200ms ease-out, left 240ms var(--ease-drawer)
+
+            .sbIcon
+                color: var(--dash-cyan)
+
+            .sbLabel
+                color: var(--dash-text)
+
+        .sbSpacer
+            flex: 1
+
+        // ── Footer ──
+        .sbFoot
+            padding: 0 12px
+            display: flex
+            flex-direction: column
+            gap: 3px
+
+            .sbDivider
+                height: 1px
+                background: var(--dash-line)
+                margin: 8px 10px
+
+            .sbThemeRow
+                display: flex
+                align-items: center
+                justify-content: space-between
+                height: 44px
+                padding: 0 11px
+                overflow: hidden
+
+                .sbThemeLabel
+                    font-size: 0.84rem
+                    font-weight: 500
+                    color: var(--dash-text-2)
+                    white-space: nowrap
+                    transition: opacity 200ms ease-out
+
+            .sbCollapseBtn .sbIcon svg
+                transition: transform 240ms var(--ease-drawer)
+
+// ── Estados de ancho ──
+#nav-expanded
+    width: var(--siderExpanded)
+
+#nav-collapsed
+    width: var(--siderCollapsed)
+
+    .sbBrand
+        justify-content: center
+        padding: 0
+        gap: 0
+
+    .sbBrandText, .sbSectionLabel, .sbLabel, .sbCount, .sbThemeLabel
+        opacity: 0
+        width: 0
+        max-width: 0
+        min-width: 0 !important
+        flex: none
+        overflow: hidden
+        pointer-events: none
+        transition: opacity 80ms ease-out
+
+    .ulWrapper ul, .sbFoot
+        padding: 0 10px
+
+    .sbItem
+        justify-content: center
+        padding: 0
+        gap: 0
+
+    .sbThemeRow
+        justify-content: center
+        padding: 0
+        gap: 0
+
+    .selected::before
+        left: -10px
+
+    .sbCollapseBtn .sbIcon svg
+        transform: rotate(180deg)
+
+// ── Sync del padding del contenido con el ancho del sidebar ──
+.DashboardSection
+    transition: padding-left 240ms var(--ease-drawer)
+
+.DashboardWrapper:has(#nav-collapsed) .DashboardSection
+    padding-left: var(--siderCollapsed)
+
+.DashboardWrapper:has(#nav-expanded) .DashboardSection
+    padding-left: var(--siderExpanded)
+
+// ── Sync del padding del overlay ClinicalHistory con el ancho del sidebar ──
+// ClinicalHistory se renderiza como HERMANO de .DashboardWrapper (dashboardContext.tsx),
+// no como descendiente; por eso se usa el combinador hermano "~".
+.ClinicalHistoryContainer
+    transition: padding-left 240ms var(--ease-drawer)
+
+.DashboardWrapper:has(#nav-collapsed) ~ .ClinicalHistoryContainer
+    padding-left: var(--siderCollapsed)
+
+.DashboardWrapper:has(#nav-expanded) ~ .ClinicalHistoryContainer
+    padding-left: var(--siderExpanded)
+
+// ── Mobile: SideNav = bolita flotante (FAB) arrastrable ──
+@media (max-width: 800px)
+    // El FAB flota encima: el contenido NO reserva columna lateral
+    .DashboardWrapper:has(.SideNavContainer) .DashboardSection
+        padding-left: 14px
+
+    // Fix: ClinicalHistory es HERMANO de .DashboardWrapper → combinador "~"
+    // (antes usaba descendiente, que nunca matcheaba). En mobile el overlay
+    // ocupa todo el ancho porque el FAB flota encima.
+    .DashboardWrapper ~ .ClinicalHistoryContainer
+        padding-left: 18px
+
+    // ── Backdrop: click en cualquier parte del dashboard cierra el panel ──
+    .SideNavMobileBackdrop
+        position: fixed
+        inset: 0
+        z-index: var(--globalZ4)
+        background: var(--dash-scrim)
+        backdrop-filter: blur(2px)
+        -webkit-backdrop-filter: blur(2px)
+        animation: sideNavBackdropIn 200ms var(--ease-drawer)
+
+    @keyframes sideNavBackdropIn
+        from
+            opacity: 0
+        to
+            opacity: 1
+
+    // ── Estado bolita (colapsado) ──
+    .SideNavContainer.is-mobile.mobile-fab
+        position: fixed
+        height: auto
+        width: auto
+        padding: 0
+        // left / top vienen del estilo inline (posición arrastrable)
+        transition: none
+
+        .sbFab
+            position: relative
+            width: 56px
+            height: 56px
+            border-radius: 50%
+            display: grid
+            place-items: center
+            padding: 0
+            border: 1px solid var(--dash-line)
+            background: var(--dash-sidebar-bg)
+            backdrop-filter: var(--dash-blur)
+            -webkit-backdrop-filter: var(--dash-blur)
+            box-shadow: 0 8px 24px var(--dash-scrim)
+            cursor: grab
+            touch-action: none // pointer drag sin que la página haga scroll
+            -webkit-tap-highlight-color: transparent
+
+            &:active
+                cursor: grabbing
+                transform: scale(0.94)
+
+            .CronosLogo
+                width: 30px // ancho mínimo → LogoCC muestra solo el icono
+                pointer-events: none
+
+    // ── Estado panel abierto (expandido) ──
+    .SideNavContainer.is-mobile.mobile-open
+        position: fixed
+        left: 0
+        top: 0
+        height: 100vh
+        width: var(--siderExpanded)
+        padding: 10px
+        z-index: var(--globalZ5)
+        animation: sideNavPanelIn 240ms var(--ease-drawer)
+
+    @keyframes sideNavPanelIn
+        from
+            opacity: 0
+            transform: translateX(-16px)
+        to
+            opacity: 1
+            transform: translateX(0)
+
+
+// ── LogoCC internal text — base opacity transition ──
+.sbBrand .sbBrandText
+    transition: opacity 200ms ease-out
+
+// ── Accessibility: reduced motion ──
+@media (prefers-reduced-motion: reduce)
+    .SideNavContainer
+        transition: none
+    .SideNavContainer .sbItem,
+    .SideNavContainer .sbLabel,
+    .SideNavContainer .sbSectionLabel,
+    .SideNavContainer .sbCount,
+    .SideNavContainer .sbBrandText,
+    .SideNavContainer .sbThemeLabel,
+    .SideNavContainer .sbCollapseBtn .sbIcon svg,
+    .SideNavContainer .selected::before
+        transition: none !important
+    .DashboardSection
+        transition: none

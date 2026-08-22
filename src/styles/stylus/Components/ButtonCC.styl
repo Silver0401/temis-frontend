@@ -1,0 +1,191 @@
+@keyframes rotating {
+    from { transform: rotate(0deg) }
+    to   { transform: rotate(360deg) }
+}
+
+// ── Base ──────────────────────────────────────────────────────────────────────
+.ButtonCC
+    position: relative
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    gap: 8px
+    font-weight: 500
+    border: 1px solid transparent
+    cursor: pointer
+    letter-spacing: 0.06em
+    // text-transform: uppercase
+    text-decoration: none
+    transition: all 0.25s var(--lp-ease)
+
+    &:active
+        transform: scale(0.97)
+        transition: transform 160ms ease-out
+
+    .ButtonCC-Text
+        padding: 0px 1px
+
+    .ButtonCC-Icon
+        width: 18px
+        height: 18px
+        display: grid
+        place-items: center
+
+        svg
+            width: 90%
+            height: 90%
+
+    .miniButtonLoader
+        width: 20px
+        height: 20px
+        animation: rotating 1s linear infinite
+        fill: var(--quaternary)
+
+#Button-CC-Disabled
+    cursor: no-drop !important
+
+#Button-CC-Animated
+    &:hover
+        transform: translateY(-2px)
+    &:active
+        transform: translate(2px, 2px)
+        transition: transform 100ms
+
+// ── Shape ─────────────────────────────────────────────────────────────────────
+.ButtonCC--Pill
+    border-radius: 100px
+
+.ButtonCC--Square
+    border-radius: 10px
+
+// ── Size ──────────────────────────────────────────────────────────────────────
+.ButtonCC--sm
+    padding: 10px 22px
+    font-size: 12px
+
+.ButtonCC--lg
+    padding: 15px 34px
+    font-size: 13px
+    font-family: "Audiowide", sans-serif
+
+// ── Type: Solid ───────────────────────────────────────────────────────────────
+// Relleno sólido de alto contraste — inspirado en el botón "Menú" del hero.
+// Fondo = --white (oscuro en día, claro en noche); texto = --bg (el opuesto).
+.ButtonCC--Solid
+    background: var(--white)
+    color: var(--bg)
+    border-color: var(--white)
+
+    .ButtonCC-Text
+        color: var(--bg)
+
+    .ButtonCC-Icon svg
+        color: var(--bg)
+
+    &:hover, &:active
+        background: var(--primary)
+        border-color: var(--primary)
+        box-shadow: 0 0 18px var(--primary), 0 4px 12px var(--primary)
+
+        .ButtonCC-Text, .ButtonCC-Icon svg
+            color: var(--bg)
+
+// ── Type: Phantom ─────────────────────────────────────────────────────────────
+// Glass translúcido + borde sutil — inspirado en "Iniciar Sesión" y "Hablar con el equipo".
+.ButtonCC--Phantom
+    background: var(--lp-glass-bg)
+    backdrop-filter: blur(8px)
+    -webkit-backdrop-filter: blur(8px)
+    border-color: var(--lp-glass-border)
+    color: var(--white)
+
+    .ButtonCC-Text
+        color: var(--white)
+
+    .ButtonCC-Icon svg
+        color: var(--white)
+
+    &:hover, &:active
+        border-color: var(--primary)
+        box-shadow: 0 0 14px unquote("color-mix(in srgb, var(--primary) 30%, transparent)")
+
+        .ButtonCC-Text, .ButtonCC-Icon svg
+            color: var(--primary)
+
+// ── Type: Gradient ────────────────────────────────────────────────────────────
+// Gradiente primary → secondary con glow — inspirado en "Ver demostración".
+.ButtonCC--Gradient
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)
+    border-color: transparent
+    color: var(--btn-gradient-ink)
+
+    .ButtonCC-Text
+        color: var(--btn-gradient-ink)
+
+    .ButtonCC-Icon svg
+        color: var(--btn-gradient-ink)
+
+    &:hover, &:active
+        box-shadow: 0 0 30px var(--primary), 0 4px 20px var(--secondary)
+        opacity: 0.9
+
+// ── colorSchema overrides ─────────────────────────────────────────────────────
+// Permiten forzar día/noche en contextos donde el schema global no corresponde.
+.ButtonCC--day
+    &.ButtonCC--Phantom
+        background: var(--lp-glass-bg)
+        border-color: var(--lp-glass-border)
+        color: var(--white)
+
+    &.ButtonCC--Solid
+        background: var(--white)
+        border-color: var(--white)
+        color: var(--bg)
+
+.ButtonCC--night
+    &.ButtonCC--Phantom
+        background: var(--lp-glass-bg-inverted)
+        border-color: var(--lp-glass-border)
+        color: var(--white)
+
+    &.ButtonCC--Solid
+        background: var(--white)
+        border-color: var(--white)
+        color: var(--bg)
+
+// ── Switch (SwitchCC component) ───────────────────────────────────────────────
+.ButtonCC-Switch
+    position: relative
+    width: 30px
+    height: 16px
+    border-radius: 20px
+    alignStuff(0,1,0,0)
+    cursor: pointer
+    transition: all 350ms
+    background-color: var(--bg)
+    border: 1.5px solid var(--white)
+
+    .ball
+        position: absolute
+        left: 1px
+        width: 12px
+        height: 12px
+        background-color: var(--white)
+        border-radius: 50%
+        alignStuff(0,1,0,0)
+        transition: transform 500ms
+
+        .daySvg, .nightSvg
+            position: absolute !important
+            width: 8px
+            height: 8px
+            transition: opacity 350ms
+            alignStuff(0,1,0,0)
+
+        .daySvg
+            svg
+                color: rgb(249, 237, 187)
+
+        .nightSvg
+            svg
+                color: rgb(30, 107, 60)

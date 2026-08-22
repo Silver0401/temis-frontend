@@ -1,0 +1,73 @@
+.FormCC
+    position: relative
+    fillSpace()
+    alignStuff(0,1,0,1)
+
+    .TitleForm
+        font-size: 1.5rem
+        align-self: flex-start
+        color: var(--white)
+
+    .TitleForm, .PCC-Form
+        user-select: none
+
+    .PCC-Form
+        align-self: flex-start
+        font-size: 0.8rem
+        color: var(--grey)
+
+
+    .InputCC-Checkbox, .InputCC-Container
+        width: 100%
+
+    .FormCC-InputGroup
+        width: 100%
+
+        .FormCC-GroupLabel
+            font-size: 0.75rem
+            color: var(--silver)
+            margin-bottom: 4px
+            user-select: none
+
+        &[data-orientation="horizontal"]
+            display: flex
+            flex-direction: row
+            flex-wrap: wrap
+            gap: 6px
+            padding: 6px 0
+
+            .InputCC-Container
+                width: auto !important
+                flex-shrink: 0
+
+        &[data-orientation="vertical"]
+            display: flex
+            flex-direction: column
+            gap: 6px
+
+            .InputCC-Container
+                width: 100%
+
+    .nextPrevButtCont
+        width: 100%
+        alignStuff(0,1,0,0)
+        height: 50px
+
+    
+
+
+.FormCC-CSchema-day
+    .TitleForm
+        color: var(--white) !important
+
+    .PCC-Form
+        color: var(--grey) !important
+
+
+
+.FormCC-CSchema-night
+    .TitleForm
+        color: var(--bg) !important
+
+    .PCC-Form
+        color: var(--silver) !important

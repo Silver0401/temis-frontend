@@ -1,0 +1,33 @@
+.NotFound
+    position: fixed
+    top: 0
+    wrapContainers()
+    backdrop-filter: blur(20px)
+    z-index: var(--globalZ1)
+
+    .NFIconContainer
+        alignStuff(0,1,0,0)
+        justify-content: flex-end
+        width: 50%
+        height: 100%
+
+        svg
+            width: 220px
+            height: 220px
+            color: var(--primary)
+            opacity: 0.5
+
+    .NFTextContainer
+        width: 50%
+        alignStuff(1,0,0,1)
+
+        .innerContainer
+            alignStuff(1,0,0,1)
+            width: 50%
+            
+            h2, .subtitle
+                color: var(--white)
+                margin: 20px 0px
+
+            h2
+                font-size: 3rem

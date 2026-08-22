@@ -1,0 +1,458 @@
+@keyframes upAndDown{
+  from {
+    transform: translateY(-20px)
+  }
+  to {
+    transform: translateY(0px)
+  }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+.globalNav
+    position: fixed !important
+    top: 0px
+    left: 0px
+    width: 100%;
+    height: var(--nav)
+    border-bottom: 1px solid var(--grey)
+    alignStuff(0, 1, 0, 0)
+    justify-content: space-between
+    backdrop-filter: blur(10px)
+    z-index: var(--globalZ4)
+    animation: fadeIn 1000ms linear
+
+    // ── Landing pill nav override ──────────────────────────
+    &.lp-nav
+        display: none
+        background: var(--lp-glass-bg) !important
+        backdrop-filter: blur(32px) saturate(200%) !important
+        -webkit-backdrop-filter: blur(32px) saturate(200%) !important
+        border: 1px solid var(--lp-glass-border) !important
+        border-bottom: 1px solid var(--lp-glass-border) !important
+        border-radius: var(--lp-r-pill) !important
+        top: 12px !important
+        left: clamp(16px, 4vw, 48px) !important
+        right: clamp(16px, 4vw, 48px) !important
+        width: auto !important
+        padding: 0 8px 0 20px
+        height: 0px
+
+        // Desktop only — shrink ul so center links have room
+        @media (min-width: 1001px)
+            ul
+                width: auto !important
+                flex: 0 0 auto
+
+                .SwitchContainer
+                    display: none
+
+        // Mobile — restore pill to full-width bar, style the slide panel
+        @media (max-width: 1000px)
+            border-radius: 0 !important
+            top: 0 !important
+            left: 0 !important
+            right: 0 !important
+            width: 100% !important
+            height: var(--nav) !important
+
+            ul
+                width: 300px !important
+                background: rgba(0, 21, 8, 0.85) !important
+                backdrop-filter: blur(32px) saturate(200%) !important
+                -webkit-backdrop-filter: blur(32px) saturate(200%) !important
+                border-left: 1px solid var(--lp-glass-border) !important
+                flex-direction: column !important
+                flex-direction: column-reverse !important
+                justify-content: flex-end !important
+
+                .SwitchContainer
+                    display: flex
+                    margin-top: 0
+                    padding: 20px 24px
+                    border-bottom: 1px solid rgba(86, 200, 141, 0.1)
+
+                .notInput
+                    border-bottom: 1px solid rgba(86, 200, 141, 0.1) !important
+
+                    a
+                        p
+                            color: rgba(191, 230, 205, 0.8) !important
+                            font-size: 0.85rem
+
+                        svg
+                            color: rgba(191, 230, 205, 0.5) !important
+
+                // Landing section links in mobile menu
+                .lp-mobile-link
+                    width: 80%
+                    padding: 14px 24px
+                    border-bottom: 1px solid rgba(86, 200, 141, 0.1)
+
+                    a
+                        font-size: 13px
+                        font-weight: 300
+                        color: rgba(191, 230, 205, 0.7)
+                        text-decoration: none
+                        transition: color 0.2s
+
+                        &:hover
+                            color: #ffffff
+
+        // Switch inside center links (desktop)
+        .lp-nav-switch
+            display: flex
+            align-items: center
+            margin-left: 8px
+
+            > *
+                transform: scale(0.72)
+                transform-origin: center
+
+        // Contáctanos / Mi Dashboard — plain text link
+        .lp-nav-login
+            a
+                padding: 8px 16px
+                font-size: 13px
+                font-weight: 300
+                color: var(--lp-text-2)
+                text-decoration: none
+                transition: color 0.2s
+
+                p
+                    color: var(--lp-text-2)
+                    font-size: 13px
+                    font-weight: 300
+                    &::after
+                        display: none
+
+                svg
+                    display: none
+
+                &:hover
+                    p
+                        color: var(--lp-text-1)
+
+        // Mi Cuenta — gradient pill CTA
+        .lp-nav-demo
+            a
+                font-size: 13px
+                font-weight: 500
+                color: #000f06
+                background: linear-gradient(135deg, var(--lp-accent), #00c8d8)
+                padding: 9px 20px
+                border-radius: var(--lp-r-pill)
+                transition: opacity 0.2s, transform 0.2s
+                box-shadow: 0 0 20px rgba(10, 255, 224, 0.3)
+                text-decoration: none
+
+                p
+                    color: #000f06
+                    font-size: 13px
+                    font-weight: 500
+                    &::after
+                        display: none
+
+                svg
+                    display: none
+
+                &:hover
+                    opacity: 0.88
+                    transform: translateY(-1px)
+
+    // ── Landing center links ────────────────────────────────
+    .lp-nav-links
+        display: flex
+        align-items: center
+        gap: 2px
+        list-style: none
+        flex: 1
+        justify-content: center
+
+    .lp-nav-link
+        font-size: 13px
+        font-weight: 300
+        color: var(--lp-text-2)
+        text-decoration: none
+        padding: 6px 14px
+        border-radius: var(--lp-r-pill)
+        transition: background 0.2s, color 0.2s
+
+        &:hover
+            background: var(--lp-accent-soft)
+            color: var(--lp-accent)
+
+    @media (max-width: 1000px)
+        .lp-nav-links
+            display: none
+
+    // Slot del logo de marca (LogoCC) — ancho determina cuánto se muestra
+    .Logo
+      position: relative
+      width: 190px
+      height: 35px
+      margin-left: 30px
+      display: flex
+      align-items: center
+      font-size: 17px
+      color: var(--white)
+      text-decoration: none
+
+      > *
+        text-decoration: none
+
+
+    
+    .menu
+        position: absolute
+        overflow: hidden
+        top: 12px
+        right: 25px
+        width: 40px;       
+        height: 40px;
+        visibility: hidden
+
+        label 
+            position: absolute
+
+        input
+            position: absolute
+            visibility: hidden
+
+    ul
+        position: relative
+        width 700px !important;
+        alignStuff(0, 1, 0, 0)
+        fillSpace()
+        list-style: none
+
+        .lp-mobile-link
+            display: none
+        
+        .notInput
+          position: relative
+          cursor: pointer
+
+          .navLoadContainer
+              position: relative
+              width 200px
+              height 30px
+
+          a
+            position: relative
+            alignStuff(0,1,0,0)
+            fillSpace()
+            text-decoration: none
+
+            p
+              position: relative
+              color: var(--white)
+              font-size: 0.8rem
+
+              &::after
+                position: absolute
+                content: ""
+                width: 0px
+                height: 1px
+                background-color: var(--primary)
+                left: 0
+                bottom: 0
+                transition: width 350ms
+
+
+            svg
+              width: 25px
+              height: 25px
+              color: var(--white)
+              margin-left: 7px
+
+            &:hover
+              p
+                &::after
+                  width: 100%
+                  transition: width 350ms
+
+
+
+    @media (max-width: 1000px)
+
+        ul
+          width: 20%
+          height: calc(100vh - var(--nav))
+          position: absolute
+          top: var(--nav)
+          right: 0
+          flex-direction: column
+          width 300px !important;
+          background-color: var(--white)
+          overflow: hidden
+          pointer-events: all
+          flex-direction: column-reverse
+          justify-content: flex-end
+          padding-top: 40px
+
+          .lp-mobile-link
+              display: flex
+
+          .SwitchContainer
+            margin-top: 60px
+
+          .notInput
+            width: 80%
+            height: 50px
+            border-bottom: 1px solid var(--grey)
+
+            a
+              fillSpace()
+              flex-direction: row-reverse
+              justify-content: flex-end
+
+              p
+                color: var(--bg)
+
+                &::after
+                  background-color: var(--secondary)
+
+              svg
+                color: var(--bg)
+                margin-right: 20px
+
+        .menu
+          visibility: visible
+
+
+#AcoplateToDashboard
+  .dashboardTitle
+    visibility: hidden
+
+
+@media (min-width: 1000px)
+  #AcoplateToDashboard
+    justify-content: flex-end
+    width: calc(100% - (var(--sider) * var(--siderMultiplier)))
+    left: calc(var(--sider) * var(--siderMultiplier))
+    justify-content: space-between  
+
+    .dashboardTitle
+      color: var(--white)
+      height: 100%
+      animation: fadeIn 500ms
+      alignStuff(0,0,1,0)
+      padding-bottom: 10px
+      visibility: visible
+
+
+
+@media (max-width: 1000px)
+
+    .opened
+        transform: translateX(0px)
+        transition: transform 550ms, opacity 550ms
+        opacity: 1
+
+
+    .closed
+        transform: translateX(100%)
+        transition: transform 550ms, opacity 550ms
+        opacity: 0
+
+// ------------- Menu Burguer CSS ----------------
+
+.navMenuLabel {
+  display: block;
+  cursor: pointer;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: scale(2.5) rotate(180deg)
+}
+
+.menu--1 label,{
+  bottom: 0;
+}
+
+
+.burguerPath {
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  --length: 24;
+  --offset: -38;
+  stroke-dasharray: var(--length) var(--total-length);
+  stroke-dashoffset: var(--offset);
+  transition: all 600ms cubic-bezier(.645, .045, .355, 1);
+
+}
+
+.line--1{
+  --length: 17
+}
+.line--3{
+  --length: 10
+}
+
+
+label:hover circle {
+  opacity: 1;
+}
+
+label 
+  border-radius: 15px
+
+
+label svg {
+  fill: var(--bg)
+  border-radius: 15px
+}
+
+.cross input:checked+svg {
+  .line--1,
+  .line--3 {
+    --length: 22.627416998;
+  }
+  .line--2 {
+    --length: 0;
+  }
+}
+
+.back input:checked+svg {
+  
+  .line--1,
+  .line--3 {
+    --length: 8.602325267;
+  }
+}
+
+.menu--1 {
+
+  border-radius: 5px
+
+  .line--1,
+  .line--3 {
+    --total-length: 126.64183044433594;
+  }
+  .line--2 {
+    --total-length: 70;
+  }
+  input:checked+svg {
+    .line--1,
+    .line--3 {
+      --offset: -94.1149185097;
+    }
+    .line--2 {
+      --offset: -50;
+    }
+  }
+}
+
+        
+
+@media (max-width: 500px){
+  }
+

@@ -1,0 +1,172 @@
+.DashboardConsents
+    width: 100%
+    height: 100%
+    overflow: hidden
+    color: var(--dash-text)
+
+    .consentsScroll
+        width: 100%
+        height: 100%
+        overflow-y: auto
+        padding: 24px
+
+    .consentsTitle
+        display: flex
+        align-items: flex-end
+        justify-content: space-between
+        margin-bottom: 20px
+
+        p
+            margin: 0 0 4px
+            color: var(--dash-text-3)
+            font-size: 0.65rem
+            letter-spacing: 0.12em
+            text-transform: uppercase
+
+        h1
+            margin: 0
+            font-size: 1.8rem
+
+        > span
+            padding: 6px 10px
+            border: 1px solid var(--dash-line)
+            border-radius: 8px
+            color: var(--dash-text-2)
+            font-size: 0.72rem
+
+    .consentsGrid
+        display: grid
+        grid-template-columns: minmax(0, 1.4fr) minmax(250px, 0.8fr)
+        gap: 14px
+        margin-bottom: 14px
+
+    .consentPanel
+        padding: 20px
+        border: 1px solid var(--dash-line)
+        border-radius: 14px
+        background: var(--dash-card-bg-2)
+
+        h2
+            margin: 0 0 18px
+            font-size: 1rem
+
+    .consentComposer
+        display: grid
+        gap: 10px
+
+        label
+            margin-top: 4px
+            color: var(--dash-text-2)
+            font-size: 0.72rem
+            font-weight: 600
+
+        select
+            width: 100%
+            min-height: 42px
+            padding: 0 11px
+            border: 1px solid var(--dash-line)
+            border-radius: 9px
+            background: var(--dash-card-bg)
+            color: var(--dash-text)
+            font: inherit
+
+        .GeneralSearchCCContainer
+            min-height: 70px
+
+    .selectedConsentPatient
+        margin: 0
+        color: var(--dash-cyan)
+        font-size: 0.78rem
+
+    .createConsentButton, .consentQrPanel button, .consentRows button
+        min-height: 40px
+        padding: 0 14px
+        border: 1px solid var(--dash-cyan)
+        border-radius: 9px
+        background: var(--dash-chip-bg)
+        color: var(--dash-cyan)
+        font: inherit
+        cursor: pointer
+
+        &:disabled
+            opacity: 0.45
+            cursor: not-allowed
+
+    .consentQrPanel
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        gap: 14px
+        text-align: center
+
+        .QRCContainer
+            width: auto
+            height: auto
+
+        a
+            max-width: 100%
+            color: var(--dash-cyan)
+            font-size: 0.7rem
+            overflow-wrap: anywhere
+
+        > p
+            color: var(--dash-text-3)
+
+    .consentListPanel
+        > p
+            color: var(--dash-text-3)
+
+    .consentRows
+        display: grid
+        gap: 9px
+
+        article
+            display: grid
+            grid-template-columns: minmax(0, 1fr) auto auto
+            align-items: center
+            gap: 12px
+            padding: 13px
+            border: 1px solid var(--dash-line)
+            border-radius: 11px
+
+            h3
+                margin: 0 0 4px
+                font-size: 0.86rem
+
+            p, small
+                display: block
+                margin: 0
+                color: var(--dash-text-3)
+                font-size: 0.68rem
+
+            &[data-status="signed"] .consentStatus
+                color: var(--green)
+
+            &[data-status="pending"] .consentStatus
+                color: var(--yellow)
+
+            &[data-status="expired"] .consentStatus
+                color: var(--red)
+
+    .consentStatus
+        font-size: 0.72rem
+        font-weight: 700
+
+    .consentsError
+        color: var(--red) !important
+
+@media (max-width: 760px)
+    .DashboardConsents
+        .consentsScroll
+            padding: 16px
+
+        .consentsGrid
+            grid-template-columns: 1fr
+
+        .consentRows article
+            grid-template-columns: 1fr auto
+
+            button
+                grid-column: 1 / -1
+                width: 100%

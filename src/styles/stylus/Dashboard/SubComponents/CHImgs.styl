@@ -1,0 +1,32 @@
+.CHImgsContainer
+    position: relative
+    fillSpace()
+    // alignStuff(0,1,0,0)
+    overflow: scroll
+
+    .CHImgsListContainer 
+        height: auto
+
+        .imgDisplay
+            alignStuff(0,1,0,1)
+
+            border-bottom: 1px solid var(--white)
+            margin-bottom: 30px
+
+            p
+                color: var(--white)
+
+
+    .UploadImgButton
+        margin-top: 100px
+
+
+@media (max-width: 800px)
+
+    .CHImgsContainer
+        display: block
+        overflow: visible
+        height: auto
+
+        #CameraForm
+            height: calc(90vh - var(--nav))

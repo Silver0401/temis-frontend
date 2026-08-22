@@ -1,0 +1,340 @@
+// ─────────────────────────────────────────────────────────────
+// Estadísticas — LP-11. Vista nueva (shell visual).
+// Colores 100% por variables --dash-* (ver SchemaSwitch-CC).
+// ─────────────────────────────────────────────────────────────
+
+.StatsContainer
+    position: relative
+    width: 100%
+    height: 100%
+    overflow: hidden
+
+    .statsScroll
+        position: relative
+        width: 100%
+        height: 100%
+        overflow-y: auto
+        noScrollbar()
+        padding: 24px
+
+    // ── Título + periodo ──
+    .statsTitleRow
+        display: flex
+        align-items: flex-end
+        justify-content: space-between
+        margin-bottom: 22px
+
+        .statsTitleText
+            h2
+                font-size: 1.7rem
+                font-weight: 700
+                letter-spacing: -0.03em
+                line-height: 1
+                color: var(--dash-text)
+
+            p
+                font-size: 0.72rem
+                color: var(--dash-text-3)
+                margin-top: 6px
+
+        .statsPeriod
+            display: flex
+            align-items: center
+            gap: 8px
+            height: 36px
+            padding: 0 14px
+            background: var(--dash-card-bg-2)
+            border: 1px solid var(--dash-line)
+            border-radius: 11px
+            font-size: 0.72rem
+            color: var(--dash-text-2)
+            cursor: pointer
+
+            svg
+                width: 14px
+                height: 14px
+                fill: var(--dash-text-3)
+
+    // ── KPIs ──
+    .statsKpis
+        display: grid
+        grid-template-columns: repeat(4, 1fr)
+        gap: 12px
+        margin-bottom: 14px
+
+    .statKpi
+        position: relative
+        padding: 16px
+        background: var(--dash-card-bg-2)
+        border: 1px solid var(--dash-line)
+        border-radius: 14px
+        overflow: hidden
+
+        .kpiShine
+            position: absolute
+            top: 0
+            left: 0
+            right: 0
+            height: 50px
+            background: var(--dash-shine)
+            pointer-events: none
+
+        .kpiIcon
+            width: 34px
+            height: 34px
+            border-radius: 10px
+            display: grid
+            place-items: center
+            margin-bottom: 14px
+            background: var(--dash-chip-bg)
+            border: 1px solid var(--dash-line)
+            color: var(--dash-cyan)
+
+            svg
+                width: 17px
+                height: 17px
+                fill: currentColor
+
+        .kpiLabel
+            display: block
+            font-size: 0.58rem
+            letter-spacing: 0.14em
+            text-transform: uppercase
+            color: var(--dash-text-3)
+
+        .kpiNum
+            display: block
+            font-size: 1.85rem
+            font-weight: 700
+            letter-spacing: -0.03em
+            margin-top: 3px
+            line-height: 1
+            color: var(--dash-text)
+
+        .kpiDelta
+            display: inline-flex
+            align-items: center
+            gap: 3px
+            margin-top: 8px
+            font-family: "Space Mono", monospace
+            font-size: 0.6rem
+            padding: 2px 7px
+            border-radius: 6px
+
+            &.up
+                background: unquote("color-mix(in srgb, var(--dash-risk-ok) 16%, transparent)")
+                color: var(--dash-risk-ok)
+
+            &.down
+                background: unquote("color-mix(in srgb, var(--dash-risk-high) 16%, transparent)")
+                color: var(--dash-risk-high)
+
+    // ── Grid de paneles ──
+    .statsGrid
+        display: grid
+        grid-template-columns: 1.4fr 1fr
+        gap: 12px
+        margin-bottom: 12px
+
+    .statPanel
+        position: relative
+        padding: 18px
+        background: var(--dash-card-bg-2)
+        border: 1px solid var(--dash-line)
+        border-radius: 14px
+        overflow: hidden
+        margin-bottom: 12px
+
+        .panelShine
+            position: absolute
+            top: 0
+            left: 0
+            right: 0
+            height: 60px
+            background: var(--dash-shine)
+            pointer-events: none
+
+        .panelHead
+            display: flex
+            align-items: center
+            justify-content: space-between
+            margin-bottom: 18px
+            position: relative
+            z-index: 2
+
+            .t
+                font-size: 0.95rem
+                font-weight: 600
+                color: var(--dash-text)
+
+            .pill
+                font-family: "Space Mono", monospace
+                font-size: 0.6rem
+                letter-spacing: 0.1em
+                text-transform: uppercase
+                color: var(--dash-text-3)
+                padding: 3px 9px
+                border: 1px solid var(--dash-line)
+                border-radius: 7px
+
+    // ── Bar chart ──
+    .statBars
+        display: flex
+        align-items: flex-end
+        gap: 10px
+        height: 150px
+        position: relative
+        z-index: 2
+
+        .barCol
+            flex: 1
+            display: flex
+            flex-direction: column
+            align-items: center
+            gap: 8px
+            height: 100%
+            justify-content: flex-end
+
+            .bar
+                width: 100%
+                max-width: 26px
+                border-radius: 6px 6px 3px 3px
+                background: linear-gradient(180deg, var(--dash-blue), transparent)
+                transition: height 600ms cubic-bezier(0.4, 0, 0.2, 1)
+
+                &.peak
+                    background: linear-gradient(180deg, var(--dash-cyan), transparent)
+                    box-shadow: 0 0 18px var(--dash-glow-b)
+
+            .barX
+                font-size: 0.58rem
+                color: var(--dash-text-3)
+                font-family: "Space Mono", monospace
+
+    // ── Donut ──
+    .donutWrap
+        display: flex
+        align-items: center
+        gap: 20px
+        position: relative
+        z-index: 2
+
+        .donut
+            width: 124px
+            height: 124px
+            border-radius: 50%
+            flex-shrink: 0
+            position: relative
+            background: conic-gradient(var(--dash-risk-high) 0% 22%, var(--dash-risk-mid) 22% 51%, var(--dash-risk-ok) 51% 100%)
+
+            &::after
+                content: ""
+                position: absolute
+                inset: 16px
+                border-radius: 50%
+                background: var(--dash-app-bg)
+
+            .donutCenter
+                position: absolute
+                inset: 0
+                display: grid
+                place-items: center
+                align-content: center
+                z-index: 2
+                text-align: center
+
+                .n
+                    font-size: 1.5rem
+                    font-weight: 700
+                    line-height: 1
+                    color: var(--dash-text)
+
+                .l
+                    font-size: 0.52rem
+                    letter-spacing: 0.12em
+                    text-transform: uppercase
+                    color: var(--dash-text-3)
+                    margin-top: 2px
+                    font-family: "Space Mono", monospace
+
+        .donutLegend
+            display: flex
+            flex-direction: column
+            gap: 11px
+            flex: 1
+
+            .lgRow
+                display: flex
+                align-items: center
+                gap: 9px
+
+                .lgDot
+                    width: 9px
+                    height: 9px
+                    border-radius: 3px
+                    flex-shrink: 0
+
+                    &.high
+                        background: var(--dash-risk-high)
+
+                    &.mid
+                        background: var(--dash-risk-mid)
+
+                    &.ok
+                        background: var(--dash-risk-ok)
+
+                .lgTx
+                    font-size: 0.72rem
+                    color: var(--dash-text-2)
+                    flex: 1
+
+                .lgVal
+                    font-family: "Space Mono", monospace
+                    font-size: 0.78rem
+                    font-weight: 700
+                    color: var(--dash-text)
+
+    // ── Top diagnósticos ──
+    .dxBars
+        display: flex
+        flex-direction: column
+        gap: 13px
+        position: relative
+        z-index: 2
+
+        .dxbRow
+            .dxbTop
+                display: flex
+                justify-content: space-between
+                margin-bottom: 6px
+
+                .dxbName
+                    font-size: 0.74rem
+                    color: var(--dash-text-2)
+
+                .dxbVal
+                    font-family: "Space Mono", monospace
+                    font-size: 0.68rem
+                    color: var(--dash-text-3)
+
+            .dxbTrack
+                height: 7px
+                border-radius: 4px
+                background: var(--dash-chip-bg)
+                overflow: hidden
+
+                .dxbFill
+                    height: 100%
+                    border-radius: 4px
+                    background: linear-gradient(90deg, var(--dash-blue), var(--dash-cyan))
+
+@media (max-width: 800px)
+    .StatsContainer
+        .statsScroll
+            padding: 14px
+
+        .statsKpis
+            grid-template-columns: repeat(2, 1fr)
+
+        .statsGrid
+            grid-template-columns: 1fr

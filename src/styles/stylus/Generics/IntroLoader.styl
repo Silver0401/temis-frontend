@@ -1,0 +1,114 @@
+.IntroLoader
+  position: fixed
+  inset: 0
+  background-color: transparent
+  backdrop-filter: blur(10px)
+  z-index: 1000
+  display: flex
+  align-items: center
+  justify-content: center
+  opacity: 1
+  transition: opacity 0.55s ease
+  pointer-events: none
+
+  &--fading
+    opacity: 0
+
+  &--persistent
+    background-color: transparent
+
+  // --- Panel squares / counter ---
+  &__content
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 14px
+    position: absolute
+    opacity: 1
+    transition: opacity 0.3s ease
+
+    &[data-hidden="true"]
+      opacity: 0
+
+  &__counter
+    font-family: 'Courier New', Courier, monospace
+    font-size: 0.72rem
+    letter-spacing: 0.22em
+    color: var(--primary)
+    align-self: flex-end
+    opacity: 0.85
+
+  &__squares
+    display: flex
+    flex-direction: row
+    gap: 20px
+
+  &__square
+    width: 14px
+    height: 14px
+    background-color: var(--primary)
+    opacity: 0.07
+    transition: opacity 0.28s ease, box-shadow 0.28s ease
+
+    &[data-lit="true"]
+      opacity: 1
+      box-shadow: unquote("0 0 10px 2px color-mix(in srgb, var(--primary) 45%, transparent)")
+
+  &__label
+    font-family: 'Courier New', Courier, monospace
+    font-size: 0.63rem
+    letter-spacing: 0.24em
+    color: var(--white)
+    opacity: 0.45
+    text-transform: uppercase
+    margin: 0
+
+  // --- Logo LogoCC ---
+  &__logo
+    position: absolute
+    inset: 0
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: clamp(2rem, 4.5vw, 3rem)
+    color: var(--white)
+    // border: 10px solid black
+
+    .CronosLogo
+      width: min(80vw, 380px)
+      justify-content: center
+      // border: 10px solid black
+
+    .clMark
+      opacity: 0
+      transform: translateY(8px) scale(0.92)
+      transition: opacity 0.38s ease 0.04s, transform 0.38s ease 0.04s
+
+    .clWord
+      transform: translateY(8px)
+      transition: transform 0.38s ease 0.14s
+      font-family: var(--font)
+
+    .clName
+      font: var(--font)
+      opacity: 0
+      transition: opacity 0.38s ease 0.14s
+
+    .clMd
+      font: var(--font)
+      opacity: 0
+      transition: opacity 0.38s ease 0.26s
+
+  &__logo[data-visible="true"]
+    .clMark
+      opacity: 1
+      transform: translateY(0) scale(1)
+
+    .clWord
+      transform: translateY(0)
+
+    .clName
+      opacity: 1
+
+    .clMd
+      opacity: 1

@@ -1,0 +1,31 @@
+@keyframes clockRotateFrame1 {
+    from {
+        transform: rotate(0deg)
+        opacity: 0;
+    }
+    to {
+        transform: rotate(360deg)
+        opacity: 1;
+    }
+}
+
+.LoaderContainer
+    fillSpace()
+    alignStuff(0,1,0,0)
+
+    svg
+        position: absolute
+        width: 30px
+        height: 30px
+        fill: var(--white)
+        border-radius: 50%
+        padding: 3px
+        animation rotate 2s linear infinite 
+    
+#schema_night
+    svg
+        fill: var(--bg)
+
+#schema_day
+    svg
+        fill: var(--white)

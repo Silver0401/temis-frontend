@@ -1,0 +1,102 @@
+@keyframes rotate {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(360deg)
+    }
+}   
+
+@keyframes fadeIn {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}   
+
+@keyframes upDown {
+    0% {
+        color: var(--bg)
+    }
+    50% {
+        color: var(--white)
+        text-shadow: 0px 0px 1px var(--white)
+    }
+    100% {
+        color: var(--white)
+    }
+}
+
+.FancyLoader
+
+    alignStuff(0,1,0,0)
+    justify-content: center
+    transform-origin: left top
+    z-index: 100
+    overflow: hidden
+
+    .logoContainer
+        position: relative
+        alignStuff(0,1,0,1)
+        justify-content: center
+        z-index: 1
+
+        .hgMark
+            width: clamp(70px, 8vw, 90px)
+            height: clamp(70px, 8vw, 90px)
+            overflow: visible
+            filter: drop-shadow(0 0 6px var(--hub-glow-mid))
+
+            .hgFlip
+                transform-box: view-box
+                transform-origin: 50px 50px
+                animation: hgFlip hgCycle ease-in-out infinite
+
+            .hgSandTop
+                transform-box: view-box
+                transform-origin: 50px 50px
+                animation: hgDrain hgCycle ease-in-out infinite
+
+            .hgSandBottom
+                transform-box: view-box
+                transform-origin: 50px 80px
+                animation: hgFill hgCycle ease-in-out infinite
+
+            .hgStream
+                animation: hgStream hgCycle ease-in-out infinite
+
+        .logoTitle
+            position: relative
+            pointer-events: none
+            color: var(--white)
+            font-size: 0.7rem
+            width: 200px
+            display: grid
+            place-items: center
+            text-align: center
+            height: auto
+            margin-top: 20px
+
+
+#normalBg
+    background-color: var(--bg)
+    position: fixed !important
+    top 0px
+    left 0px
+    width: 100vw
+    height: 100vh
+
+#translucidBg
+    background-color: var(--transparent)
+    position: absolute !important
+    z-index: var(--globalZ2)
+    top 0px
+    left 0px
+    fillSpace()
+
+
+@media (max-width: 800px)
+    .AILoader
+        height: calc(100vh - var(--nav) * 2.5)

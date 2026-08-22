@@ -1,0 +1,274 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
+
+:root {
+  --bg: #141414;
+  --dual: #000000;
+  --grey: #929292;
+  --silver: #2e2e2e;
+  --white: #e6e6e6;
+  --primary: #bbf3d8;
+  --secondary: #00391b;
+  --tertiary: #36a5a5;
+  --quaternary: #f0d6ff;
+  --red: #ee9e9e;
+  --green: #88e28a;
+  --yellow: #f4eb6a;
+  --red-inverted: #6b1212;
+  --green-inverted: #177542;
+  --yellow-inverted: #d7c739;
+  --transparency: rgba(255, 255, 255, 0.5);
+  --translucid: rgba(0, 0, 0, 0.5);
+  --maxWidth: 680px;
+
+  --nav: 55px;
+  --phoneBottom: 26px;
+  --sider: 64px;
+  --siderMultiplier: 1.2;
+  --font: "Audiowide", sans-serif;
+
+  --globalZ0: 0;
+  --globalZ1: 10;
+  --globalZ2: 20;
+  --globalZ3: 30;
+  --globalZ4: 40;
+  --globalZ5: 50;
+
+  /* Curvas de easing (kowalski: built-in son débiles) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Custom Injected Calendar Styling */
+  --fc-small-font-size: 0.8rem;
+
+  --lp-bg-from: #020d06;
+  --lp-bg-mid: #001507;
+  --lp-bg-to: #020d06;
+  --lp-bg-orb-a: rgba(0, 159, 59, 0.18);
+  --lp-bg-orb-b: rgba(90, 222, 164, 0.12);
+  --lp-bg-orb-c: rgba(0, 159, 59, 0.14);
+
+  /* Background dots */
+  --lp-bg-dots: rgba(86, 200, 141, 0.08);
+
+  /* Floating orbs */
+  --lp-orb-1: hsla(172, 100%, 52%, 0.122);
+  --lp-orb-2: hsla(220, 100%, 60%, 0.122);
+  --lp-orb-3: hsla(270, 100%, 60%, 0.122);
+  --lp-orb-4: hsla(150, 100%, 50%, 0.122);
+
+  /* Accent colors */
+  --lp-accent: #0affe0;
+  --lp-featured-shadow: rgba(0, 0, 0, 0.4);
+
+  /* Footer — default night (light bg); SchemaSwitch overrides both modes */
+  --lp-footer-bg: rgba(238, 248, 242, 0.95);
+  --lp-footer-word-stroke: rgba(0, 55, 7, 0.12);
+  --lp-footer-word-stroke-accent: rgba(0, 159, 59, 0.25);
+  --lp-footer-text: rgba(153, 201, 171, 0.45);
+  --lp-footer-text-hover: #f0fbf5;
+  --lp-footer-border: rgba(86, 200, 141, 0.12);
+  --lp-footer-accent: #0affe0;
+  --lp-footer-border-hi: rgba(10, 255, 224, 0.25);
+  --lp-accent-2: #00a03d;
+  --lp-accent-soft: rgba(10, 255, 224, 0.12);
+  --lp-accent-glow: rgba(10, 255, 224, 0.25);
+
+  /* Text — night defaults; SchemaSwitch overrides per mode */
+  --lp-text-1: var(--white);
+  --lp-text-2: rgba(191, 230, 205, 0.75);
+  --lp-text-3: rgba(153, 201, 171, 0.4);
+
+  /* Glass surfaces */
+  --lp-chip-bg: rgba(0, 32, 8, 0.75);
+  --lp-glass-bg: rgba(0, 28, 11, 0.45);
+  --lp-glass-bg-inverted: rgba(0, 28, 11, 0.45);
+  --lp-glass-bg-lite: rgba(0, 48, 20, 0.35);
+  --lp-glass-border: rgba(86, 200, 141, 0.12);
+  --lp-glass-border-hi: rgba(10, 255, 224, 0.25);
+  /* Temis: sin backdrop-filter (blur/saturate) — costoso en hardware modesto.
+     Los fondos "glass" quedan sólidos con --lp-glass-bg*. Ver DECISIONS.md. */
+  --lp-glass-blur: none;
+  --lp-glass-blur-sm: none;
+  --lp-glass-shine: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 50%
+  );
+
+  /* Type scale */
+  --lp-t-hero: clamp(46px, 7vw, 85px);
+  --lp-t-h2: clamp(38px, 5.5vw, 68px);
+  --lp-t-h3: clamp(17px, 2vw, 24px);
+  --lp-t-body: 14px;
+  --lp-t-small: 10px;
+  --lp-t-micro: 9px;
+
+  /* Spacing */
+  --lp-s-section: clamp(68px, 10vw, 119px);
+  --lp-s-pad: clamp(17px, 5vw, 54px);
+  --lp-s-max: 1003px;
+
+  /* Radii */
+  --lp-r-card: 17px;
+  --lp-r-pill: 999px;
+  --lp-r-sm: 9px;
+
+  /* Easing */
+  --lp-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out-ui: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Pricing */
+  --lp-plan-glow-text: #001105;
+
+  /* Specialties cards — night defaults (SchemaSwitch overrides per mode) */
+  --lp-sp-card: #092817;
+  --lp-sp-fold-base: #061a0f;
+  --lp-sp-icon-overlay: rgba(0, 0, 0, 0.45);
+  --lp-sp-dotgrid-line: rgba(255, 255, 255, 0.04);
+  --lp-sp-name-color: rgba(217, 240, 225, 0.9);
+  --lp-sp-name-border: rgba(255, 255, 255, 0.07);
+  --lp-sp-ribbon-bg: rgba(0, 22, 8, 0.82);
+  --lp-sp-ribbon-text: rgba(153, 201, 171, 0.75);
+  --lp-sp-ribbon-border: rgba(4, 183, 111, 0.18);
+
+  /* ── Dashboard (LP-11 redesign) — night defaults; SchemaSwitch overrides per mode ── */
+  --siderExpanded: 220px;
+  --siderCollapsed: 78px;
+  --dash-app-bg: #010803;
+  --dash-scrim: rgba(0, 0, 0, 0.4);
+  --dash-sidebar-bg: rgba(0, 20, 8, 0.72);
+  --dash-card-bg: rgba(0, 30, 13, 0.55);
+  --dash-card-bg-2: rgba(0, 42, 17, 0.42);
+  --dash-glass-lite: rgba(99, 201, 146, 0.05);
+  --dash-line: rgba(99, 201, 146, 0.16);
+  --dash-line-hi: rgba(90, 222, 164, 0.3);
+  --dash-chip-bg: rgba(99, 201, 146, 0.07);
+  --dash-shine: linear-gradient(180deg, rgba(99, 201, 146, 0.1), transparent);
+  --dash-text: #eefaf2;
+  --dash-text-2: rgba(193, 231, 207, 0.62);
+  --dash-text-3: rgba(153, 201, 171, 0.4);
+  --dash-cyan: #5adea4;
+  --dash-blue: #00822f;
+  --dash-purple: #36c170;
+  --dash-glow-a: rgba(0, 159, 59, 0.22);
+  --dash-glow-b: rgba(90, 222, 164, 0.16);
+  --dash-glow-c: rgba(54, 193, 112, 0.1);
+  --dash-risk-high: #ff6b8b;
+  --dash-risk-mid: #ffd166;
+  --dash-risk-low: #5adea4;
+  --dash-risk-ok: #5fe6a8;
+  --dash-glass-solid: rgba(0, 33, 14, 0.97);
+  --dash-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  --dash-sex-m: #5adea4;
+  --dash-sex-f: #ff8fb3;
+  --dash-blur: blur(28px) saturate(160%);
+  --dash-blur-card: blur(34px) saturate(170%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Audiowide";
+  font-style: normal;
+  font-weight: 200;
+}
+
+p,
+button,
+label,
+textarea,
+span,
+li,
+a,
+i,
+b .TextArea {
+  font-family: "Poppins", sans-serif !important;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: transparent;
+}
+
+body {
+  position: relative;
+  width: 100vw;
+  height: auto;
+  overflow: hidden;
+}
+
+.AppContainer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.HomeSection {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+
+main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#GeneralSection {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - var(--nav));
+  margin-top: var(--nav);
+}
+
+.MobileFullViewContainer {
+  position: fixed;
+  width: 100%;
+  height: 90vh;
+  background-color: var(--bg);
+  top: 0px;
+  z-index: var(--globalZ5);
+}
+
+@media (max-width: 800px) {
+  .AppContainer {
+    height: 100%;
+    padding-bottom: 100px;
+  }
+
+  #GeneralSection {
+    height: auto;
+  }
+}
+
+/* ------------- Random color Tester -----------*/
+
+.nothingContainerthatWillNeverBeUsed {
+  color: rgba(255, 255, 255, 0.2);
+  color: rgb(152, 152, 152);
+  background: radial-gradient(
+    circle,
+    rgba(160, 239, 202, 0.7) 0%,
+    rgba(0, 48, 19, 0.7) 100%
+  );
+  color: #303030;
+  fill: #767673;
+  /* stroke: theme === "day" ? "" : "", */
+}
