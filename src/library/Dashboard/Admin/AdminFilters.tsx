@@ -58,9 +58,17 @@ const MESES_CORTOS = [
   "Dic",
 ];
 
-/** Desplaza un "aaaa-mm" en N meses, cruzando el año cuando toca. */
+/**
+ * Desplaza un "aaaa-mm" en N meses, cruzando el año cuando toca.
+ *
+ * Con `month` vacío la aritmética daba `new Date(NaN, NaN)` y de ahí salía la
+ * cadena "NaN-NaN": el conmutador pintaba cuatro botones sin etiqueta, angostos,
+ * y al pulsar Limpiar —que sí fija un mes real— aparecían los nombres y la barra
+ * entera se recorría. Sin mes de partida se asume el mes en curso.
+ */
 export const shiftMonth = (month: string, delta: number) => {
-  const [year, monthNumber] = month.split("-").map(Number);
+  const [year, monthNumber] = (month || currentMonth()).split("-").map(Number);
+  if (!year || !monthNumber) return currentMonth();
   const fecha = new Date(year, monthNumber - 1 + delta, 1);
   return `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, "0")}`;
 };
@@ -81,6 +89,8 @@ const AdminFilters: React.FC<{
   showSearch?: boolean;
   showSex?: boolean;
   showMonth?: boolean;
+  /** Apaga el tramo de fechas entero (ni conmutador de mes ni Desde/Hasta). */
+  showDateRange?: boolean;
   /** Etiqueta del conmutador de meses ("Mes", "Registro"…). */
   monthLabel?: string;
   searchPlaceholder?: string;
@@ -91,6 +101,7 @@ const AdminFilters: React.FC<{
   showSearch = true,
   showSex = true,
   showMonth = false,
+  showDateRange = true,
   monthLabel,
   searchPlaceholder = "Nombre o CURP",
 }) => {
@@ -140,7 +151,7 @@ const AdminFilters: React.FC<{
         </div>
       ) : null}
 
-      {showMonth ? (
+      {!showDateRange ? null : showMonth ? (
         <div className="admin-filter admin-filter-months">
           <span>{monthLabel ?? "Mes"}</span>
           {/* Conmutador y no `input type=month`: el control nativo se ve como un

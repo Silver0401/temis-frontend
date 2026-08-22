@@ -80,19 +80,8 @@ export default function AdminPatients() {
     chips.push({ key: "sex", label: "sexo", value: applied.sex });
   if (applied.doctorId)
     chips.push({ key: "doctorId", label: "médico", value: "seleccionado" });
-  if (applied.from || applied.to)
-    chips.push({
-      key: "from",
-      label: "registro",
-      value: [applied.from, applied.to].filter(Boolean).join(" → "),
-    });
-
   const quitarChip = (key: keyof AdminFilterState) => {
     const limpio: AdminFilterState = { ...applied, [key]: "" };
-    if (key === "from") {
-      limpio.to = "";
-      limpio.month = "";
-    }
     setDraft(limpio);
     setApplied(limpio);
     setPage(0);
@@ -121,8 +110,7 @@ export default function AdminPatients() {
           setPage(0);
           setApplied(value);
         }}
-        monthLabel="Registro"
-        showMonth
+        showDateRange={false}
       />
 
       {chips.length ? (
