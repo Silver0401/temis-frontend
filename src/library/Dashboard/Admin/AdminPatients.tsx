@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import { useGlobalContext } from "@/e2e/globalContext";
-import { Search_Admin_Patients } from "@/e2e/server/FeathersAPI";
+import {
+  Generate_Exchange_File,
+  Search_Admin_Patients,
+} from "@/e2e/server/FeathersAPI";
 import ActionButton from "@/library/Generics/ActionButton";
 import LoaderCC from "@/components/Loader-CC";
 import { AgeFromBirthdate } from "@/scripts/Generator";
@@ -14,6 +18,12 @@ import AdminFilters, {
   EmptyAdminFilters,
 } from "./AdminFilters";
 import type { AdminPatientRow, AdminPatientsResponse } from "./adminTypes";
+
+type ExchangeFileBatch = {
+  fileContent: string;
+  total: number;
+  omitted: Array<{ patientId: string; reason: string }>;
+};
 
 const PAGE_SIZE = 25;
 
@@ -60,6 +70,59 @@ export default function AdminPatients() {
   });
 
   const rows = patients.data?.rows ?? [];
+  /**
+   * Archivo de intercambio de todos los pacientes que hay en pantalla.
+   *
+   * El backend arma el `.txt` completo y aquí solo se vuelca a un Blob: así el
+   * formato del renglón vive en un único lugar y no hay que replicar la
+   * especificación GIIS en el cliente.
+   */
+  const exchange_file_mutation = useMutation({
+    mutationFn: async () => {
+      const patientIds = rows.map((row) => row._id);
+      const response = await feathersFetchCC<ExchangeFileBatch>(
+        await Generate_Exchange_File(patientIds, {
+          from: applied.from,
+          to: applied.to,
+        }),
+      );
+      if (response.type === "error") throw new Error("exchange-file-error");
+      return response.data;
+    },
+    onSuccess: (data) => {
+      if (!data.total) {
+        toast.error(
+          "Ningún paciente de la lista tiene consultas en el periodo",
+        );
+        return;
+      }
+
+      const blob = new Blob([data.fileContent], {
+        type: "text/plain;charset=utf-8",
+      });
+      const url = URL.createObjectURL(blob);
+      const enlace = document.createElement("a");
+      enlace.href = url;
+      enlace.download = `intercambio-${new Date().toISOString().split("T")[0]}.txt`;
+      document.body.appendChild(enlace);
+      enlace.click();
+      document.body.removeChild(enlace);
+      URL.revokeObjectURL(url);
+
+      // Los omitidos se avisan, no se esconden: un archivo con menos renglones
+      // de los esperados debe notarse antes de entregarlo.
+      if (data.omitted.length) {
+        toast.warning(
+          `${data.total} pacientes en el archivo · ${data.omitted.length} sin consultas en el periodo`,
+        );
+      } else {
+        toast.success(`Archivo generado con ${data.total} pacientes`);
+      }
+    },
+    onError: () => toast.error("No se pudo generar el archivo de intercambio"),
+  });
+
+
   const total = patients.data?.total ?? 0;
   const lastPage = Math.max(0, Math.ceil(total / PAGE_SIZE) - 1);
 
@@ -97,11 +160,30 @@ export default function AdminPatients() {
             Búsqueda en todos los establecimientos
           </div>
         </div>
-        <div className="admin-count">
-          <b>{miles(total)}</b>
-          <span>resultados</span>
+        <div className="admin-head-actions">
+          <ActionButton
+            variant="primary"
+            disabled={!rows.length || exchange_file_mutation.isPending}
+            onClick={() => exchange_file_mutation.mutate()}
+          >
+            {exchange_file_mutation.isPending
+              ? "Generando…"
+              : `Archivo de intercambio (${miles(rows.length)})`}
+          </ActionButton>
+          <div className="admin-count">
+            <b>{miles(total)}</b>
+            <span>resultados</span>
+          </div>
         </div>
       </header>
+
+      {exchange_file_mutation.isPending ? (
+        <div className="admin-exchange-progress" aria-live="polite">
+          <span className="admin-exchange-bar" />
+          Generando el archivo de intercambio… cada paciente se resuelve por
+          separado, puede tardar.
+        </div>
+      ) : null}
 
       <AdminFilters
         value={draft}

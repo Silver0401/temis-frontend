@@ -692,6 +692,34 @@ export const Synthesize_Exchange_Document = (
   );
 };
 
+/**
+ * Archivo de intercambio NOM-024 para una lista de pacientes.
+ *
+ * De cada paciente el backend toma su PRIMERA consulta dentro del rango y
+ * devuelve el archivo entero en `fileContent`, más los pacientes que quedaron
+ * fuera en `omitted`. El renglón lleva como prestador al médico que atendió,
+ * no a quien descarga.
+ */
+export const Generate_Exchange_File = (
+  patientIds: string[],
+  range: { from?: string; to?: string } = {},
+): Promise<feathersApiProps> => {
+  return new Promise((resolve) =>
+    resolve({
+      method: "create",
+      service: "exchange-file",
+      logId: "exchange_file_batch_generated",
+      logs: false,
+      nonLoggable: true,
+      data: {
+        patientIds,
+        ...(range.from ? { from: range.from } : {}),
+        ...(range.to ? { to: range.to } : {}),
+      },
+    }),
+  );
+};
+
 export const Create_Insurance_Report = (
   patientId: string,
   recordIds: string[],
