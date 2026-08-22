@@ -63,7 +63,7 @@ const MyAgenda = () => {
 
   const events = useMemo(() => {
     if (data?.data && data?.data?.length > 0) {
-      return data?.data[0].appointments.map((appointment) => {
+      return (data.data[0].appointments ?? []).map((appointment) => {
         return {
           title: `${appointment.patientName} | ${appointment.patientId}`,
           date: new Date(appointment.startDate),
@@ -183,11 +183,21 @@ const MyAgenda = () => {
 
   const add_patient_to_agenda_mutation = useMutation({
     mutationFn: async (patientIdAndName: string) => {
+      // `data.data[0]` estaba sin guarda: mientras no existía el documento de
+      // agenda, elegir paciente lanzaba un TypeError y la petición nunca salía
+      // —el modal se quedaba quieto sin error visible—. El backend ya crea la
+      // agenda a demanda; esta guarda evita además mandar "undefined" si la
+      // consulta todavía no ha resuelto.
+      const agendaId = data?.data?.[0]?._id;
+      if (!agendaId) {
+        throw new Error("Todavía no se carga tu agenda, intenta de nuevo");
+      }
+
       const req = await Add_Patient_To_Agenda({
         startDate: `${dateSelected?.startDate?.toLocaleString()}`,
         endDate: `${dateSelected?.endDate?.toLocaleString()}`,
         patientId: patientIdAndName.split("|")[1].trim(),
-        agendaId: `${data?.data[0]._id}`,
+        agendaId: `${agendaId}`,
         patientName: patientIdAndName.split("|")[0].trim(),
       });
       return feathersFetchCC<Array<Agenda>>(req);
