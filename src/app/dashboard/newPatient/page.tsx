@@ -720,57 +720,6 @@ const NewPatientIndex: React.FC = () => {
               options: ["Masculino", "Femenino", "Intersexual"],
               required: true,
             },
-            // GIIS-B015-04-11 campos 18-20: autoadscripción étnica y condición migratoria
-            {
-              type: "select",
-              identifier: "seAutodenominaAfromexicano",
-              label: "¿Se autodenomina afromexicano?",
-              options: ["0 - No", "1 - Sí", "2 - No responde", "3 - No sabe"],
-              required: true,
-            },
-            {
-              type: "select",
-              identifier: "seConsideraIndigena",
-              label: "¿Se considera indígena?",
-              options: ["0 - No", "1 - Sí", "2 - No responde", "3 - No sabe"],
-              required: true,
-            },
-            {
-              type: "select",
-              identifier: "migrante",
-              label: "Condición migratoria",
-              options: [
-                "0 - No",
-                "1 - Nacional",
-                "2 - Internacional",
-                "3 - Retornado",
-              ],
-              required: true,
-              onChange: (value: string) => {
-                const parsed = parseInt(value, 10);
-                setManualMigrante(Number.isNaN(parsed) ? null : parsed);
-                if (parsed !== 2) setManualPaisProcedencia(undefined);
-              },
-            },
-            // Solo se captura el país de procedencia cuando la migración es internacional
-            ...(manualMigrante === 2
-              ? [
-                  {
-                    type: "custom" as const,
-                    identifier: "PaisProcedenciaSearch",
-                    label: "País de Procedencia",
-                    required: true,
-                    children: (
-                      <PaisesSearchCC
-                        identifier="PaisProcedenciaSearch"
-                        placeholder="País de Procedencia"
-                        onSelect={handleManualPaisProcedenciaSelect}
-                        onClear={() => setManualPaisProcedencia(undefined)}
-                      />
-                    ),
-                  },
-                ]
-              : []),
             {
               type: "select",
               identifier: "genre",
@@ -867,6 +816,57 @@ const NewPatientIndex: React.FC = () => {
                 />
               ),
             },
+            // GIIS-B015-04-11 campos 18-20: autoadscripción étnica y condición migratoria
+            {
+              type: "select",
+              identifier: "seAutodenominaAfromexicano",
+              label: "¿Se autodenomina afromexicano?",
+              options: ["0 - No", "1 - Sí", "2 - No responde", "3 - No sabe"],
+              required: true,
+            },
+            {
+              type: "select",
+              identifier: "seConsideraIndigena",
+              label: "¿Se considera indígena?",
+              options: ["0 - No", "1 - Sí", "2 - No responde", "3 - No sabe"],
+              required: true,
+            },
+            {
+              type: "select",
+              identifier: "migrante",
+              label: "Condición migratoria",
+              options: [
+                "0 - No",
+                "1 - Nacional",
+                "2 - Internacional",
+                "3 - Retornado",
+              ],
+              required: true,
+              onChange: (value: string) => {
+                const parsed = parseInt(value, 10);
+                setManualMigrante(Number.isNaN(parsed) ? null : parsed);
+                if (parsed !== 2) setManualPaisProcedencia(undefined);
+              },
+            },
+            // Solo se captura el país de procedencia cuando la migración es internacional
+            ...(manualMigrante === 2
+              ? [
+                  {
+                    type: "custom" as const,
+                    identifier: "PaisProcedenciaSearch",
+                    label: "País de Procedencia",
+                    required: true,
+                    children: (
+                      <PaisesSearchCC
+                        identifier="PaisProcedenciaSearch"
+                        placeholder="País de Procedencia"
+                        onSelect={handleManualPaisProcedenciaSelect}
+                        onClear={() => setManualPaisProcedencia(undefined)}
+                      />
+                    ),
+                  },
+                ]
+              : []),
           ]}
         />
       </div>,
