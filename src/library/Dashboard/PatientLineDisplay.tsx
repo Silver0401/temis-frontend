@@ -28,7 +28,9 @@ const PatientLineDisplay: React.FC<PatientLineDisplayProps> = ({
   useEffect(() => {
     if (searchedWord) {
       const loweredSearchedWord = searchedWord.toLowerCase();
-      const patientDxs = patient.records[0].Diagnosis.map((p) => p.Name)
+      const patientDxs = (
+        patient.records?.[0]?.Diagnosis?.map((p) => p.Name) ?? []
+      )
         .join(" ")
         .toLowerCase();
       if (

@@ -127,31 +127,32 @@ const MyPatients = () => {
   });
 
   const filteredPatients = useMemo((): Array<PatientWithGroup> => {
-    const patientList: PatientWithGroup[] | undefined = folderSelected
-      ? folderData?.data.patients.patientsList
-      : data?.data?.patientsList;
+    // Una carpeta recién creada llega sin `patients`, no con `patients` vacío:
+    // la cadena directa reventaba con "Cannot read properties of undefined
+    // (reading 'patientsList')" en cuanto se abría una carpeta con 0 pacientes.
+    const patientList: PatientWithGroup[] = (folderSelected
+      ? folderData?.data?.patients?.patientsList
+      : data?.data?.patientsList) ?? [];
 
-    if (patientList?.length === 0) {
-      return patientList;
-    }
+    // El grupo puede haberse borrado en otra pestaña y seguir seleccionado aquí,
+    // así que el nombre se busca sin asumir que el filtro encuentra algo.
+    const grupoActivo = folderSelected
+      ? userData?.data?.user?.groups?.find((gp) => gp.id === folderSelected)
+      : undefined;
 
     // Add To Patient Group
-    const patientListWithGroup = patientList?.map((px) => {
+    const patientListWithGroup = patientList.map((px) => {
       return {
         ...px,
         group: {
           id: folderSelected ? folderSelected : undefined,
-          name: folderSelected
-            ? userData?.data.user.groups.filter(
-                (gp) => gp.id === folderSelected,
-              )[0].name
-            : undefined,
+          name: grupoActivo?.name,
         },
       };
     });
 
     // Sort by Date
-    patientListWithGroup?.sort((patientA, patientB) => {
+    patientListWithGroup.sort((patientA, patientB) => {
       const patientACreatedAt = MongoDbIdDateAndTimeRetriever(patientA._id);
       const patientBCreatedAt = MongoDbIdDateAndTimeRetriever(patientB._id);
 
@@ -178,7 +179,7 @@ const MyPatients = () => {
     if (patientSearch) {
       const loweredPatientSearch = patientSearch.toLowerCase();
       // Sort by Name
-      patientListWithGroup?.sort((patientA, patientB) => {
+      patientListWithGroup.sort((patientA, patientB) => {
         const patientAfullName =
           `${patientA.personalInfo.names} ${patientA.personalInfo.middleName} ${patientA.personalInfo.lastName}`.toLowerCase();
         const patientBfullName =
@@ -224,7 +225,7 @@ const MyPatients = () => {
       // });
     }
 
-    return patientListWithGroup ? patientListWithGroup : [];
+    return patientListWithGroup;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, patientSearch, folderData]);

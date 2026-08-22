@@ -81,9 +81,11 @@ const OrdersMaker: React.FC<OrdersSectionProps> = ({
             type={"select"}
             label="Diagnóstico Asociado"
             identifier={"DxPrescriberSelect"}
-            options={PatientInfo.records[0].Diagnosis.map(
-              (dx) => `${dx.Name} | ${dx.id}`,
-            )}
+            options={
+              PatientInfo.records?.[0]?.Diagnosis?.map(
+                (dx) => `${dx.Name} | ${dx.id}`,
+              ) ?? []
+            }
             onChange={(selectedDx) => setSelectedDx(selectedDx)}
             styles={{ container: { width: "100%" } }}
           />

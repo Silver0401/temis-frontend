@@ -57,9 +57,10 @@ const LabsForm: React.FC<FormActionGeneric> = ({
         type: "select",
         placeholder: "Diagnóstico Asociado",
         identifier: "labsDxId",
-        options: PatientInfo.records[0].Diagnosis.map(
-          (dx) => `${dx.Name} | ${dx.id}`,
-        ),
+        options:
+          PatientInfo.records?.[0]?.Diagnosis?.map(
+            (dx) => `${dx.Name} | ${dx.id}`,
+          ) ?? [],
         required: true,
       },
       base[1],

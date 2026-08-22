@@ -89,9 +89,9 @@ const ImgsForm: React.FC<FormActionGeneric> = ({
             options:
               PatientInfo.LUID === "synthesized-temporal-patient"
                 ? []
-                : PatientInfo.records[0].Diagnosis.map(
+                : (PatientInfo.records?.[0]?.Diagnosis?.map(
                     (dx) => `${dx.Name} | ${dx.id}`,
-                  ),
+                  ) ?? []),
             required: true,
             limitFileQuantity: 1,
           },

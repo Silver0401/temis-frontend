@@ -66,7 +66,7 @@ const PdfViewerCC: React.FC<PdfViewerCC> = ({
         ? prescriptionProps?.patientData
         : orderProps?.patientData;
 
-      return PatientData?.records[0].Diagnosis.filter((dx) =>
+      return PatientData?.records?.[0]?.Diagnosis?.filter((dx) =>
         pdfOptions.dxList.includes(dx.Name),
       );
     } else return [];

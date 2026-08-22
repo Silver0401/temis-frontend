@@ -45,7 +45,8 @@ const PrescriptionCC: React.FC<PrescriptionProps> = (props) => {
               drugs.type === "processed"
                 ? drugs.values.map((drug) => drug.name)
                 : drugs.values.map((drug) => drug.drugPresentation),
-            dxList: patientData.records[0].Diagnosis.map((dx) => dx.Name),
+            dxList:
+              patientData.records?.[0]?.Diagnosis?.map((dx) => dx.Name) ?? [],
           }}
         />
       ),

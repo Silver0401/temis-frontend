@@ -123,9 +123,11 @@ const Prescriber: React.FC<PrescriptionSectionProps> = ({
             type={"select"}
             identifier={"DxPrescriberSelect"}
             label="Diagnóstico Asociado"
-            options={PatientInfo.records[0].Diagnosis.map(
-              (dx) => `${dx.Name} | ${dx.id}`,
-            )}
+            options={
+              PatientInfo.records?.[0]?.Diagnosis?.map(
+                (dx) => `${dx.Name} | ${dx.id}`,
+              ) ?? []
+            }
             onChange={(selectedDx) => setSelectedDx(selectedDx)}
             styles={{ container: { width: "100%" } }}
           />

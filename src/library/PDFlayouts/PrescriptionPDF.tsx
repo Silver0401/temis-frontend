@@ -241,7 +241,7 @@ const PrescriptionPDF: React.FC<PrescriptionPropsWithQR> = ({
 
           {patientData.LUID !== "synthesized-temporal-patient" && (
             <Text style={[styles.patientText, styles.poppins]}>
-              {`Dx: ${patientData.records[0].Diagnosis.map((dx) => dx.Name).join(", ")}`}
+              {`Dx: ${(patientData.records?.[0]?.Diagnosis?.map((dx) => dx.Name) ?? []).join(", ")}`}
             </Text>
           )}
         </View>

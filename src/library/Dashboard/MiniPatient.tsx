@@ -13,7 +13,7 @@ const MiniPatient: React.FC<MiniPatientProps> = ({ PatientInfo }) => {
     <div className="miniPatient">
       <div className="miniDiagnosis">
         <h4>{"Dx"}</h4>
-        {PatientInfo?.records[0].Diagnosis.map((dx) => {
+        {PatientInfo?.records?.[0]?.Diagnosis?.map((dx) => {
           return (
             <p key={dx.id}>
               {dx.Name}
