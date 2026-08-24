@@ -143,216 +143,369 @@
                 
         .ProfileSection
             fillSpace()
-            display: flex
-            flex-direction: row
-            overflow: hidden
+            position: relative
+            overflow-y: auto
+            overflow-x: hidden
+            noScrollbar()
+            display: block
+            padding: 0 clamp(20px, 4vw, 58px) 70px
 
-            .ProfileLeftPanel
-                width: 280px
-                min-width: 240px
-                height: 100%
-                overflow-y: auto
-                border-right: 1px solid var(--silver)
-                padding: 30px 20px
+            .ProfileHeading
+                padding: 42px 0 28px
                 display: flex
-                flex-direction: column
-                align-items: center
-                gap: 12px
+                align-items: flex-end
+                justify-content: space-between
+                gap: 28px
 
-                .ProfileAvatar
-                    width: 90px
-                    height: 90px
-                    border-radius: 50%
-                    background: linear-gradient(-45deg, var(--secondary), var(--primary))
+                .ProfileHeadingCopy
+                    min-width: 0
+
+                    .ProfileEyebrow
+                        margin: 0 0 8px
+                        color: var(--lp-accent)
+                        font-size: 0.67rem
+                        font-weight: 800
+                        letter-spacing: 0.17em
+                        text-transform: uppercase
+
+                    h1
+                        margin: 0
+                        font-family: var(--font)
+                        font-size: clamp(2.2rem, 5vw, 4.6rem)
+                        font-weight: 400
+                        line-height: 0.92
+                        letter-spacing: -0.02em
+                        color: var(--lp-text-1)
+
+                    .ProfileHeadingSub
+                        max-width: 560px
+                        margin: 12px 0 0
+                        color: var(--lp-text-2)
+                        font-size: 0.84rem
+                        line-height: 1.6
+
+                .ProfileHeadingActions
                     display: flex
                     align-items: center
-                    justify-content: center
-                    overflow: hidden
-                    flex-shrink: 0
+                    flex-wrap: wrap
+                    justify-content: flex-end
+                    gap: 9px
+
+                    .ProfileUniqueIdentifier
+                        padding: 8px 11px
+                        border: 1px solid var(--lp-glass-border)
+                        border-radius: 9px
+                        color: var(--lp-text-2)
+                        background: unquote("color-mix(in srgb, var(--lp-text-1) 3%, transparent)")
+                        font-family: Menlo, Monaco, Consolas, monospace
+                        font-size: 0.64rem
+                        white-space: nowrap
+
+            .ProfileLayout
+                display: grid
+                grid-template-columns: 300px minmax(0, 1fr)
+                gap: 19px
+                align-items: start
+
+            .ProfileLeftPanel
+                position: sticky
+                top: 18px
+                overflow: hidden
+                border: 1px solid var(--lp-glass-border)
+                border-radius: 22px
+                background: var(--lp-glass-bg)
+                box-shadow: unquote("inset 0 1px color-mix(in srgb, var(--lp-text-1) 4%, transparent), 0 20px 55px rgba(0, 0, 0, 0.18)")
+
+                .ProfileCover
+                    position: relative
+                    height: 102px
+                    background: unquote("linear-gradient(120deg, color-mix(in srgb, var(--lp-accent) 22%, transparent), color-mix(in srgb, var(--lp-accent-2) 34%, transparent))")
+
+                    &::after
+                        content: attr(data-initials)
+                        position: absolute
+                        right: -12px
+                        bottom: -28px
+                        font-family: var(--font)
+                        font-size: 7rem
+                        line-height: 0.8
+                        color: unquote("color-mix(in srgb, var(--lp-text-1) 6%, transparent)")
+
+                .ProfileIdentityBody
+                    padding: 0 22px 22px
+                    text-align: center
+
+                .ProfileAvatar
+                    position: relative
+                    width: 92px
+                    height: 92px
+                    margin: -48px auto 16px
+                    display: grid
+                    place-items: center
+                    border: 6px solid var(--lp-bg-mid)
+                    border-radius: 50%
+                    color: var(--bg)
+                    background: linear-gradient(145deg, var(--lp-accent), var(--lp-accent-2))
+                    font-family: var(--font)
+                    font-size: 1.5rem
 
                     img
                         width: 100%
                         height: 100%
+                        border-radius: 50%
                         object-fit: cover
 
-                    span
-                        font-size: 2rem
-                        font-weight: 700
+                    .ProfileVerifiedMark
+                        position: absolute
+                        right: -2px
+                        bottom: 2px
+                        width: 25px
+                        height: 25px
+                        display: grid
+                        place-items: center
+                        border: 4px solid var(--lp-bg-mid)
+                        border-radius: 50%
                         color: var(--bg)
-
-                .ProfileUniqueIdentifier
-                    width: 100%
-                    color: var(--white)
-                    font-size: 0.6rem
-                    text-align: center
-                    height: 16px
+                        background: var(--green)
+                        font-family: "Poppins", sans-serif
+                        font-size: 0.63rem
+                        font-weight: 900
 
                 .ProfileName
-                    font-size: 1rem
-                    color: var(--white)
-                    text-align: center
+                    margin: 0
+                    font-size: 1.08rem
                     font-weight: 600
+                    line-height: 1.35
+                    color: var(--lp-text-1)
 
                 .ProfileProfessionBadge
-                    background: var(--secondary)
-                    color: var(--primary)
-                    padding: 4px 12px
-                    border-radius: 20px
-                    font-size: 0.7rem
-                    font-weight: 600
-                    text-align: center
-
-                .ProfileClues
-                    font-size: 0.75rem
-                    color: var(--grey)
-                    text-align: center
-
-                    strong
-                        color: var(--white)
+                    display: block
+                    width: fit-content
+                    margin: 9px auto 0
+                    padding: 5px 10px
+                    border-radius: var(--lp-r-pill)
+                    color: var(--lp-accent)
+                    background: unquote("color-mix(in srgb, var(--lp-accent) 12%, transparent)")
+                    font-size: 0.66rem
+                    font-weight: 800
 
                 .ProfileInstitute
-                    font-size: 0.75rem
-                    color: var(--grey)
-                    text-align: center
+                    margin: 17px 0 0
+                    color: var(--lp-text-2)
+                    font-size: 0.73rem
+                    line-height: 1.55
 
-                    span
+                    strong
                         display: block
-                        margin-top: 2px
+                        color: var(--lp-text-1)
+                        font-size: 0.76rem
 
-                .ProfileDivider
-                    width: 80%
-                    height: 1px
-                    background: var(--silver)
-                    margin: 8px 0
+                .ProfileClues
+                    margin: 12px 0 0
+                    color: var(--lp-text-3)
+                    font-family: Menlo, Monaco, Consolas, monospace
+                    font-size: 0.62rem
 
                 .ProfileStats
-                    display: flex
-                    gap: 24px
+                    margin: 22px 0
+                    padding: 18px 0
+                    display: grid
+                    grid-template-columns: 1fr 1fr
+                    border-top: 1px solid var(--lp-glass-border)
+                    border-bottom: 1px solid var(--lp-glass-border)
 
                     .ProfileStat
-                        display: flex
-                        flex-direction: column
-                        align-items: center
+                        min-width: 0
+
+                        & + .ProfileStat
+                            border-left: 1px solid var(--lp-glass-border)
 
                         strong
-                            font-size: 1.5rem
-                            color: var(--primary)
-                            font-weight: 700
+                            display: block
+                            color: var(--lp-accent)
+                            font-family: var(--font)
+                            font-size: 1.4rem
+                            font-weight: 400
 
                         span
-                            font-size: 0.7rem
-                            color: var(--grey)
+                            display: block
+                            margin-top: 4px
+                            color: var(--lp-text-2)
+                            font-size: 0.65rem
 
-                .ProfileLogoutContainer
-                    margin-top: auto
-                    width: 100%
-                    padding-top: 20px
-
-            .ProfileRightPanel
-                flex: 1
-                height: 100%
-                overflow-y: auto
-                padding: 30px 24px
-                display: flex
-                flex-direction: column
-                gap: 16px
+            .ProfileContentStack
+                min-width: 0
+                display: grid
+                gap: 17px
 
                 .ProfileCard
-                    border: 1px solid var(--silver)
-                    border-radius: 12px
-                    padding: 20px
+                    padding: 22px
+                    border: 1px solid var(--lp-glass-border)
+                    border-radius: 18px
+                    background: var(--lp-glass-bg)
+                    box-shadow: unquote("inset 0 1px color-mix(in srgb, var(--lp-text-1) 4%, transparent), 0 20px 55px rgba(0, 0, 0, 0.18)")
 
-                    .ProfileCardTitle
-                        font-size: 0.7rem
-                        color: var(--grey)
-                        text-transform: uppercase
-                        letter-spacing: 0.08em
-                        margin-bottom: 16px
-                        font-weight: 600
-
-                    .ProfileCardGrid
-                        display: grid
-                        grid-template-columns: repeat(2, 1fr)
+                    .ProfileCardHead
+                        margin-bottom: 18px
+                        display: flex
+                        align-items: center
+                        justify-content: space-between
                         gap: 16px
 
-                    .ProfileField
-                        display: flex
-                        flex-direction: column
-                        gap: 4px
-
-                        label
-                            font-size: 0.65rem
-                            color: var(--grey)
+                        .ProfileCardTitle
+                            margin: 0
+                            font-size: 0.83rem
+                            font-weight: 700
+                            letter-spacing: 0.08em
                             text-transform: uppercase
-                            letter-spacing: 0.05em
+                            color: var(--lp-text-1)
 
-                        p
-                            font-size: 0.9rem
-                            color: var(--white)
+                        .ProfileCardNumber
+                            color: var(--lp-text-3)
+                            font-family: Menlo, Monaco, Consolas, monospace
+                            font-size: 0.65rem
 
-                        .ProfileFieldMono
-                            font-family: monospace
-                            font-size: 0.85rem
-                            letter-spacing: 0.04em
+                    .ProfileFieldGrid
+                        display: grid
+                        grid-template-columns: repeat(2, minmax(0, 1fr))
+                        gap: 12px
+
+                        .ProfileField
+                            min-width: 0
+                            padding: 15px
+                            border: 1px solid var(--lp-glass-border)
+                            border-radius: 12px
+                            background: unquote("color-mix(in srgb, var(--lp-text-1) 3%, transparent)")
+
+                            label
+                                display: block
+                                margin-bottom: 7px
+                                color: var(--lp-text-3)
+                                font-size: 0.59rem
+                                font-weight: 800
+                                letter-spacing: 0.1em
+                                text-transform: uppercase
+
+                            p
+                                display: block
+                                overflow: hidden
+                                margin: 0
+                                color: var(--lp-text-1)
+                                font-size: 0.78rem
+                                text-overflow: ellipsis
+                                white-space: nowrap
+
+                                &.ProfileFieldMono
+                                    font-family: Menlo, Monaco, Consolas, monospace
+                                    font-size: 0.7rem
+                                    letter-spacing: 0.04em
 
                     .ProfileEmptyState
-                        color: var(--grey)
-                        font-size: 0.85rem
-                        text-align: center
-                        padding: 20px 0
+                        margin: 0
+                        color: var(--lp-text-3)
+                        font-size: 0.75rem
 
                     .ProfileLicenseList
-                        display: flex
-                        flex-direction: column
+                        display: grid
                         gap: 8px
 
                         .ProfileLicenseItem
-                            display: flex
+                            padding: 14px 15px
+                            display: grid
+                            grid-template-columns: 110px 1fr auto
+                            gap: 15px
                             align-items: center
-                            gap: 16px
-                            padding: 12px 16px
-                            background: var(--silver)
-                            border-radius: 8px
+                            border: 1px solid var(--lp-glass-border)
+                            border-radius: 12px
+                            background: unquote("color-mix(in srgb, var(--lp-text-1) 3%, transparent)")
 
                             .ProfileLicenseId
-                                font-size: 0.95rem
+                                color: var(--lp-accent)
+                                font-family: Menlo, Monaco, Consolas, monospace
+                                font-size: 0.75rem
                                 font-weight: 700
-                                color: var(--primary)
-                                font-family: monospace
-                                min-width: 80px
 
                             .ProfileLicenseDetails
-                                display: flex
-                                flex-direction: column
-                                flex: 1
+                                min-width: 0
 
-                                span:first-child
-                                    font-size: 0.85rem
-                                    color: var(--white)
-                                    font-weight: 500
+                                strong
+                                    display: block
+                                    font-size: 0.77rem
+                                    font-weight: 600
+                                    color: var(--lp-text-1)
 
-                                span:last-child
-                                    font-size: 0.75rem
-                                    color: var(--grey)
+                                span
+                                    display: block
+                                    margin-top: 3px
+                                    color: var(--lp-text-2)
+                                    font-size: 0.67rem
 
                             .ProfileLicenseYear
-                                font-size: 0.75rem
-                                color: var(--grey)
+                                color: var(--lp-text-2)
+                                font-size: 0.67rem
 
-                    .ProfileIdVerification
-                        display: flex
-                        gap: 20px
-                        align-items: flex-start
+                    .ProfileWorkplace
+                        display: grid
+                        gap: 12px
 
-                        .ProfileIdInfo
-                            flex: 1
+                        .ProfileWorkRow
+                            padding-bottom: 12px
+                            border-bottom: 1px solid var(--lp-glass-border)
+
+                            &:last-child
+                                padding: 0
+                                border: 0
+
+                            span
+                                display: block
+                                color: var(--lp-text-2)
+                                font-size: 0.61rem
+                                letter-spacing: 0.08em
+                                text-transform: uppercase
+
+                            strong
+                                display: block
+                                margin-top: 5px
+                                font-size: 0.77rem
+                                font-weight: 600
+                                color: var(--lp-text-1)
+
+                    .ProfileVerificationBody
+                        display: grid
+                        grid-template-columns: 1fr 74px
+                        gap: 17px
+                        align-items: center
+
+                        .ProfileVerificationData
+                            display: grid
+                            gap: 11px
+
+                            .ProfileVerificationRow
+                                display: flex
+                                justify-content: space-between
+                                gap: 12px
+                                font-size: 0.7rem
+
+                                span
+                                    color: var(--lp-text-2)
+
+                                strong
+                                    font-weight: 600
+                                    text-align: right
+                                    color: var(--lp-text-1)
 
                         .ProfileIdPhoto
-                            width: 80px
-                            height: 80px
-                            border-radius: 8px
+                            width: 74px
+                            height: 74px
                             overflow: hidden
-                            flex-shrink: 0
+                            display: grid
+                            place-items: center
+                            border: 1px solid var(--lp-glass-border-hi)
+                            border-radius: 14px
+                            color: var(--bg)
+                            background: linear-gradient(145deg, var(--lp-accent), var(--lp-accent-2))
+                            font-family: var(--font)
+                            font-size: 1rem
 
                             img
                                 width: 100%
@@ -360,24 +513,29 @@
                                 object-fit: cover
 
                     .ProfileValidityBadge
-                        display: inline-block
-                        padding: 4px 12px
-                        border-radius: 20px
-                        font-size: 0.75rem
-                        font-weight: 600
+                        width: fit-content
+                        padding: 5px 9px
+                        border-radius: var(--lp-r-pill)
+                        font-size: 0.64rem
+                        font-weight: 800
+                        white-space: nowrap
 
                         &[data-valid="true"]
-                            background: var(--green-inverted)
                             color: var(--green)
+                            background: unquote("color-mix(in srgb, var(--green) 14%, transparent)")
 
                         &[data-valid="false"]
-                            background: var(--yellow-inverted)
                             color: var(--yellow)
+                            background: unquote("color-mix(in srgb, var(--yellow) 14%, transparent)")
 
-        
+                .ProfileLowerGrid
+                    display: grid
+                    grid-template-columns: 1fr 1fr
+                    gap: 17px
+                    align-items: start
 
 
-    
+
 @media (max-width: 800px)
     .AccountSection
         .innerAccountContainer
@@ -392,26 +550,105 @@
                     background-size: 100% 120% !important
 
             .ProfileSection
-                flex-direction: column
+                padding: 0 15px 90px
+
+                .ProfileHeading
+                    padding: 26px 0 22px
+                    align-items: flex-start
+                    flex-direction: column
+                    gap: 16px
+
+                    .ProfileHeadingActions
+                        width: 100%
+                        justify-content: flex-start
+
+                .ProfileLayout
+                    grid-template-columns: 1fr
 
                 .ProfileLeftPanel
-                    width: 100%
-                    height: auto
-                    border-right: none
-                    border-bottom: 1px solid var(--silver)
-                    padding: 20px
-                    flex-direction: row
-                    flex-wrap: wrap
-                    justify-content: center
+                    position: relative
+                    top: auto
 
-                    .ProfileLogoutContainer
-                        margin-top: 0
-                        width: auto
-
-                .ProfileRightPanel
-                    padding: 20px 16px
-
+                .ProfileContentStack
                     .ProfileCard
-                        .ProfileCardGrid
+                        .ProfileFieldGrid
                             grid-template-columns: 1fr
 
+                        .ProfileLicenseList
+                            .ProfileLicenseItem
+                                grid-template-columns: 1fr auto
+
+                                .ProfileLicenseDetails
+                                    grid-column: 1 / -1
+                                    grid-row: 2
+
+                    .ProfileLowerGrid
+                        grid-template-columns: 1fr
+
+
+
+.ProfileLogout
+    width: 100%
+    min-height: 42px
+    padding: 0 14px
+    border: unquote("1px solid color-mix(in srgb, var(--red) 30%, transparent)")
+    border-radius: 11px
+    color: var(--red)
+    background: unquote("color-mix(in srgb, var(--red) 8%, transparent)")
+    font-size: 0.72rem
+    font-weight: 700
+    cursor: pointer
+    transition: background 0.18s var(--lp-ease), border-color 0.18s var(--lp-ease)
+
+    &:hover
+        background: unquote("color-mix(in srgb, var(--red) 16%, transparent)")
+        border-color: unquote("color-mix(in srgb, var(--red) 55%, transparent)")
+
+.ProfileModalBtn
+    min-height: 40px
+    padding: 0 14px
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    gap: 7px
+    border: 1px solid var(--lp-glass-border-hi)
+    border-radius: 10px
+    color: var(--lp-text-1)
+    background: unquote("color-mix(in srgb, var(--lp-accent) 6%, transparent)")
+    font-size: 0.7rem
+    font-weight: 800
+    cursor: pointer
+    transition: background 0.18s var(--lp-ease)
+
+    &:hover
+        background: unquote("color-mix(in srgb, var(--lp-accent) 14%, transparent)")
+
+.ProfileLogoutModal
+    fillSpace()
+    padding: 25px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    border-radius: 20px
+    background: var(--lp-bg-mid)
+
+    h2
+        margin: 0 0 9px
+        font-size: 1.05rem
+        font-weight: 600
+        color: var(--lp-text-1)
+
+    p
+        margin: 0
+        color: var(--lp-text-2)
+        font-size: 0.76rem
+        line-height: 1.6
+
+    .ProfileLogoutModalActions
+        margin-top: 21px
+        display: flex
+        justify-content: flex-end
+        gap: 8px
+
+        .ProfileLogout
+            width: auto

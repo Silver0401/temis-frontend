@@ -281,3 +281,42 @@ Ahora cada `git commit` pregunta el tipo de cambio y sube `package.json` en el n
 ```bash
 bash scripts/install-version-hook.sh
 ```
+
+## 2026-08-24 — Rediseño de MyProfile según mockup de cuenta
+
+### Segunda pasada (mismo día) — copia fiel del mockup
+
+La primera versión conservaba la estructura de dos paneles con scroll independiente y tipografía chica; no se parecía lo suficiente. Se rehizo copiando los valores del mockup uno a uno:
+
+- **Scroll único con panel sticky.** `.ProfileSection` es ahora el contenedor que scrollea y `.ProfileLayout` es un grid `300px minmax(0, 1fr)` con `align-items: start`; `.ProfileLeftPanel` va `position: sticky`. Antes cada panel scrolleaba por su cuenta, que es lo que se sentía distinto.
+- **Tipografía del mockup.** `h1` pasó de `clamp(22px, 2.6vw, 30px)` a `clamp(2.2rem, 5vw, 4.6rem)` con `line-height: .92` y `letter-spacing: -.055em`. Títulos de card en mayúsculas con `letter-spacing: .08em`.
+- **Detalle del panel de identidad:** cover de 102px con las iniciales gigantes de fondo (`content: attr(data-initials)`), avatar de 92px montado sobre el cover con `margin-top: -48px` y borde de 6px del color de superficie, marca de verificado con borde de 4px, stats con separadores arriba/abajo y divisor central en vez de cajas.
+- **Campos en caja.** `.ProfileField` ahora es una caja con borde, fondo y `text-overflow: ellipsis`, como en el mockup. Cédulas en grid `110px 1fr auto`; filas de trabajo con etiqueta arriba y valor abajo; verificación en grid `1fr 74px`.
+- **Botones propios** (`.ProfileLogout`, `.ProfileModalBtn`) en vez de `ButtonCC`, para poder replicar el tratamiento del mockup.
+
+**Tintes translúcidos con `color-mix`.** El mockup usa `rgba()` literales sobre colores fijos; Temis voltea sus tokens según el esquema, así que los tintes se hacen con `color-mix(in srgb, var(--token) N%, transparent)`. Ya se usaba en el repo, así que no introduce nada nuevo.
+
+**Gotcha de Stylus:** `in` es un operador de Stylus, así que `color-mix(in srgb, …)` revienta el parser con `illegal unary "in"`. Hay que envolver el valor completo en `unquote("…")`.
+
+Se aplicó a `src/library/Account/MyProfile.tsx` y al bloque `.ProfileSection` de `src/styles/stylus/Account/Account.styl` el diseño del mockup `MyBrain/04-Proyectos/CronosMD/Branding y Marketing/mockup-cuenta-medico.html`.
+
+**Qué se portó:** encabezado de página (eyebrow + título + chip de ID), panel de identidad con cover en degradado, avatar con marca de verificado, badge de profesión, stats, cards numeradas 01/02/03 con `card-head`, filas etiqueta/valor para Lugar de trabajo y Verificación de identidad, grid inferior de dos columnas y modal de confirmación al cerrar sesión (reusa `ModalCC`).
+
+**Qué NO se portó, y por qué:**
+
+- **Paleta del mockup (cyan `#18d7ff` / azul `#4b6bff`, Arial Black).** Se mapeó a los tokens de Temis (`--lp-accent`, `--lp-glass-*`, `--lp-text-*`, `--font` Audiowide). Copiarla tal cual habría dejado el perfil con identidad de CronosMD.
+- **`backdrop-filter: blur()`** del `.glass` del mockup. Está prohibido en Temis por costo en hardware modesto (ver nota en `globals.css` y la entrada previa de este archivo). Los fondos glass quedan sólidos con `--lp-glass-bg*`.
+- **Sección "Perfil público"** (bridge con URL, botón copiar y miniatura del sitio). Temis no tiene servicio `public-profiles` ni ruta de perfil público; es funcionalidad exclusiva de CronosMD.
+- **Vista "Configuración y datos"** (formulario editable, nav de secciones, guardado). Decisión del usuario: solo rediseño visual. Por lo mismo se omitió el botón `⚙ Configuración y datos` del encabezado, para no dejar un control muerto.
+- **`app-shell` / `app-rail` / topbar / breadcrumbs.** Temis ya tiene su propia navegación; no son parte de MyProfile.
+
+**Implementado directamente por Claude, no por Codex:** el contexto (mockup, componente y hoja de estilos) ya estaba cargado y el cambio se limita a dos archivos; delegarlo habría obligado a re-derivar todo.
+
+**Verificación:** `npx stylus src/styles/stylus --out src/styles/css/Index.css` compila sin error y `npx tsc --noEmit` pasa limpio. No se verificó visualmente — pendiente de que el usuario levante `npm run local`. Nota: `npm run local` ya corre `stylus -w`, así que en dev recompila solo; `src/styles/css/Index.css` está versionado y quedó recompilado en este cambio.
+
+**Detalles de compatibilidad resueltos durante la implementación:**
+
+- **Móvil ≤800px.** `.innerAccountContainer` está fijo en `height: 800px` en ese breakpoint. Al pasar los paneles a `overflow: visible` para el layout en columna, el contenido quedaba recortado sin nada que lo scrolleara. Se le dio `overflow-y: auto` a `.ProfileSection` misma en el media query.
+- **Esquema día/noche.** `ThemeSync` voltea `--white` (y con él `--lp-text-1`), `--lp-glass-bg*`, `--lp-accent` y `--bg`, así que los tokens usados son seguros en ambos modos. Las iniciales del avatar se dejaron en `var(--bg)` —como estaban antes— porque `var(--secondary)` no contrasta contra el degradado en modo noche.
+- **Fondo del modal.** `ModalCC` sin prop `schema` cae en `.Schema-day`, que pinta `var(--lp-bg-mid-inverse)`; esa variable solo la define `SchemaSwitch-CC`, que no corre en `/account`. Se le puso fondo propio a `.ProfileLogoutModal` con `var(--lp-bg-mid)`, que sí está en `globals.css` y sí voltea con el tema.
+- **Ojo al compilar Stylus a mano.** `npx stylus src/styles/stylus --out src/styles/css/Index.css` (los mismos args del script `stylus`) compila cada `.styl` por separado y se pisan entre sí: deja un `Index.css` de 220 bytes. Para un build de una sola pasada hay que apuntar al archivo raíz: `npx stylus src/styles/stylus/Index.styl --out src/styles/css/Index.css`. En dev no se nota porque `-w` recompila en cada cambio.

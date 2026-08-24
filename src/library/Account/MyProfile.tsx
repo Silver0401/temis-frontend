@@ -1,5 +1,7 @@
-import React from "react";
-import ButtonCC from "@/components/Button-CC";
+"use client";
+
+import React, { useState } from "react";
+import ModalCC from "@/components/Modal-CC";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Verify_Login } from "@/e2e/server/Queries";
 import FancyLoader from "../Generics/Loaders/FancyLoader";
@@ -28,6 +30,7 @@ const ProfileSection: React.FC = () => {
   const client = useQueryClient();
   const { getAccessToken, registerLog } = useGlobalContext();
   const { isLoading, data } = useQuery(Verify_Login(getAccessToken()));
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const LogOut = () => {
     registerLog({
@@ -49,166 +52,231 @@ const ProfileSection: React.FC = () => {
     return <NotFound type="unauthorized" />;
 
   const user: UserBasedSchema = data.data.user;
+  const initials = getInitials(user.name);
   const isVerified = user.UID?.validity === "valid";
+  const hasWorkplace = Boolean(
+    user.institute?.Name || user.institute?.HospitalOrClinic,
+  );
 
   return (
     <section className="ProfileSection">
-      <div className="ProfileLeftPanel">
-        <div className="ProfileAvatar">
-          {isVerified && user.UID?.faceImg ? (
-            <img src={user.UID.faceImg} alt="Foto de perfil" />
-          ) : (
-            <span>{getInitials(user.name)}</span>
-          )}
-        </div>
-
-        <h2 className="ProfileName">{user.name}</h2>
-        <p className="ProfileUniqueIdentifier">{`ID: ${user._id}`}</p>
-
-        {user.professionType && (
-          <span className="ProfileProfessionBadge">{user.professionType}</span>
-        )}
-
-        {user.clues && (
-          <p className="ProfileClues">
-            <strong>CLUES:</strong> {user.clues}
+      <header className="ProfileHeading">
+        <div className="ProfileHeadingCopy">
+          <p className="ProfileEyebrow">Cuenta profesional</p>
+          <h1>Mi perfil</h1>
+          <p className="ProfileHeadingSub">
+            Consulta tu información profesional, credenciales e identidad
+            verificada.
           </p>
-        )}
+        </div>
+        <div className="ProfileHeadingActions">
+          <span className="ProfileUniqueIdentifier">{`ID: ${user._id}`}</span>
+        </div>
+      </header>
 
-        {(user.institute?.Name || user.institute?.HospitalOrClinic) && (
-          <p className="ProfileInstitute">
-            {user.institute.Name}
-            {user.institute.HospitalOrClinic && (
-              <span>{user.institute.HospitalOrClinic}</span>
+      <div className="ProfileLayout">
+        <aside className="ProfileLeftPanel">
+          <div className="ProfileCover" data-initials={initials} />
+
+          <div className="ProfileIdentityBody">
+            <div className="ProfileAvatar">
+              {isVerified && user.UID?.faceImg ? (
+                <img src={user.UID.faceImg} alt="Foto de perfil" />
+              ) : (
+                initials
+              )}
+              {isVerified && (
+                <span
+                  className="ProfileVerifiedMark"
+                  title="Identidad verificada"
+                >
+                  ✓
+                </span>
+              )}
+            </div>
+
+            <h2 className="ProfileName">{user.name}</h2>
+
+            {user.professionType && (
+              <span className="ProfileProfessionBadge">
+                {user.professionType}
+              </span>
             )}
-          </p>
-        )}
 
-        <div className="ProfileDivider" />
-
-        <div className="ProfileStats">
-          <div className="ProfileStat">
-            <strong>{user.patientsList?.length ?? 0}</strong>
-            <span>Pacientes</span>
-          </div>
-          <div className="ProfileStat">
-            <strong>{user.groups?.length ?? 0}</strong>
-            <span>Grupos</span>
-          </div>
-        </div>
-
-        <div className="ProfileLogoutContainer">
-          <ButtonCC
-            type="Phantom" size="lg"
-            text="Cerrar mi Sesión"
-            onClick={LogOut}
-          />
-        </div>
-      </div>
-
-      <div className="ProfileRightPanel">
-        <div className="ProfileCard">
-          <h3 className="ProfileCardTitle">Información Personal</h3>
-          <div className="ProfileCardGrid">
-            <div className="ProfileField">
-              <label>Correo</label>
-              <p>{user.email || "—"}</p>
-            </div>
-            <div className="ProfileField">
-              <label>Sexo</label>
-              <p>{user.personalInfo?.sex || "—"}</p>
-            </div>
-            <div className="ProfileField">
-              <label>Fecha de Nacimiento</label>
-              <p>{formatDate(user.personalInfo?.birthDate)}</p>
-            </div>
-            <div className="ProfileField">
-              <label>CURP</label>
-              <p className="ProfileFieldMono">
-                {user.personalInfo?.curp || "—"}
+            {hasWorkplace && (
+              <p className="ProfileInstitute">
+                {user.institute?.Name && <strong>{user.institute.Name}</strong>}
+                {user.institute?.HospitalOrClinic}
               </p>
-            </div>
-          </div>
-        </div>
+            )}
 
-        <div className="ProfileCard">
-          <h3 className="ProfileCardTitle">Cédulas Médicas</h3>
-          {user.medicalLicenses?.length > 0 ? (
-            <div className="ProfileLicenseList">
-              {user.medicalLicenses.map((lic) => (
-                <div key={lic.id} className="ProfileLicenseItem">
-                  <div className="ProfileLicenseId">{lic.id}</div>
-                  <div className="ProfileLicenseDetails">
-                    <span>{lic.profession}</span>
-                    <span>{lic.institution}</span>
-                  </div>
-                  <div className="ProfileLicenseYear">
-                    {lic.registrationYear}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="ProfileEmptyState">Sin cédulas registradas</p>
-          )}
-        </div>
+            {user.clues && (
+              <p className="ProfileClues">{`CLUES: ${user.clues}`}</p>
+            )}
 
-        {(user.institute?.Name || user.institute?.HospitalOrClinic) && (
-          <div className="ProfileCard">
-            <h3 className="ProfileCardTitle">Lugar de Trabajo</h3>
-            <div className="ProfileCardGrid">
-              {user.institute?.Name && (
-                <div className="ProfileField">
-                  <label>Institución</label>
-                  <p>{user.institute.Name}</p>
-                </div>
-              )}
-              {user.institute?.HospitalOrClinic && (
-                <div className="ProfileField">
-                  <label>Hospital / Clínica</label>
-                  <p>{user.institute.HospitalOrClinic}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {user.UID?.type && (
-          <div className="ProfileCard">
-            <h3 className="ProfileCardTitle">Verificación de Identidad</h3>
-            <div className="ProfileIdVerification">
-              <div className="ProfileIdInfo">
-                <div className="ProfileCardGrid">
-                  <div className="ProfileField">
-                    <label>Tipo de ID</label>
-                    <p>{user.UID.type || "—"}</p>
-                  </div>
-                  <div className="ProfileField">
-                    <label>Modelo</label>
-                    <p>{user.UID.model || "—"}</p>
-                  </div>
-                  <div className="ProfileField">
-                    <label>Estado</label>
-                    <span
-                      className="ProfileValidityBadge"
-                      data-valid={isVerified ? "true" : "false"}
-                    >
-                      {isVerified
-                        ? "Verificado"
-                        : user.UID.validity || "Pendiente"}
-                    </span>
-                  </div>
-                </div>
+            <div className="ProfileStats">
+              <div className="ProfileStat">
+                <strong>{user.patientsList?.length ?? 0}</strong>
+                <span>Pacientes</span>
               </div>
-              {user.UID.faceImg && (
-                <div className="ProfileIdPhoto">
-                  <img src={user.UID.faceImg} alt="Foto de identificación" />
-                </div>
-              )}
+              <div className="ProfileStat">
+                <strong>{user.groups?.length ?? 0}</strong>
+                <span>Grupos</span>
+              </div>
             </div>
+
+            <button
+              className="ProfileLogout"
+              type="button"
+              onClick={() => setLogoutOpen(true)}
+            >
+              Cerrar mi sesión
+            </button>
           </div>
-        )}
+        </aside>
+
+        <div className="ProfileContentStack">
+          <section className="ProfileCard">
+            <div className="ProfileCardHead">
+              <h2 className="ProfileCardTitle">Información personal</h2>
+              <span className="ProfileCardNumber">01</span>
+            </div>
+            <div className="ProfileFieldGrid">
+              <div className="ProfileField">
+                <label>Correo</label>
+                <p title={user.email || "—"}>{user.email || "—"}</p>
+              </div>
+              <div className="ProfileField">
+                <label>Sexo</label>
+                <p>{user.personalInfo?.sex || "—"}</p>
+              </div>
+              <div className="ProfileField">
+                <label>Fecha de nacimiento</label>
+                <p>{formatDate(user.personalInfo?.birthDate)}</p>
+              </div>
+              <div className="ProfileField">
+                <label>CURP</label>
+                <p className="ProfileFieldMono">
+                  {user.personalInfo?.curp || "—"}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className="ProfileCard">
+            <div className="ProfileCardHead">
+              <h2 className="ProfileCardTitle">Cédulas médicas</h2>
+              <span className="ProfileCardNumber">02</span>
+            </div>
+            {user.medicalLicenses?.length > 0 ? (
+              <div className="ProfileLicenseList">
+                {user.medicalLicenses.map((lic) => (
+                  <article key={lic.id} className="ProfileLicenseItem">
+                    <div className="ProfileLicenseId">{lic.id}</div>
+                    <div className="ProfileLicenseDetails">
+                      <strong>{lic.profession}</strong>
+                      <span>{lic.institution}</span>
+                    </div>
+                    <span className="ProfileLicenseYear">
+                      {lic.registrationYear}
+                    </span>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="ProfileEmptyState">Sin cédulas registradas</p>
+            )}
+          </section>
+
+          <div className="ProfileLowerGrid">
+            {hasWorkplace && (
+              <section className="ProfileCard">
+                <div className="ProfileCardHead">
+                  <h2 className="ProfileCardTitle">Lugar de trabajo</h2>
+                  <span className="ProfileCardNumber">03</span>
+                </div>
+                <div className="ProfileWorkplace">
+                  {user.institute?.Name && (
+                    <div className="ProfileWorkRow">
+                      <span>Institución</span>
+                      <strong>{user.institute.Name}</strong>
+                    </div>
+                  )}
+                  {user.institute?.HospitalOrClinic && (
+                    <div className="ProfileWorkRow">
+                      <span>Hospital / Clínica</span>
+                      <strong>{user.institute.HospitalOrClinic}</strong>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
+
+            {user.UID?.type && (
+              <section className="ProfileCard">
+                <div className="ProfileCardHead">
+                  <h2 className="ProfileCardTitle">
+                    Verificación de identidad
+                  </h2>
+                  <span
+                    className="ProfileValidityBadge"
+                    data-valid={isVerified ? "true" : "false"}
+                  >
+                    {isVerified ? "✓ Verificado" : "Pendiente"}
+                  </span>
+                </div>
+                <div className="ProfileVerificationBody">
+                  <div className="ProfileVerificationData">
+                    <div className="ProfileVerificationRow">
+                      <span>Tipo de ID</span>
+                      <strong>{user.UID.type || "—"}</strong>
+                    </div>
+                    <div className="ProfileVerificationRow">
+                      <span>Modelo</span>
+                      <strong>{user.UID.model || "—"}</strong>
+                    </div>
+                    <div className="ProfileVerificationRow">
+                      <span>Estado</span>
+                      <strong>{user.UID.validity || "Pendiente"}</strong>
+                    </div>
+                  </div>
+                  <div className="ProfileIdPhoto">
+                    {user.UID.faceImg ? (
+                      <img src={user.UID.faceImg} alt="Foto de identificación" />
+                    ) : (
+                      initials
+                    )}
+                  </div>
+                </div>
+              </section>
+            )}
+          </div>
+        </div>
       </div>
+
+      <ModalCC
+        size="small"
+        identifier="logoutModal"
+        animation="popUp"
+        useStates={{ state: logoutOpen, setState: setLogoutOpen }}
+      >
+        <div className="ProfileLogoutModal">
+          <h2>¿Cerrar tu sesión?</h2>
+          <p>Tendrás que volver a ingresar tus credenciales para acceder.</p>
+          <div className="ProfileLogoutModalActions">
+            <button
+              className="ProfileModalBtn"
+              type="button"
+              onClick={() => setLogoutOpen(false)}
+            >
+              Cancelar
+            </button>
+            <button className="ProfileLogout" type="button" onClick={LogOut}>
+              Cerrar sesión
+            </button>
+          </div>
+        </div>
+      </ModalCC>
     </section>
   );
 };
