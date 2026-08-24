@@ -6,7 +6,7 @@ export const User_Login = async (
   return new Promise((resolve) => {
     resolve({
       method: "post",
-      route: "/authentication",
+      route: "authentication",
       requestType: "internal",
       logId: "user_logged_in",
       logs: true,
