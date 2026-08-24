@@ -9,7 +9,7 @@ export const User_Login = async (
       route: "/authentication",
       requestType: "internal",
       logId: "user_logged_in",
-      logs: false,
+      logs: true,
       data: {
         strategy: "local",
         email: loginFormData.get("logMail")?.toString().toLowerCase(),
@@ -153,4 +153,3 @@ export const Save_Gabinet_Img2 = async ({
     });
   });
 };
-

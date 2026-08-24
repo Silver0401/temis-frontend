@@ -352,7 +352,7 @@ export const GlobalContextProvider = React.memo(
           };
 
           if (
-            props.route.includes("/authentication") ||
+            props.route.includes("authentication") ||
             props.requestType === "external"
           ) {
             delete headers.Authorization;
