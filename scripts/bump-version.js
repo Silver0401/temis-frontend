@@ -85,7 +85,7 @@ const cyan = (s) => `\x1b[36m${s}\x1b[0m`;
 const red = (s) => `\x1b[31m${s}\x1b[0m`;
 
 console.log(
-  "\n" + bold("── Versionamiento CronosMD ─────────────────────────────"),
+  "\n" + bold("── Versionamiento Temis ────────────────────────────────"),
 );
 console.log(`   Versión actual: ${yellow(currentVersion)}`);
 console.log(

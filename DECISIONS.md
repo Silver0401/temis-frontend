@@ -263,3 +263,21 @@ useFrame(({ clock }, delta) => {
 - La tarjeta `QR / Link` generara una URL publica con el `_id` del medico autenticado; `Agenda` sera solo visual en este alcance.
 - La pagina publica recolectara exclusivamente identificacion del paciente y llamara al servicio publico de alta; no usara login, IA ni historia clinica.
 - La pagina publica vivira fuera de `/dashboard` para no heredar el guard de autenticacion.
+
+## 2026-08-24 — Versionador interactivo en pre-commit
+
+`scripts/bump-version.js` (heredado del fork de Cronos) ya estaba en el repo pero **nunca se activó**: el hook vive en `.git/hooks/pre-commit`, que git no versiona. Se instaló el hook en este repo y se cambió el encabezado de "Versionamiento CronosMD" a "Versionamiento Temis".
+
+Ahora cada `git commit` pregunta el tipo de cambio y sube `package.json` en el nivel correspondiente (`MAJOR.SYSTEM.FEATURE.PATCH`), dejando el `package.json` ya en stage:
+
+- `[1]` Small Feature — bug fix, diseño → 4º dígito
+- `[2]` Big Feature — componente nuevo → 3º
+- `[3]` System Feature — sistema completo → 2º
+- `[4]` Mayor Reworkout — cambio total de flujo → 1º
+- `[0]` Omitir — commitea sin tocar la versión
+
+**Importante:** el hook no se clona. En cada máquina/clon nuevo hay que correr una vez:
+
+```bash
+bash scripts/install-version-hook.sh
+```
