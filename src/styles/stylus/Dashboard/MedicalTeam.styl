@@ -181,6 +181,7 @@
     border 1px solid var(--dash-line)
     border-radius 10px
     background var(--dash-card-bg)
+    font-size 16px
 
 .medical-team-patient-list
   max-height 300px
@@ -231,3 +232,24 @@
   .medical-team-filters
     width 100%
     overflow auto
+
+  .medical-team-member-main
+    grid-template-columns 54px minmax(0, 1fr)
+
+    .medical-team-status
+      grid-column 1 / -1
+      justify-self start
+
+  .medical-team-member-meta
+    flex-direction column
+
+  .medical-team-assignment-modal
+    width 100%
+    padding 18px
+
+  .medical-team-assignment-actions
+    flex-wrap wrap
+
+    button
+      flex 1 1 140px
+      min-height 44px

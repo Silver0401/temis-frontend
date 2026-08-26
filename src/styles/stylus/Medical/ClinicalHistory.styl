@@ -46,8 +46,6 @@
             background: var(--dash-card-bg)
             border: 1px solid var(--dash-line)
             border-radius: 16px
-            backdrop-filter: blur(28px) saturate(160%)
-            -webkit-backdrop-filter: blur(28px) saturate(160%)
 
             .patient-chip
                 display: flex
@@ -168,8 +166,6 @@
                     border: 1px solid var(--dash-line)
                     border-radius: 14px
                     background: var(--dash-card-bg)
-                    backdrop-filter: blur(28px) saturate(160%)
-                    -webkit-backdrop-filter: blur(28px) saturate(160%)
 
             .pd-grid
                 display: grid
@@ -214,8 +210,6 @@
                 background: var(--dash-card-bg)
                 border: 1px solid var(--dash-line)
                 border-radius: 20px
-                backdrop-filter: blur(30px) saturate(160%)
-                -webkit-backdrop-filter: blur(30px) saturate(160%)
                 overflow: hidden
                 display: flex
                 flex-direction: column
@@ -313,8 +307,6 @@
                 background: var(--dash-card-bg)
                 border: 1px solid var(--dash-line)
                 border-radius: 20px
-                backdrop-filter: blur(30px) saturate(160%)
-                -webkit-backdrop-filter: blur(30px) saturate(160%)
                 overflow: hidden
                 display: flex
                 flex-direction: column
@@ -514,8 +506,6 @@
                             border-color: var(--dash-line-hi)
                             border-radius: 18px
                             background: var(--dash-glass-solid)
-                            backdrop-filter: blur(30px) saturate(160%)
-                            -webkit-backdrop-filter: blur(30px) saturate(160%)
 
                         .sec-head
                             display: flex
@@ -756,7 +746,6 @@
                         transition: all 350ms
                         overflow: hidden
                         justify-content: center
-                        backdrop-filter: blur(7px)
 
                         .TrashIcon
                             position: absolute
@@ -1146,6 +1135,32 @@
                 .model-card
                     min-height: 300px
 
+            .GabinetImgsDisplay .ImagesDisplayContainer
+                .gImgContainer
+                    width: calc(100% - 24px)
+
+                .LeftClickBox, .RightClickBox
+                    width: 44px
+
+            .NutritionalIntervention
+                flex-direction: column
+                overflow-y: auto
+
+                .SomasNutriFormContainer, .MainNutriSection
+                    width: 100%
+                    height: auto
+
+    .GabinetImgIndividual
+        #lowerImgCont, #expanedImgCont
+            width: 100%
+
+        .InterpretationContainer
+            width: min(100%, 350px)
+            overflow-y: auto
+
+        #notToggled
+            transform: translateX(-100%)
+
 
 // ════════════════════════════════════════════════════════════════════════
 // Expediente sin modelo 3D: nota expandida a la izquierda y línea de tiempo
@@ -1230,8 +1245,6 @@
                 border-radius: 18px
                 background: var(--dash-glass-solid)
                 border-color: var(--dash-line-hi)
-                backdrop-filter: blur(30px) saturate(160%)
-                -webkit-backdrop-filter: blur(30px) saturate(160%)
                 box-shadow: var(--dash-shadow)
 
                 .sec-body

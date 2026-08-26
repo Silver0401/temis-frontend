@@ -9,6 +9,7 @@
     .innerDocForm
         height: 100%
         width: 500px
+        max-width: 100%
 
     .ReturnForm
         position: absolute
@@ -23,3 +24,10 @@
 
 .AddNewDocForm-night
     background-color: var(--lp-bg-mid-inverse)
+
+@media (max-width: 800px)
+    .AddNewDocForm
+        padding: 12px
+
+        .innerDocForm
+            width: 100%

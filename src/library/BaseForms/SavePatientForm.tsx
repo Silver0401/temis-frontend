@@ -26,6 +26,7 @@ import PatientIdentityPanel from "../Dashboard/PatientIdentityPanel";
 import { Save_Gabinet_Img2 } from "@/e2e/server/AxiosAPI";
 import { useRouter } from "next/navigation";
 import { resolveUserRole } from "@/library/Dashboard/userRole";
+import { useTutorTarget } from "@/library/Dashboard/useTutors";
 import { SOMAS_FIELDS, somasSummary } from "@/scripts/somasFields";
 import MultiCIESearchCC from "@/components/SearchInputs/MultiCieSearch-CC";
 
@@ -61,6 +62,10 @@ const SavePatientForm: React.FC<SavePatientFormProps> = ({ loading }) => {
   const { data: userData } = useQuery(Verify_Login(getAccessToken()));
   // Enfermería levanta la ficha y la somatometría; la nota clínica es del médico.
   const isNurse = resolveUserRole(userData?.data.user) === "enfermeria";
+  // Una enfermera puede atender a uno o dos médicos. Leer es la unión de sus
+  // pacientes, pero el alta queda a nombre de UN médico, así que si tiene más
+  // de un tutor hay que preguntarle para quién es.
+  const { tutors, tutorId, setTutorId, mustChoose } = useTutorTarget(isNurse);
 
   // Paraclinical Save Functions
 
@@ -702,10 +707,14 @@ const SavePatientForm: React.FC<SavePatientFormProps> = ({ loading }) => {
         PreguntarPorSomatometricos();
         throw new Error("No Somatometricos Added");
       }
+      if (mustChoose && !tutorId) {
+        throw new Error("Selecciona el médico para el que registras al paciente");
+      }
       const req = await Synthesize_New_Patient(
         ClinicalHistory,
         currentSessionData.patientIdentification,
         currentSessionData.diagnosisCatalog,
+        tutorId,
       );
       return await feathersFetchCC<SynthesizeRecordResponse>(req);
     },
@@ -825,6 +834,24 @@ const SavePatientForm: React.FC<SavePatientFormProps> = ({ loading }) => {
                 Captura la somatometría del paciente y guarda el registro. La
                 nota clínica la escribirá el médico.
               </p>
+              {mustChoose ? (
+                <label className="NurseTutorSelect">
+                  <span>¿Para qué médico es este paciente?</span>
+                  <select
+                    value={tutorId ?? ""}
+                    onChange={(event) => setTutorId(event.target.value)}
+                  >
+                    <option value="" disabled>
+                      Selecciona un médico
+                    </option>
+                    {tutors.map((tutor) => (
+                      <option key={tutor._id} value={tutor._id}>
+                        {tutor.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              ) : null}
               <ButtonCC
                 type="Solid"
                 width="block"

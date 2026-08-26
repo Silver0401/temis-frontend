@@ -115,8 +115,6 @@
         border-radius: var(--lp-r-card)
         border: 1px solid var(--dash-line)
         background: var(--dash-card-bg)
-        backdrop-filter: var(--dash-blur-card)
-        -webkit-backdrop-filter: var(--dash-blur-card)
         box-shadow: var(--dash-shadow)
 
         .admin-filter
@@ -133,14 +131,14 @@
                 color: var(--dash-text-3)
 
             input, select
-                height: 38px
+                min-height: 44px
                 padding: 0 12px
                 border-radius: 11px
                 border: 1px solid var(--dash-line)
                 background: var(--dash-chip-bg)
                 color: var(--dash-text)
                 font-family: inherit
-                font-size: 0.82rem
+                font-size: 16px
 
                 &:focus
                     outline: none
@@ -192,7 +190,7 @@
                 border: 0
                 background: transparent
                 box-shadow: none
-                font-size: 0.9rem
+                font-size: 16px
 
                 &:focus
                     border: 0
@@ -233,6 +231,7 @@
                 font-family: inherit
                 font-size: 0.75rem
                 cursor: pointer
+                min-height: 44px
                 transition: background 120ms ease, color 120ms ease
 
                 &:hover
@@ -432,7 +431,7 @@
 
     .admin-pies
         display: grid
-        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr))
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr))
         gap: 16px
 
     .admin-year-head
@@ -464,8 +463,6 @@
     border-radius: var(--lp-r-card)
     border: 1px solid var(--dash-line)
     background: var(--dash-card-bg)
-    backdrop-filter: var(--dash-blur-card)
-    -webkit-backdrop-filter: var(--dash-blur-card)
     box-shadow: var(--dash-shadow)
 
     h2
@@ -646,10 +643,9 @@
         border-radius: var(--lp-r-card)
         border: 1px solid var(--dash-line)
         background: var(--dash-card-bg)
-        backdrop-filter: var(--dash-blur-card)
-        -webkit-backdrop-filter: var(--dash-blur-card)
         box-shadow: var(--dash-shadow)
-        overflow: hidden
+        overflow-x: auto
+        overflow-y: hidden
 
     .admin-results-head
         position: sticky
@@ -661,7 +657,6 @@
         padding: 12px 20px
         border-bottom: 1px solid var(--dash-line)
         background: var(--dash-glass-solid)
-        backdrop-filter: blur(20px)
         font-size: 0.63rem
         letter-spacing: 0.12em
         text-transform: uppercase
@@ -763,8 +758,6 @@
         border-radius: var(--lp-r-card)
         border: 1px solid var(--dash-line)
         background: var(--dash-card-bg)
-        backdrop-filter: var(--dash-blur-card)
-        -webkit-backdrop-filter: var(--dash-blur-card)
         box-shadow: var(--dash-shadow)
 
     .admin-calendar-head
@@ -882,8 +875,6 @@
         border-radius: var(--lp-r-card)
         border: 1px solid var(--dash-line)
         background: var(--dash-card-bg)
-        backdrop-filter: var(--dash-blur-card)
-        -webkit-backdrop-filter: var(--dash-blur-card)
         box-shadow: var(--dash-shadow)
 
     .admin-side-head
@@ -988,6 +979,40 @@
     .AdminSearchView .admin-results-head,
     .AdminSearchView .admin-row
         min-width: 760px
+
+    .AdminDashboard .admin-hero-side
+        grid-template-columns: 1fr
+
+    .AdminDashboard .admin-hero-main, .AdminDashboard .admin-hero-side article
+        padding: 18px
+
+    .AdminSectionContainer .admin-filter-actions,
+    .AdminSectionContainer .admin-search-row,
+    .AdminSearchView .admin-head-actions,
+    .AdminSearchView .admin-export-row
+        width: 100%
+
+    .AdminSectionContainer .admin-filter-actions > *,
+    .AdminSectionContainer .admin-search-btn
+        flex: 1 1 140px
+
+    .AdminSearchView .admin-calendar
+        padding: 12px 8px
+
+    .AdminSearchView .admin-dow,
+    .AdminSearchView .admin-cal-grid
+        gap: 3px
+
+    .AdminSearchView .admin-day
+        min-height: 64px
+        padding: 6px 3px
+
+    .MonthBarsCC .month-bars-plot
+        gap: 3px
+
+    .PieChartCC .pie-tip
+        right: 0
+        transform: none
 
 // ═══════════════════ Esqueleto de carga del tablero ═══════════════════
 // Repite la geometría del tablero real para que el contenido no salte al
@@ -1097,13 +1122,13 @@
         flex-wrap: wrap
 
         input[type="date"]
-            min-height: 38px
+            min-height: 44px
             padding: 0 10px
             color: var(--dash-text)
             border: 1px solid var(--dash-line)
             border-radius: 10px
             background: var(--dash-card-bg)
-            font-size: 0.78rem
+            font-size: 16px
 
     .admin-export-hint
         max-width: 440px

@@ -9,6 +9,8 @@ import ModalCC from "@/components/Modal-CC";
 import { useGlobalContext } from "@/e2e/globalContext";
 import { Get_User_Patients } from "@/e2e/server/FeathersAPI";
 import ActionButton from "@/library/Generics/ActionButton";
+import TeamInvitations from "@/library/Dashboard/TeamInvitations";
+import { resolveUserRole } from "@/library/Dashboard/userRole";
 
 // Enfermería es el único rol que un médico puede dar de alta (medical-team).
 type TeamRole = "enfermeria";
@@ -18,9 +20,19 @@ type TeamMember = {
   name: string;
   email: string;
   role: TeamRole;
-  tutorId: string;
+  // Plural: una enfermera atiende normalmente a uno o dos médicos.
+  tutorIds: string[];
   status: TeamStatus;
+  // Solo los pacientes que le asignó ESTE médico, nunca los de otro tutor.
   assignedPatientIds: string[];
+};
+
+// Invitación que un médico le manda a una cuenta de enfermería que ya existe.
+type TeamInvite = {
+  tutorId: string;
+  tutorName: string;
+  status: "pending" | "accepted" | "rejected";
+  createdAt: string;
 };
 
 const roleLabels: Record<TeamRole, string> = {
@@ -36,7 +48,22 @@ const patientName = (patient: Patient) =>
     .filter(Boolean)
     .join(" ");
 
-export default function MedicalTeam() {
+export default function MedicalTeam({
+  role,
+  ready = true,
+}: {
+  role?: UserRole;
+  ready?: boolean;
+}) {
+  // Misma ruta, dos vistas: el médico administra su equipo; la enfermera solo
+  // responde las invitaciones que le mandaron. Sin `ready` una enfermera
+  // montaría un instante la vista del médico y se comería un Forbidden.
+  if (!ready) return null;
+  if (resolveUserRole({ role }) === "enfermeria") return <TeamInvitations />;
+  return <DoctorTeam />;
+}
+
+function DoctorTeam() {
   const { feathersFetchCC } = useGlobalContext();
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -47,6 +74,13 @@ export default function MedicalTeam() {
   const [assignedIds, setAssignedIds] = useState<Set<string>>(new Set());
   const [patientSearch, setPatientSearch] = useState("");
   const [loading, setLoading] = useState(false);
+  // El correo ya tiene cuenta de enfermería: en vez de fallar, se le ofrece al
+  // médico invitarla. El vínculo NO nace aquí, nace cuando ella acepta.
+  const [inviteCandidate, setInviteCandidate] = useState<{
+    name: string;
+    email: string;
+  }>();
+  const [inviteModalOpen, setInviteModalOpen] = useState(false);
 
   const loadData = async () => {
     const [teamResponse, patientsResponse] = await Promise.all([
@@ -90,14 +124,16 @@ export default function MedicalTeam() {
 
   const submit = async (formData: FormData) => {
     const password = String(formData.get("password") ?? "");
+    const name = String(formData.get("name") ?? "");
+    const email = String(formData.get("email") ?? "");
     setLoading(true);
     const response = await feathersFetchCC<TeamMember>({
       service: "medical-team",
       method: editing ? "patch" : "create",
       ...(editing ? { resourceId: editing._id } : {}),
       data: {
-        name: String(formData.get("name") ?? ""),
-        email: String(formData.get("email") ?? ""),
+        name,
+        email,
         role: "enfermeria" as TeamRole,
         ...(password ? { password } : {}),
       },
@@ -109,6 +145,44 @@ export default function MedicalTeam() {
     setLoading(false);
     if (response.type === "success") {
       setMemberModalOpen(false);
+      await loadData();
+      return;
+    }
+    // 409 tipado del backend: la cuenta existe y es de enfermería. El cuerpo no
+    // dice de quién es ni qué rol tiene, solo que ese correo está tomado.
+    if (
+      (response.data as { data?: { code?: string } } | undefined)?.data?.code ===
+      "TEAM_MEMBER_EXISTS"
+    ) {
+      setMemberModalOpen(false);
+      setInviteCandidate({ name, email });
+      setInviteModalOpen(true);
+    }
+  };
+
+  /** Manda la invitación. El tutor se agrega hasta que ella la acepte. */
+  const sendInvite = async () => {
+    if (!inviteCandidate) return;
+    setLoading(true);
+    const response = await feathersFetchCC<TeamMember>({
+      service: "medical-team",
+      method: "create",
+      data: {
+        name: inviteCandidate.name,
+        email: inviteCandidate.email,
+        role: "enfermeria" as TeamRole,
+        // Contraseña ignorada por el backend en este camino: la cuenta ya
+        // existe y conserva la suya. Va solo para pasar el validador.
+        password: "invitacion",
+        inviteExisting: true,
+      },
+      logId: "medical_team_invite_sent",
+      successToast: "Invitación enviada. Aparecerá en tu equipo cuando la acepte.",
+    });
+    setLoading(false);
+    if (response.type === "success") {
+      setInviteModalOpen(false);
+      setInviteCandidate(undefined);
       await loadData();
     }
   };
@@ -380,6 +454,39 @@ export default function MedicalTeam() {
               onClick={() => void saveAssignments()}
             >
               Guardar asignaciones
+            </ActionButton>
+          </div>
+        </section>
+      </ModalCC>
+
+      <ModalCC
+        size="small"
+        identifier="MedicalTeamInvite"
+        animation="popUp"
+        useStates={{
+          state: inviteModalOpen,
+          setState: setInviteModalOpen,
+        }}
+      >
+        <section className="medical-team-assignment-modal">
+          <p>Este perfil ya existe</p>
+          <h2>Invitar a tu equipo</h2>
+          <span>
+            Ya hay una cuenta de enfermería con el correo{" "}
+            <strong>{inviteCandidate?.email}</strong>. Puedes invitarla a tu
+            equipo: recibirá la solicitud y el acceso empieza cuando la acepte.
+            Hasta entonces no verá ninguno de tus pacientes.
+          </span>
+          <div className="medical-team-assignment-actions">
+            <ActionButton onClick={() => setInviteModalOpen(false)}>
+              Cancelar
+            </ActionButton>
+            <ActionButton
+              variant="primary"
+              disabled={loading}
+              onClick={() => void sendInvite()}
+            >
+              Enviar invitación
             </ActionButton>
           </div>
         </section>

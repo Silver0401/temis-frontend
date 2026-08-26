@@ -2,8 +2,8 @@
 
 .DashboardWrapper
     position: relative
-    width: 100vw
-    min-height: 100vh
+    width: 100%
+    min-height: 100dvh
     background: var(--dash-app-bg)
     overflow: hidden
 
@@ -41,10 +41,8 @@
         .DashboardTransitioner
             position: relative
             width: 100%
-            height: calc(100vh - 28px)
+            height: calc(100dvh - 28px)
             background: var(--dash-card-bg)
-            backdrop-filter: var(--dash-blur-card)
-            -webkit-backdrop-filter: var(--dash-blur-card)
             border: 1px solid var(--dash-line)
             border-radius: 22px
             overflow: hidden
@@ -117,6 +115,7 @@
                             position: relative
                             margin-top: 50px
                             width: 500px
+                            max-width: 100%
                             height: 300px
                             border: 2px solid var(--white)
                             border-radius: 15px
@@ -239,6 +238,7 @@
                             font-size: 0.72rem
                             font-family: inherit
                             padding: 5px 13px
+                            min-height: 44px
                             border-radius: 6px
                             cursor: pointer
                             transition: background 180ms var(--ease-out), color 180ms var(--ease-out), transform 120ms var(--ease-out)
@@ -290,8 +290,8 @@
                         position: absolute !important
                         bottom: 5px
                         right: 5px
-                        width: 23px
-                        height: 23px
+                        width: 44px
+                        height: 44px
                         border-radius: 7px
                         border: 1px solid var(--dash-line-hi)
                         display: grid
@@ -337,8 +337,8 @@
                             border: 1px solid var(--dash-line)
 
                         .addAppt
-                            width: 26px
-                            height: 26px
+                            width: 44px
+                            height: 44px
                             border-radius: 8px
                             border: 1px solid var(--dash-line-hi)
                             background: transparent
@@ -430,8 +430,8 @@
                                 margin-top: 2px
 
                         .apptTrash
-                            width: 22px
-                            height: 22px
+                            width: 44px
+                            height: 44px
                             border-radius: 7px
                             border: 1px solid var(--dash-line)
                             display: grid
@@ -493,17 +493,58 @@
 
         .DashboardTransitioner
             height: auto !important
+            min-height: calc(100dvh - 20px)
 
             .NewPatientTransitioner
                 padding-top: 50px
 
                 .NewPatientContainer
                     height: auto !important
+                    width: 100%
+                    padding-inline: 12px
 
                     .HeadersContainer
 
                         .SubHeader
                             margin: 15px
+
+                    .SearchPatientToAddDoc
+                        width: 100%
+
+                        .topCont
+                            width: 100%
+                            max-width: 300px
+
+                        .miniPatient
+                            width: 100%
+                            height: auto
+                            flex-direction: column
+
+                            .miniDiagnosis, .miniPatientModelCont
+                                width: 100%
+
+                            .miniDiagnosis
+                                height: auto
+                                border-right: 0
+                                border-bottom: 1px solid var(--primary)
+
+                            .miniPatientModelCont
+                                min-height: 300px
+
+            .MyAgendaContainer
+                padding: 12px
+                overflow-y: auto
+
+                .AgendaTopBar
+                    align-items: stretch
+                    flex-direction: column
+                    gap: 12px
+
+                .AgendaLayout
+                    overflow: visible
+
+                .CalendarContainer, .AgendaSide
+                    padding: 12px
 
 
 // ── Animación de entrada de citas (agenda lateral) ──

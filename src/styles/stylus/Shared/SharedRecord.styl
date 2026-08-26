@@ -1,5 +1,8 @@
 .SharedViewConatainer
     position: relative
+    width: 100%
+    min-height: 100dvh
+    overflow-y: auto
 
     .SharedSection 
         position: relative
@@ -8,3 +11,16 @@
             position: relative
             fillSpace()
             alignStuff(0,1,0,1)
+            width: min(100% - 24px, 520px)
+            min-height: 100dvh
+            margin: 0 auto
+            padding: 24px 16px
+            text-align: center
+
+            input, button, a
+                max-width: 100%
+                min-height: 44px
+
+            input
+                width: 100%
+                font-size: 16px

@@ -23,9 +23,17 @@ import FancyLoader from "@/library/Generics/Loaders/FancyLoader";
 import LoaderCC from "@/components/Loader-CC";
 import { DashboardContext } from "@/e2e/dashboardContext";
 import ButtonCC from "@/components/Button-CC";
+import { Verify_Login } from "@/e2e/server/Queries";
+import { resolveUserRole } from "@/library/Dashboard/userRole";
+import { useTutorTarget } from "@/library/Dashboard/useTutors";
 
 const MyAgenda = () => {
-  const { feathersFetchCC } = useGlobalContext();
+  const { feathersFetchCC, getAccessToken } = useGlobalContext();
+  const { data: userData } = useQuery(Verify_Login(getAccessToken()));
+  const isNurse = resolveUserRole(userData?.data.user) === "enfermeria";
+  // La agenda es la de UN médico. Una enfermera puede atender a uno o dos: con
+  // uno se abre sola, con dos hay que decir cuál.
+  const { tutors, tutorId, setTutorId, mustChoose } = useTutorTarget(isNurse);
   const { setShowPatient } = useContext(DashboardContext);
   const isMobile = useMediaQuery({ query: "(max-width: 800px)" });
   const [eventIDToDelete, setEventIDToDelete] = useState<string | undefined>(
@@ -54,11 +62,14 @@ const MyAgenda = () => {
 
   const { isPending, data, refetch } = useQuery({
     queryFn: async () => {
-      const req = await Get_User_Agenda();
+      const req = await Get_User_Agenda(tutorId);
       return feathersFetchCC<Array<Agenda>>(req);
     },
     refetchOnWindowFocus: false,
-    queryKey: ["fetching_user_agenda"],
+    // El médico elegido entra en la llave: cambiarlo recarga la agenda.
+    queryKey: ["fetching_user_agenda", tutorId ?? "self"],
+    // Sin médico elegido la petición fallaría en el backend; mejor no mandarla.
+    enabled: !isNurse || Boolean(tutorId),
   });
 
   const events = useMemo(() => {
@@ -306,6 +317,24 @@ const MyAgenda = () => {
               <h2>Mi Agenda</h2>
               <span className="sub">{`${apptsRaw.length} citas`}</span>
             </div>
+            {mustChoose ? (
+              <label className="NurseTutorSelect">
+                <span>Agenda de</span>
+                <select
+                  value={tutorId ?? ""}
+                  onChange={(event) => setTutorId(event.target.value)}
+                >
+                  <option value="" disabled>
+                    Selecciona un médico
+                  </option>
+                  {tutors.map((tutor) => (
+                    <option key={tutor._id} value={tutor._id}>
+                      {tutor.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
             <div className="cal-view-toggle">
               <button
                 className={viewMode === "day" ? "on" : ""}

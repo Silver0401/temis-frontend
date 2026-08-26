@@ -2,6 +2,10 @@
     position: relative
     fillSpace()
     alignStuff(0,1,0,0)
+    width: 100%
+    min-height: 100dvh
+    overflow-y: auto
+    padding: unquote("max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom))")
 
     h4
         font-size: 1.4rem
@@ -15,6 +19,11 @@
         position: relative
         fillSpace() 
         alignStuff(0,1,0,1)
+        gap: 16px
+
+        .ButtonCC
+            min-width: 44px
+            min-height: 44px
 
 
     .mobileFullContainer
@@ -26,3 +35,9 @@
             position: absolute
             top: 20px
             right: 20px
+            min-width: 44px
+            min-height: 44px
+
+.MobileFullViewContainer
+    height: 100dvh
+    overflow-y: auto

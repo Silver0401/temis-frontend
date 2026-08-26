@@ -93,7 +93,6 @@
             span
                 position: absolute
                 background-color: rgba(255, 255, 255, 0.3)
-                backdrop-filter: blur(5px)
                 border-radius: 8px
                 border: 1px solid rgba(255, 255, 255, 0.6)
                 // Los cuadros flotan encima del lienzo; si capturan el puntero
@@ -539,7 +538,9 @@
 @media (max-width: 800px)
     .AccountSection
         .innerAccountContainer
-            height: 800px
+            height: auto
+            min-height: calc(100dvh - var(--nav))
+            overflow-y: auto
 
             .LogRegisterSection
                 transform: translate(0%, 0%)
@@ -589,7 +590,7 @@
 
 .ProfileLogout
     width: 100%
-    min-height: 42px
+    min-height: 44px
     padding: 0 14px
     border: unquote("1px solid color-mix(in srgb, var(--red) 30%, transparent)")
     border-radius: 11px
@@ -605,7 +606,7 @@
         border-color: unquote("color-mix(in srgb, var(--red) 55%, transparent)")
 
 .ProfileModalBtn
-    min-height: 40px
+    min-height: 44px
     padding: 0 14px
     display: inline-flex
     align-items: center

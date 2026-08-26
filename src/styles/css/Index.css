@@ -3,12 +3,13 @@
   height: 100%;
 }
 .formOptContainer {
-  width: clamp(300px, 50vw, 450px);
+  width: 100%;
   height: 500px;
 }
 @media (max-width: 800px) {
   .formOptContainer {
-    height: 600px;
+    height: auto;
+    min-height: 500px;
   }
 }
 .fontWhite {
@@ -31,7 +32,7 @@
 }
 .InputCC-Container {
   position: relative;
-  height: 35px;
+  min-height: 44px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -78,6 +79,7 @@
   cursor: pointer;
   font-family: "Poppins", sans-serif;
   z-index: 1;
+  font-size: 16px;
 }
 .InputCC-Container .InputCC {
   background-color: transparent;
@@ -155,8 +157,8 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  width: 20px;
-  height: 20px;
+  width: 44px;
+  height: 44px;
   background-color: var(--red);
   border-radius: 50%;
   cursor: pointer;
@@ -205,8 +207,8 @@
   position: absolute !important;
   right: 2px;
   overflow: hidden;
-  width: 25px;
-  height: 25px;
+  width: 44px;
+  height: 44px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -373,7 +375,7 @@
 }
 .InputCC-Checkbox {
   position: relative;
-  height: 35px;
+  min-height: 44px;
   width: 180px;
   display: flex;
   justify-content: space-evenly;
@@ -415,7 +417,7 @@
   width: 100%;
   height: 100%;
   padding: 10px;
-  font-size: 0.8rem;
+  font-size: 16px;
 }
 .InputCC-Container.InputCC-Custom {
   height: auto;
@@ -433,7 +435,7 @@
   width: auto;
   min-width: 105px;
   max-width: 155px;
-  height: 36px;
+  min-height: 44px;
   padding: 0 8px;
   border-radius: 7px;
 }
@@ -459,7 +461,7 @@
   height: 100%;
   padding-left: 4px;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 16px;
   width: auto;
 }
 .InputCC-Container[data-direction="horizontal"] .InputCC-Icon {
@@ -727,8 +729,6 @@
 }
 .ButtonCC--Phantom {
   background: var(--lp-glass-bg);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border-color: var(--lp-glass-border);
   color: var(--white);
 }
@@ -1030,10 +1030,9 @@
   justify-content: space-evenly;
   align-items: center;
   flex-direction: row;
-  overflow: hidden;
+  overflow-y: auto;
+  padding: 12px;
   background: var(--translucid);
-  backdrop-filter: var(--lp-glass-blur-sm);
-  -webkit-backdrop-filter: var(--lp-glass-blur-sm);
 }
 .Modal-CC-Container .Modal-CC {
   position: relative;
@@ -1045,19 +1044,20 @@
   will-change: transform, opacity;
   transform-origin: center;
   backface-visibility: hidden;
-  overflow: hidden;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background-image: var(--lp-glass-shine);
   border: 1px solid var(--lp-glass-border);
-  backdrop-filter: var(--lp-glass-blur);
-  -webkit-backdrop-filter: var(--lp-glass-blur);
   box-shadow: 0 16px 48px var(--lp-featured-shadow);
 }
 .Modal-CC-Container .Modal-CC .xModalButton {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 23px;
-  height: 23px;
+  width: 44px;
+  height: 44px;
   cursor: pointer;
   z-index: var(--globalZ5);
   transition: color 0.2s var(--lp-ease);
@@ -1085,7 +1085,7 @@
   position: absolute;
   top: 0px;
   right: 20px;
-  width: 23px;
+  width: 44px;
   height: var(--nav);
   cursor: pointer;
   display: grid;
@@ -1188,8 +1188,8 @@
 }
 #DropdownCC {
   position: relative;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   justify-content: space-evenly;
@@ -1207,15 +1207,16 @@
 }
 #DropdownCC .itemsContainer {
   position: absolute;
-  top: 30px;
+  top: 44px;
   right: 0px;
   width: 200px;
   height: auto;
   overflow: hidden;
   border-radius: 10px;
-  backdrop-filter: blur(15px);
+  background-color: var(--dash-glass-solid);
 }
 #DropdownCC .itemsContainer .dropdownItem {
+  min-height: 44px;
   width: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1248,7 +1249,7 @@
 }
 .Dropdownopen .itemsContainer .dropdownItem {
   transition: height 350ms, opacity 300ms;
-  height: 40px;
+  height: 44px;
   opacity: 1;
 }
 .Dropdownclosed .dotsIcon {
@@ -1371,7 +1372,6 @@
   width: 100%;
   height: 80px;
   border: 2px solid var(--white);
-  backdrop-filter: blur(2px);
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   background-color: var(--translucid);
@@ -1391,8 +1391,8 @@
 }
 .CameraCC .ButtonContainer .TakePhoto {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background-color: var(--white);
   border-radius: 50%;
   cursor: pointer;
@@ -1401,8 +1401,8 @@
 }
 .CameraCC .ButtonContainer .SwitchCamera {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   right: 7%;
   background-color: var(--bg);
   border-radius: 50%;
@@ -1419,7 +1419,7 @@
 }
 @media (max-width: 800px) {
   .CameraCC {
-    height: calc(90vh - var(--nav));
+    height: calc(100dvh - var(--nav));
   }
 }
 .ActionCC {
@@ -1527,8 +1527,8 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  width: 25px;
-  height: 25px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   justify-content: space-evenly;
@@ -1718,6 +1718,18 @@
 }
 .CardCC-night .xCorner svg {
   fill: var(--white) !important;
+}
+@media (max-width: 800px) {
+  .CardCC {
+    width: 100%;
+    min-width: 0 !important;
+    margin-inline: 0;
+  }
+  #lg,
+  #sm {
+    min-width: 0;
+    flex-basis: 100%;
+  }
 }
 .GeneralSearchCCContainer {
   position: relative;
@@ -1909,7 +1921,7 @@
 .PrescriptionCC {
   position: relative;
   background-color: var(--bg);
-  width: 300px;
+  width: 100%;
   height: 250px;
   border-radius: 15px;
   border: 1px solid var(--white);
@@ -1962,10 +1974,15 @@
   align-items: center;
   flex-direction: row;
 }
+@media (max-width: 800px) {
+  .PrescriptionCC {
+    margin-inline: 0;
+  }
+}
 .OrderCC {
   position: relative;
   background-color: var(--bg);
-  width: 300px;
+  width: 100%;
   height: 250px;
   border-radius: 15px;
   border: 1px solid var(--white);
@@ -2014,6 +2031,11 @@
   justify-content: space-evenly;
   align-items: center;
   flex-direction: row;
+}
+@media (max-width: 800px) {
+  .OrderCC {
+    margin-inline: 0;
+  }
 }
 .TabsCC {
   position: relative;
@@ -2363,6 +2385,23 @@
   border-radius: 20px;
   overflow: hidden;
 }
+@media (max-width: 800px) {
+  .PdfViewerCC {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .PdfViewerCC .PdfOptions,
+  .PdfViewerCC .PdfContainer {
+    width: 100%;
+  }
+  .PdfViewerCC .PdfOptions {
+    height: auto;
+    flex-shrink: 0;
+  }
+  .PdfViewerCC .PdfContainer {
+    min-height: 60dvh;
+  }
+}
 .SignaturePadCC {
   width: 100%;
   display: grid;
@@ -2399,7 +2438,7 @@
   gap: 10px;
 }
 .SignaturePadCC .signatureActions button {
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 18px;
   border: 1px solid var(--silver);
   border-radius: 10px;
@@ -2506,7 +2545,6 @@
   border: 1px solid var(--lp-glass-border);
   border-radius: 16px;
   padding: 28px 32px;
-  backdrop-filter: var(--lp-glass-blur);
   text-decoration: none;
   display: flex;
   flex-direction: column;
@@ -2643,15 +2681,20 @@
   color: color-mix(in srgb, var(--sp-accent) 80%, var(--lp-text-2));
 }
 @media (max-width: 640px) {
+  .lp-institutional {
+    padding-top: calc(var(--nav) + 32px);
+  }
   .lp-inst-contact-grid {
     grid-template-columns: 1fr;
+  }
+  .lp-legal-body {
+    overflow-wrap: anywhere;
   }
 }
 .IntroLoader {
   position: fixed;
   inset: 0;
   background-color: transparent;
-  backdrop-filter: blur(10px);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -2951,7 +2994,6 @@
   top: 0;
   display: flex;
   flex-wrap: wrap;
-  backdrop-filter: blur(20px);
   z-index: var(--globalZ1);
 }
 .NotFound .NFIconContainer {
@@ -3155,8 +3197,6 @@
   background: var(--dash-card-bg);
   border: 1px solid var(--dash-line);
   border-radius: 16px;
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
 }
 .ClinicalHistoryContainer .GenericContainer .ch-top .patient-chip {
   display: flex;
@@ -3274,8 +3314,6 @@
   border: 1px solid var(--dash-line);
   border-radius: 14px;
   background: var(--dash-card-bg);
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
 }
 .ClinicalHistoryContainer .GenericContainer .patient-details .pd-grid {
   display: grid;
@@ -3317,8 +3355,6 @@
   background: var(--dash-card-bg);
   border: 1px solid var(--dash-line);
   border-radius: 20px;
-  backdrop-filter: blur(30px) saturate(160%);
-  -webkit-backdrop-filter: blur(30px) saturate(160%);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -3416,8 +3452,6 @@
   background: var(--dash-card-bg);
   border: 1px solid var(--dash-line);
   border-radius: 20px;
-  backdrop-filter: blur(30px) saturate(160%);
-  -webkit-backdrop-filter: blur(30px) saturate(160%);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -3622,8 +3656,6 @@
   border-color: var(--dash-line-hi);
   border-radius: 18px;
   background: var(--dash-glass-solid);
-  backdrop-filter: blur(30px) saturate(160%);
-  -webkit-backdrop-filter: blur(30px) saturate(160%);
 }
 .ClinicalHistoryContainer .GenericContainer .stage .data-card .data-scroll .sec-card .sec-head {
   display: flex;
@@ -3856,7 +3888,6 @@
   transition: all 350ms;
   overflow: hidden;
   justify-content: center;
-  backdrop-filter: blur(7px);
 }
 .ClinicalHistoryContainer .SectionsContainer .SectionWrapper .GabinetImgsDisplay .ImagesDisplayContainer .gImgContainer .TrashIcon {
   position: absolute;
@@ -4316,6 +4347,33 @@
   .ClinicalHistoryContainer .GenericContainer .stage .model-card {
     min-height: 300px;
   }
+  .ClinicalHistoryContainer .GenericContainer .GabinetImgsDisplay .ImagesDisplayContainer .gImgContainer {
+    width: calc(100% - 24px);
+  }
+  .ClinicalHistoryContainer .GenericContainer .GabinetImgsDisplay .ImagesDisplayContainer .LeftClickBox,
+  .ClinicalHistoryContainer .GenericContainer .GabinetImgsDisplay .ImagesDisplayContainer .RightClickBox {
+    width: 44px;
+  }
+  .ClinicalHistoryContainer .GenericContainer .NutritionalIntervention {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .ClinicalHistoryContainer .GenericContainer .NutritionalIntervention .SomasNutriFormContainer,
+  .ClinicalHistoryContainer .GenericContainer .NutritionalIntervention .MainNutriSection {
+    width: 100%;
+    height: auto;
+  }
+  .GabinetImgIndividual #lowerImgCont,
+  .GabinetImgIndividual #expanedImgCont {
+    width: 100%;
+  }
+  .GabinetImgIndividual .InterpretationContainer {
+    width: 100%;
+    overflow-y: auto;
+  }
+  .GabinetImgIndividual #notToggled {
+    transform: translateX(-100%);
+  }
 }
 .ClinicalHistoryContainer .GenericContainer .stage .note-detail {
   position: relative;
@@ -4377,8 +4435,6 @@
   border-radius: 18px;
   background: var(--dash-glass-solid);
   border-color: var(--dash-line-hi);
-  backdrop-filter: blur(30px) saturate(160%);
-  -webkit-backdrop-filter: blur(30px) saturate(160%);
   box-shadow: var(--dash-shadow);
 }
 .ClinicalHistoryContainer .GenericContainer .stage .note-detail .data-scroll .sec-card.is-fullscreen .sec-body {
@@ -4623,6 +4679,7 @@
 .AddNewDocForm .innerDocForm {
   height: 100%;
   width: 500px;
+  max-width: 100%;
 }
 .AddNewDocForm .ReturnForm {
   position: absolute;
@@ -4635,6 +4692,14 @@
 }
 .AddNewDocForm-night {
   background-color: var(--lp-bg-mid-inverse);
+}
+@media (max-width: 800px) {
+  .AddNewDocForm {
+    padding: 12px;
+  }
+  .AddNewDocForm .innerDocForm {
+    width: 100%;
+  }
 }
 .PatientConsents {
   width: 100%;
@@ -5505,8 +5570,6 @@
   flex: 1;
   min-width: 0;
   background: var(--lp-card-bg);
-  backdrop-filter: var(--lp-glass-blur);
-  -webkit-backdrop-filter: var(--lp-glass-blur);
   border: 1px solid var(--lp-glass-border);
   clip-path: polygon(14px 0%, calc(100% - 14px) 0%, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0% calc(100% - 14px), 0% 14px);
   overflow: hidden;
@@ -5846,7 +5909,6 @@
   border-radius: var(--lp-r-pill);
   border: 1px solid var(--lp-glass-border);
   background: var(--lp-glass-bg-lite);
-  backdrop-filter: blur(10px);
 }
 .lp-legend-item::before {
   content: "";
@@ -5872,8 +5934,6 @@
   justify-content: center;
   padding: 40px 36px;
   background: var(--lp-card-bg);
-  backdrop-filter: var(--lp-glass-blur);
-  -webkit-backdrop-filter: var(--lp-glass-blur);
   border: 1px solid var(--lp-glass-border);
   clip-path: polygon(14px 0%, calc(100% - 14px) 0%, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0% calc(100% - 14px), 0% 14px);
   overflow: hidden;
@@ -6037,8 +6097,6 @@
 }
 .lp-quote-glass {
   background: var(--lp-card-bg);
-  backdrop-filter: var(--lp-glass-blur);
-  -webkit-backdrop-filter: var(--lp-glass-blur);
   border: 1px solid var(--lp-glass-border);
   clip-path: polygon(14px 0%, calc(100% - 14px) 0%, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0% calc(100% - 14px), 0% 14px);
   padding: 38px 32px;
@@ -6118,8 +6176,6 @@
 }
 .lp-plan-glass {
   background: var(--lp-card-bg);
-  backdrop-filter: var(--lp-glass-blur);
-  -webkit-backdrop-filter: var(--lp-glass-blur);
   border: 1px solid var(--lp-glass-border);
   clip-path: polygon(14px 0%, calc(100% - 14px) 0%, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0% calc(100% - 14px), 0% 14px);
   padding: 36px 32px;
@@ -6442,8 +6498,6 @@
   flex-direction: column;
   justify-content: space-between;
   background: color-mix(in srgb, var(--sp-accent) 6%, var(--lp-card-bg));
-  backdrop-filter: var(--lp-glass-blur);
-  -webkit-backdrop-filter: var(--lp-glass-blur);
   border: 1px solid var(--lp-glass-border);
   overflow: hidden;
   cursor: default;
@@ -7577,7 +7631,6 @@
   z-index: 1;
   border-top: 1px solid var(--lp-footer-border);
   background: var(--lp-footer-bg);
-  backdrop-filter: blur(20px);
   overflow: hidden;
 }
 .lp-foot-word {
@@ -7901,7 +7954,6 @@
   border-radius: 10px;
   padding: 9px 17px;
   cursor: pointer;
-  backdrop-filter: blur(8px);
   transition: all 0.25s var(--lp-ease);
 }
 .hub-hero-navlinks button:hover {
@@ -8240,15 +8292,13 @@
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  backdrop-filter: blur(10px);
+  background: var(--lp-glass-bg);
   z-index: var(--globalZ4);
   animation: fadeIn 1000ms linear;
 }
 .globalNav.lp-nav {
   display: none;
   background: var(--lp-glass-bg) !important;
-  backdrop-filter: blur(32px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(32px) saturate(200%) !important;
   border: 1px solid var(--lp-glass-border) !important;
   border-bottom: 1px solid var(--lp-glass-border) !important;
   border-radius: var(--lp-r-pill) !important;
@@ -8280,8 +8330,6 @@
   .globalNav.lp-nav ul {
     width: 300px !important;
     background: rgba(0,21,8,0.85) !important;
-    backdrop-filter: blur(32px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(32px) saturate(200%) !important;
     border-left: 1px solid var(--lp-glass-border) !important;
     flex-direction: column !important;
     flex-direction: column-reverse !important;
@@ -8493,14 +8541,15 @@
 @media (max-width: 1000px) {
   .globalNav ul {
     width: 20%;
-    height: calc(100vh - var(--nav));
+    height: calc(100dvh - var(--nav));
     position: absolute;
     top: var(--nav);
     right: 0;
     flex-direction: column;
     width: 300px !important;
     background-color: var(--white);
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     pointer-events: all;
     flex-direction: column-reverse;
     justify-content: flex-end;
@@ -8717,7 +8766,6 @@ label svg {
 @media (max-width: 1100px) {
   .AccountSection .innerAccountContainer #overlap1 {
     background-color: var(--transparency);
-    backdrop-filter: blur(3px);
     top: 0;
     left: 0;
     position: absolute;
@@ -8813,7 +8861,6 @@ label svg {
 .AccountSection .innerAccountContainer .NewsSection span {
   position: absolute;
   background-color: rgba(255,255,255,0.3);
-  backdrop-filter: blur(5px);
   border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.6);
   pointer-events: none;
@@ -9258,7 +9305,9 @@ label svg {
 }
 @media (max-width: 800px) {
   .AccountSection .innerAccountContainer {
-    height: 800px;
+    height: auto;
+    min-height: calc(100dvh - var(--nav));
+    overflow-y: auto;
   }
   .AccountSection .innerAccountContainer .LogRegisterSection {
     transform: translate(0%, 0%);
@@ -9305,7 +9354,7 @@ label svg {
 }
 .ProfileLogout {
   width: 100%;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 14px;
   border: 1px solid color-mix(in srgb, var(--red) 30%, transparent);
   border-radius: 11px;
@@ -9321,7 +9370,7 @@ label svg {
   border-color: color-mix(in srgb, var(--red) 55%, transparent);
 }
 .ProfileModalBtn {
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 14px;
   display: inline-flex;
   align-items: center;
@@ -9538,6 +9587,9 @@ label svg {
 }
 .SharedViewConatainer {
   position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  overflow-y: auto;
 }
 .SharedViewConatainer .SharedSection {
   position: relative;
@@ -9550,6 +9602,21 @@ label svg {
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
+  width: 76%;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 24px 16px;
+  text-align: center;
+}
+.SharedViewConatainer .SharedSection .needToLogIn input,
+.SharedViewConatainer .SharedSection .needToLogIn button,
+.SharedViewConatainer .SharedSection .needToLogIn a {
+  max-width: 100%;
+  min-height: 44px;
+}
+.SharedViewConatainer .SharedSection .needToLogIn input {
+  width: 100%;
+  font-size: 16px;
 }
 .SharedConsentPage {
   min-height: 100dvh;
@@ -9743,10 +9810,18 @@ label svg {
     padding-right: 44px;
   }
 }
+@media (max-width: 800px) {
+  .SharedConsentPage .publicConsentDocument > header dl div {
+    grid-template-columns: 1fr;
+  }
+  .SharedConsentPage .consentModeTabs {
+    grid-template-columns: 1fr;
+  }
+}
 .DashboardWrapper {
   position: relative;
-  width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  min-height: 100dvh;
   background: var(--dash-app-bg);
   overflow: hidden;
 }
@@ -9781,10 +9856,8 @@ label svg {
 .DashboardWrapper .DashboardSection .DashboardTransitioner {
   position: relative;
   width: 100%;
-  height: calc(100vh - 28px);
+  height: calc(100dvh - 28px);
   background: var(--dash-card-bg);
-  backdrop-filter: var(--dash-blur-card);
-  -webkit-backdrop-filter: var(--dash-blur-card);
   border: 1px solid var(--dash-line);
   border-radius: 22px;
   overflow: hidden;
@@ -9873,6 +9946,7 @@ label svg {
   position: relative;
   margin-top: 50px;
   width: 500px;
+  max-width: 100%;
   height: 300px;
   border: 2px solid var(--white);
   border-radius: 15px;
@@ -9999,6 +10073,7 @@ label svg {
   font-size: 0.72rem;
   font-family: inherit;
   padding: 5px 13px;
+  min-height: 44px;
   border-radius: 6px;
   cursor: pointer;
   transition: background 180ms var(--ease-out), color 180ms var(--ease-out), transform 120ms var(--ease-out);
@@ -10051,8 +10126,8 @@ label svg {
   position: absolute !important;
   bottom: 5px;
   right: 5px;
-  width: 23px;
-  height: 23px;
+  width: 44px;
+  height: 44px;
   border-radius: 7px;
   border: 1px solid var(--dash-line-hi);
   display: grid;
@@ -10096,8 +10171,8 @@ label svg {
   border: 1px solid var(--dash-line);
 }
 .DashboardWrapper .DashboardSection .DashboardTransitioner .MyAgendaContainer .AgendaSide .agenda-head .addAppt {
-  width: 26px;
-  height: 26px;
+  width: 44px;
+  height: 44px;
   border-radius: 8px;
   border: 1px solid var(--dash-line-hi);
   background: transparent;
@@ -10211,8 +10286,8 @@ label svg {
   margin-top: 2px;
 }
 .DashboardWrapper .DashboardSection .DashboardTransitioner .MyAgendaContainer .AgendaSide .appt .apptTrash {
-  width: 22px;
-  height: 22px;
+  width: 44px;
+  height: 44px;
   border-radius: 7px;
   border: 1px solid var(--dash-line);
   display: grid;
@@ -10271,15 +10346,58 @@ label svg {
   }
   .DashboardSection .DashboardTransitioner {
     height: auto !important;
+    min-height: calc(100dvh - 20px);
   }
   .DashboardSection .DashboardTransitioner .NewPatientTransitioner {
     padding-top: 50px;
   }
   .DashboardSection .DashboardTransitioner .NewPatientTransitioner .NewPatientContainer {
     height: auto !important;
+    width: 100%;
+    padding-inline: 12px;
   }
   .DashboardSection .DashboardTransitioner .NewPatientTransitioner .NewPatientContainer .HeadersContainer .SubHeader {
     margin: 15px;
+  }
+  .DashboardSection .DashboardTransitioner .NewPatientTransitioner .NewPatientContainer .SearchPatientToAddDoc {
+    width: 100%;
+  }
+  .DashboardSection .DashboardTransitioner .NewPatientTransitioner .NewPatientContainer .SearchPatientToAddDoc .topCont {
+    width: 100%;
+    max-width: 300px;
+  }
+  .DashboardSection .DashboardTransitioner .NewPatientTransitioner .NewPatientContainer .SearchPatientToAddDoc .miniPatient {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+  }
+  .DashboardSection .DashboardTransitioner .NewPatientTransitioner .NewPatientContainer .SearchPatientToAddDoc .miniPatient .miniDiagnosis,
+  .DashboardSection .DashboardTransitioner .NewPatientTransitioner .NewPatientContainer .SearchPatientToAddDoc .miniPatient .miniPatientModelCont {
+    width: 100%;
+  }
+  .DashboardSection .DashboardTransitioner .NewPatientTransitioner .NewPatientContainer .SearchPatientToAddDoc .miniPatient .miniDiagnosis {
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--primary);
+  }
+  .DashboardSection .DashboardTransitioner .NewPatientTransitioner .NewPatientContainer .SearchPatientToAddDoc .miniPatient .miniPatientModelCont {
+    min-height: 300px;
+  }
+  .DashboardSection .DashboardTransitioner .MyAgendaContainer {
+    padding: 12px;
+    overflow-y: auto;
+  }
+  .DashboardSection .DashboardTransitioner .MyAgendaContainer .AgendaTopBar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .DashboardSection .DashboardTransitioner .MyAgendaContainer .AgendaLayout {
+    overflow: visible;
+  }
+  .DashboardSection .DashboardTransitioner .MyAgendaContainer .CalendarContainer,
+  .DashboardSection .DashboardTransitioner .MyAgendaContainer .AgendaSide {
+    padding: 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -10388,7 +10506,7 @@ label svg {
   position: fixed;
   left: 0;
   top: 0;
-  height: 100vh;
+  height: 100dvh;
   padding: 14px;
   z-index: var(--globalZ5);
   transition: width 240ms var(--ease-drawer);
@@ -10398,8 +10516,6 @@ label svg {
   width: 100%;
   height: 100%;
   background: var(--dash-sidebar-bg);
-  backdrop-filter: var(--dash-blur);
-  -webkit-backdrop-filter: var(--dash-blur);
   border: 1px solid var(--dash-line);
   border-radius: 20px;
   display: flex;
@@ -10644,8 +10760,6 @@ label svg {
     inset: 0;
     z-index: var(--globalZ4);
     background: var(--dash-scrim);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
     animation: sideNavBackdropIn 200ms var(--ease-drawer);
   }
   .SideNavContainer.is-mobile.mobile-fab {
@@ -10665,8 +10779,6 @@ label svg {
     padding: 0;
     border: 1px solid var(--dash-line);
     background: var(--dash-sidebar-bg);
-    backdrop-filter: var(--dash-blur);
-    -webkit-backdrop-filter: var(--dash-blur);
     box-shadow: 0 8px 24px var(--dash-scrim);
     cursor: grab;
     touch-action: none;
@@ -10684,11 +10796,14 @@ label svg {
     position: fixed;
     left: 0;
     top: 0;
-    height: 100vh;
-    width: var(--siderExpanded);
+    height: 100dvh;
+    width: 100vw;
     padding: 10px;
     z-index: var(--globalZ5);
     animation: sideNavPanelIn 240ms var(--ease-drawer);
+  }
+  .SideNavContainer.is-mobile.mobile-open .SideNav {
+    overflow-y: auto;
   }
 @-moz-keyframes sideNavBackdropIn {
     from {
@@ -10967,6 +11082,7 @@ label svg {
   border: 1px solid var(--dash-line);
   border-radius: 10px;
   background: var(--dash-card-bg);
+  font-size: 16px;
 }
 .medical-team-patient-list {
   max-height: 300px;
@@ -11018,6 +11134,27 @@ label svg {
   .medical-team-filters {
     width: 100%;
     overflow: auto;
+  }
+  .medical-team-member-main {
+    grid-template-columns: 54px minmax(0, 1fr);
+  }
+  .medical-team-member-main .medical-team-status {
+    grid-column: 1/-1;
+    justify-self: start;
+  }
+  .medical-team-member-meta {
+    flex-direction: column;
+  }
+  .medical-team-assignment-modal {
+    width: 100%;
+    padding: 18px;
+  }
+  .medical-team-assignment-actions {
+    flex-wrap: wrap;
+  }
+  .medical-team-assignment-actions button {
+    flex: 1 1 140px;
+    min-height: 44px;
   }
 }
 .DashboardWrapper .DashboardSection .DashboardTransitioner section.AdminSectionContainer {
@@ -11118,8 +11255,6 @@ label svg {
   border-radius: var(--lp-r-card);
   border: 1px solid var(--dash-line);
   background: var(--dash-card-bg);
-  backdrop-filter: var(--dash-blur-card);
-  -webkit-backdrop-filter: var(--dash-blur-card);
   box-shadow: var(--dash-shadow);
 }
 .AdminSectionContainer .admin-filters .admin-filter {
@@ -11137,14 +11272,14 @@ label svg {
 }
 .AdminSectionContainer .admin-filters .admin-filter input,
 .AdminSectionContainer .admin-filters .admin-filter select {
-  height: 38px;
+  min-height: 44px;
   padding: 0 12px;
   border-radius: 11px;
   border: 1px solid var(--dash-line);
   background: var(--dash-chip-bg);
   color: var(--dash-text);
   font-family: inherit;
-  font-size: 0.82rem;
+  font-size: 16px;
 }
 .AdminSectionContainer .admin-filters .admin-filter input:focus,
 .AdminSectionContainer .admin-filters .admin-filter select:focus {
@@ -11196,7 +11331,7 @@ label svg {
   border: 0;
   background: transparent;
   box-shadow: none;
-  font-size: 0.9rem;
+  font-size: 16px;
 }
 .AdminSectionContainer .admin-filters .admin-search-box input:focus {
   border: 0;
@@ -11236,6 +11371,7 @@ label svg {
   font-family: inherit;
   font-size: 0.75rem;
   cursor: pointer;
+  min-height: 44px;
   transition: background 120ms ease, color 120ms ease;
 }
 .AdminSectionContainer .admin-filters .month-switch button:hover {
@@ -11424,7 +11560,7 @@ label svg {
 }
 .AdminDashboard .admin-pies {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   gap: 16px;
 }
 .AdminDashboard .admin-year-head {
@@ -11456,8 +11592,6 @@ label svg {
   border-radius: var(--lp-r-card);
   border: 1px solid var(--dash-line);
   background: var(--dash-card-bg);
-  backdrop-filter: var(--dash-blur-card);
-  -webkit-backdrop-filter: var(--dash-blur-card);
   box-shadow: var(--dash-shadow);
 }
 .admin-chart h2 {
@@ -11631,10 +11765,9 @@ label svg {
   border-radius: var(--lp-r-card);
   border: 1px solid var(--dash-line);
   background: var(--dash-card-bg);
-  backdrop-filter: var(--dash-blur-card);
-  -webkit-backdrop-filter: var(--dash-blur-card);
   box-shadow: var(--dash-shadow);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 .AdminSearchView .admin-results-head {
   position: sticky;
@@ -11646,7 +11779,6 @@ label svg {
   padding: 12px 20px;
   border-bottom: 1px solid var(--dash-line);
   background: var(--dash-glass-solid);
-  backdrop-filter: blur(20px);
   font-size: 0.63rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -11745,8 +11877,6 @@ label svg {
   border-radius: var(--lp-r-card);
   border: 1px solid var(--dash-line);
   background: var(--dash-card-bg);
-  backdrop-filter: var(--dash-blur-card);
-  -webkit-backdrop-filter: var(--dash-blur-card);
   box-shadow: var(--dash-shadow);
 }
 .AdminSearchView .admin-calendar-head {
@@ -11863,8 +11993,6 @@ label svg {
   border-radius: var(--lp-r-card);
   border: 1px solid var(--dash-line);
   background: var(--dash-card-bg);
-  backdrop-filter: var(--dash-blur-card);
-  -webkit-backdrop-filter: var(--dash-blur-card);
   box-shadow: var(--dash-shadow);
 }
 .AdminSearchView .admin-side-head {
@@ -11971,6 +12099,41 @@ label svg {
   .AdminSearchView .admin-row {
     min-width: 760px;
   }
+  .AdminDashboard .admin-hero-side {
+    grid-template-columns: 1fr;
+  }
+  .AdminDashboard .admin-hero-main,
+  .AdminDashboard .admin-hero-side article {
+    padding: 18px;
+  }
+  .AdminSectionContainer .admin-filter-actions,
+  .AdminSectionContainer .admin-search-row,
+  .AdminSearchView .admin-head-actions,
+  .AdminSearchView .admin-export-row {
+    width: 100%;
+  }
+  .AdminSectionContainer .admin-filter-actions > *,
+  .AdminSectionContainer .admin-search-btn {
+    flex: 1 1 140px;
+  }
+  .AdminSearchView .admin-calendar {
+    padding: 12px 8px;
+  }
+  .AdminSearchView .admin-dow,
+  .AdminSearchView .admin-cal-grid {
+    gap: 3px;
+  }
+  .AdminSearchView .admin-day {
+    min-height: 64px;
+    padding: 6px 3px;
+  }
+  .MonthBarsCC .month-bars-plot {
+    gap: 3px;
+  }
+  .PieChartCC .pie-tip {
+    right: 0;
+    transform: none;
+  }
 }
 .AdminDashboard .admin-skeleton {
   display: flex;
@@ -12062,13 +12225,13 @@ label svg {
   flex-wrap: wrap;
 }
 .AdminSearchView .admin-export-row input[type="date"] {
-  min-height: 38px;
+  min-height: 44px;
   padding: 0 10px;
   color: var(--dash-text);
   border: 1px solid var(--dash-line);
   border-radius: 10px;
   background: var(--dash-card-bg);
-  font-size: 0.78rem;
+  font-size: 16px;
 }
 .AdminSearchView .admin-export-hint {
   max-width: 440px;
@@ -12250,9 +12413,9 @@ label svg {
   background: var(--dash-card-bg-2);
   border: 1px solid var(--dash-line);
   border-radius: 11px;
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   padding: 0;
   transition: border-color 160ms, background 160ms;
 }
@@ -12286,9 +12449,9 @@ label svg {
 }
 .MyPatientsContainer .dashTopNav .searchInputsContainer .searchGlobalButton {
   margin-right: 0;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   border-radius: 9px;
   background: transparent;
   border: none;
@@ -12358,9 +12521,9 @@ label svg {
   margin-top: 6px;
 }
 .MyPatientsContainer .viewTitleRow .folderBackBtn {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   flex-shrink: 0;
   background: var(--dash-card-bg-2);
   border: 1px solid var(--dash-line);
@@ -12381,9 +12544,9 @@ label svg {
   height: 18px;
 }
 .MyPatientsContainer .viewTitleRow .folderDeleteBtn {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   flex-shrink: 0;
   background: var(--dash-card-bg-2);
   border: 1px solid var(--dash-line);
@@ -12490,9 +12653,9 @@ label svg {
 }
 .MyPatientsContainer .displayPatientsContainer .patientsContainer .foldersContainer .foldersInnerContainer .plusSearchButton {
   margin: 0;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   padding: 0;
   background: transparent;
   border: 1px dashed var(--dash-line-hi);
@@ -12718,7 +12881,6 @@ label svg {
   flex-direction: row;
   height: 50px;
   background-color: var(--transparency);
-  backdrop-filter: blur(20px);
 }
 .MyPatientsContainer .displayPatientsContainer .patientsContainer .SquareDisplay .Birthplace {
   font-size: 0.5rem;
@@ -12783,6 +12945,49 @@ label svg {
   margin: 40px;
 }
 @media (max-width: 800px) {
+  .MyPatientsContainer {
+    padding: 14px 12px 0;
+  }
+  .MyPatientsContainer .dashTopNav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+  .MyPatientsContainer .dashTopNav .docChip {
+    min-width: 0;
+  }
+  .MyPatientsContainer .dashTopNav .docChip .docMeta {
+    min-width: 0;
+  }
+  .MyPatientsContainer .dashTopNav .docChip .docMeta .docName,
+  .MyPatientsContainer .dashTopNav .docChip .docMeta .docCedula {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .MyPatientsContainer .dashTopNav .searchInputsContainer {
+    grid-column: 1/-1;
+    grid-row: 2;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+  .MyPatientsContainer .dashTopNav .headSpacer {
+    display: none;
+  }
+  .MyPatientsContainer .dashTopNav .headActions {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .MyPatientsContainer .viewTitleRow {
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .MyPatientsContainer .viewTitleRow .viewTitleText {
+    min-width: 0;
+  }
+  .MyPatientsContainer .viewTitleRow .viewTitleText .titleTextBlock h2 {
+    font-size: clamp(1.25rem, 7vw, 1.7rem);
+  }
   .MyPatientsContainer .PatientsLoaderContainer {
     height: 600px;
   }
@@ -12792,6 +12997,9 @@ label svg {
   .MyPatientsContainer .clinicalHistoryModal {
     height: auto;
     top: 0;
+  }
+  .MyPatientsContainer .newGroupModalFormContainer {
+    margin: 16px;
   }
 }
 .StatsContainer {
@@ -13190,7 +13398,7 @@ label svg {
 }
 .DashboardConsents .consentComposer select {
   width: 100%;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 11px;
   border: 1px solid var(--dash-line);
   border-radius: 9px;
@@ -13209,7 +13417,7 @@ label svg {
 .DashboardConsents .createConsentButton,
 .DashboardConsents .consentQrPanel button,
 .DashboardConsents .consentRows button {
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 14px;
   border: 1px solid var(--dash-cyan);
   border-radius: 9px;
@@ -13288,12 +13496,17 @@ label svg {
 .DashboardConsents .consentsError {
   color: var(--red) !important;
 }
-@media (max-width: 760px) {
+@media (max-width: 800px) {
   .DashboardConsents .consentsScroll {
     padding: 16px;
   }
   .DashboardConsents .consentsGrid {
     grid-template-columns: 1fr;
+  }
+  .DashboardConsents .consentsTitle {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
   }
   .DashboardConsents .consentRows article {
     grid-template-columns: 1fr auto;
@@ -13477,7 +13690,6 @@ label svg {
   border: 2pd solid #00f;
   background-color: var(--transparency);
   z-index: 5;
-  backdrop-filter: blur(5px);
 }
 .ClinicalTextArea .RightContainer {
   position: relative;
@@ -13494,7 +13706,6 @@ label svg {
   width: 100%;
   height: 100%;
   background-color: var(--transparency);
-  backdrop-filter: blur(2px);
 }
 @media (max-width: 800px) {
   .ClinicalTextArea {
@@ -13548,13 +13759,20 @@ label svg {
 @media (max-width: 800px) {
   .ConfigurationContainer {
     flex-direction: column;
+    height: auto;
+    overflow-y: auto;
+  }
+  .ConfigurationContainer .TabsWrapper,
+  .ConfigurationContainer .DisplayWrapper {
+    width: 100%;
+    height: auto;
   }
 }
 .SavePatientContainer {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: calc(100vh - var(--nav) - 24px);
+  min-height: calc(100dvh - var(--nav) - 24px);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -13580,8 +13798,6 @@ label svg {
   border-radius: 16px;
   border: 1px solid var(--dash-line);
   background: var(--dash-card-bg);
-  backdrop-filter: var(--dash-blur-card);
-  -webkit-backdrop-filter: var(--dash-blur-card);
   box-shadow: var(--dash-shadow);
 }
 .SavePatientContainer .SavePatientStack .NursePatientSaveBar p {
@@ -13602,8 +13818,6 @@ label svg {
   border-radius: 16px;
   border: 1px solid var(--dash-line);
   background: var(--dash-card-bg);
-  backdrop-filter: var(--dash-blur-card);
-  -webkit-backdrop-filter: var(--dash-blur-card);
   box-shadow: var(--dash-shadow);
   height: 500px;
 }
@@ -13617,7 +13831,6 @@ label svg {
   border-radius: 16px;
   border: 1px solid var(--dash-line);
   background: var(--dash-card-bg);
-  backdrop-filter: var(--dash-blur-card);
   box-shadow: var(--dash-shadow);
   animation: patientIdPanelIn 260ms var(--ease-out-quint) both;
 }
@@ -13749,11 +13962,6 @@ label svg {
     transition: none;
   }
 }
-@media (max-width: 760px) {
-  .SavePatientContainer .SavePatientStack {
-    width: 100%;
-  }
-}
 .SavePatientContainer .OptionBallButtonsContainer {
   position: relative;
   flex: 0 0 auto;
@@ -13771,8 +13979,6 @@ label svg {
   border-radius: 18px;
   border: 1px solid var(--dash-line);
   background: var(--dash-sidebar-bg);
-  backdrop-filter: var(--dash-blur);
-  -webkit-backdrop-filter: var(--dash-blur);
   box-shadow: var(--dash-shadow);
 }
 .SavePatientContainer .OptionBallButtonsContainer .InnerOptionBallButtonsContainer .OptionBallButton {
@@ -13912,6 +14118,33 @@ label svg {
     transform: translateY(0);
   }
 }
+@media (max-width: 800px) {
+  .SavePatientContainer {
+    min-height: auto;
+    flex-direction: column;
+    padding: 12px;
+  }
+  .SavePatientContainer .SavePatientStack {
+    width: 100%;
+  }
+  .SavePatientContainer .SavePatientStack .GeneralTextAreaContainer .ClinicalTextArea .LeftContainer .TextBgContainer {
+    height: auto;
+    min-height: 60dvh;
+  }
+  .SavePatientContainer .OptionBallButtonsContainer {
+    width: 100%;
+    height: auto;
+  }
+  .SavePatientContainer .OptionBallButtonsContainer .InnerOptionBallButtonsContainer {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .SavePatientContainer .OptionBallButtonsContainer .InnerOptionBallButtonsContainer .OptionBallButton::after {
+    display: none;
+  }
+}
 .ConfirmMedRecord {
   position: relative;
   width: 100%;
@@ -13927,6 +14160,16 @@ label svg {
   width: 60%;
   min-width: 320px;
   max-width: 100%;
+}
+@media (max-width: 800px) {
+  .ConfirmMedRecord {
+    margin: 0;
+    padding: 12px;
+  }
+  .ConfirmMedRecord .FormCC {
+    width: 100%;
+    min-width: 0;
+  }
 }
 .LocationSearchForm {
   width: 100%;
@@ -13991,6 +14234,10 @@ label svg {
   justify-content: space-evenly;
   align-items: center;
   flex-direction: row;
+  width: 100%;
+  min-height: 100dvh;
+  overflow-y: auto;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
 }
 .phoneCameraContainer h4 {
   font-size: 1.4rem;
@@ -14008,6 +14255,11 @@ label svg {
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
+  gap: 16px;
+}
+.phoneCameraContainer .buttonsLayout .ButtonCC {
+  min-width: 44px;
+  min-height: 44px;
 }
 .phoneCameraContainer .mobileFullContainer {
   position: relative;
@@ -14022,6 +14274,12 @@ label svg {
   position: absolute;
   top: 20px;
   right: 20px;
+  min-width: 44px;
+  min-height: 44px;
+}
+.MobileFullViewContainer {
+  height: 100dvh;
+  overflow-y: auto;
 }
 .fc-toolbar-title,
 .fc-col-header-cell-cushion,
@@ -14048,6 +14306,7 @@ label svg {
   color: var(--dash-text-2);
   border-radius: 11px;
   text-transform: capitalize;
+  min-height: 44px;
   transition: border-color 160ms var(--ease-out), color 160ms var(--ease-out), background 160ms var(--ease-out), transform 120ms var(--ease-out);
 }
 .fc .fc-button-primary:hover {
@@ -14159,6 +14418,24 @@ label svg {
 .cal-ev.p {
   background: var(--dash-purple);
 }
+@media (max-width: 800px) {
+  .fc .fc-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .fc .fc-toolbar-chunk {
+    display: flex;
+    justify-content: center;
+  }
+  .fc .fc-toolbar-title {
+    font-size: clamp(1rem, 5vw, 1.4rem);
+    text-align: center;
+  }
+  .fc .fc-col-header-cell-cushion {
+    font-size: 0.7rem;
+  }
+}
 .inputQrCodeCont {
   position: absolute;
   left: 0;
@@ -14193,4 +14470,21 @@ label svg {
 }
 .data-button {
   background-color: transparent !important;
+}
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+img,
+video {
+  height: auto;
+}
+@media (max-width: 800px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }

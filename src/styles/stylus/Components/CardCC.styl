@@ -27,8 +27,8 @@
         position: absolute
         top: -5px
         right: -5px
-        width: 25px
-        height: 25px
+        width: 44px
+        height: 44px
         border-radius: 50%
         alignStuff(0,1,0,0)
         background-color: var(--red)
@@ -198,3 +198,13 @@
     .xCorner
         svg
             fill: var(--white) !important
+
+@media (max-width: 800px)
+    .CardCC
+        width: 100%
+        min-width: 0 !important
+        margin-inline: 0
+
+    #lg, #sm
+        min-width: 0
+        flex-basis: 100%

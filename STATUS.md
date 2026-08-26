@@ -1,5 +1,13 @@
 # STATUS — Cronos Frontend (Worker OpenCode)
 
+## Snapshot TEMIS - 2026-08-26
+
+- Auditoria movil completa para las 19 rutas solicitadas en 360, 390, 430 y 768 px.
+- Correcciones aplicadas solo en Stylus y CSS compilado; detalle por ruta en `AUDITORIA-MOVIL.md`.
+- Stylus y TypeScript pasan. CSS compilado: 355835 bytes.
+- Pendientes que requieren TSX documentados, sin editarlos.
+- Trabajo paralelo detectado en `globalsCC.d.ts`, `src/app/dashboard/myTeam/page.tsx`, `src/app/dashboard/newPatient/page.tsx`, `src/e2e/server/FeathersAPI.ts`, `src/library/BaseForms/SavePatientForm.tsx`, `src/library/Dashboard/DashboardRegistry.tsx`, `src/library/Dashboard/MedicalTeam.tsx`, `src/library/Dashboard/TeamInvitations.tsx` y `src/library/Dashboard/useTutors.ts`; no pertenece a esta auditoria y no se revirtio.
+
 Última actualización: 2026-07-23
 
 ## Rama y repo

@@ -83,7 +83,6 @@
   border 1px solid var(--lp-glass-border)
   border-radius 16px
   padding 28px 32px
-  backdrop-filter var(--lp-glass-blur)
   text-decoration none
   display flex
   flex-direction column
@@ -215,5 +214,11 @@
 // ── Responsive ───────────────────────────────────────────────────────────────
 
 @media (max-width: 640px)
+  .lp-institutional
+    padding-top calc(var(--nav) + 32px)
+
   .lp-inst-contact-grid
     grid-template-columns 1fr
+
+  .lp-legal-body
+    overflow-wrap anywhere

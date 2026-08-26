@@ -38,7 +38,7 @@ export declare global {
     CLAVE_CAPITULO: string;
     CAPITULO: string;
     ES_SUIVE_MORB: string;
-    EPI_CLAVE: number;
+    EPI_CLAVE: string;
     "EPI_CLAVE_DESC 2024": string;
     TIPO_PERSONAL_1VEZ_CE: string;
     TIPO_PERSONAL_SUBSEC_CE: string;
@@ -584,6 +584,10 @@ export declare global {
     name: string;
     clues: string;
     role?: UserRole;
+    // Vinculo enfermeria -> medico. `tutorId` singular es la forma vieja; se
+    // conserva porque las cuentas creadas antes del multi-tutor lo traen.
+    tutorId?: string;
+    tutorIds?: string[];
     password: string;
     googleId: string;
     groups: Array<{

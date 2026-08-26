@@ -1,5 +1,14 @@
 # Progreso
 
+## 2026-08-26 - Auditoria y optimizacion movil TEMIS
+
+- Se revisaron las 19 rutas solicitadas para 360, 390, 430 y 768 px.
+- Se corrigieron anchos fijos, grids, scroll interno, targets tactiles, zoom iOS, modales, drawers, `100vh` y recursos sin limite de ancho.
+- Se eliminaron todas las declaraciones `backdrop-filter` de `src/styles/stylus/**` por la restriccion de rendimiento de TEMIS.
+- Se recompilo `src/styles/css/Index.css` desde `src/styles/stylus/Index.styl`; resultado de 355835 bytes.
+- `npx tsc --noEmit` y la compilacion de Stylus pasan.
+- Los cambios que necesitan TSX quedaron documentados por ruta en `AUDITORIA-MOVIL.md`.
+
 ## 2026-07-23 - Alta externa de paciente por QR / link
 
 - Se releyo el estado de frontend y backend; no habia implementacion previa del flujo QR.

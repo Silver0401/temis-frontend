@@ -1,7 +1,7 @@
 .SavePatientContainer
     position: relative
     fillSpace()
-    min-height: calc(100vh - var(--nav) - 24px)
+    min-height: calc(100dvh - var(--nav) - 24px)
     display: flex
     flex-direction: row
     justify-content: center
@@ -28,8 +28,6 @@
             border-radius: 16px
             border: 1px solid var(--dash-line)
             background: var(--dash-card-bg)
-            backdrop-filter: var(--dash-blur-card)
-            -webkit-backdrop-filter: var(--dash-blur-card)
             box-shadow: var(--dash-shadow)
 
             p
@@ -51,8 +49,6 @@
                 border-radius: 16px
                 border: 1px solid var(--dash-line)
                 background: var(--dash-card-bg)
-                backdrop-filter: var(--dash-blur-card)
-                -webkit-backdrop-filter: var(--dash-blur-card)
                 box-shadow: var(--dash-shadow)
                 height: 500px
 
@@ -66,7 +62,6 @@
         border-radius: 16px
         border: 1px solid var(--dash-line)
         background: var(--dash-card-bg)
-        backdrop-filter: var(--dash-blur-card)
         box-shadow: var(--dash-shadow)
         animation: patientIdPanelIn 260ms var(--ease-out-quint) both
 
@@ -206,10 +201,6 @@
             .PatientIdPanel__chevron
                 transition: none
 
-    @media (max-width: 760px)
-        .SavePatientStack
-            width: 100%
-
     .OptionBallButtonsContainer
         position: relative
         flex: 0 0 auto
@@ -227,8 +218,6 @@
             border-radius: 18px
             border: 1px solid var(--dash-line)
             background: var(--dash-sidebar-bg)
-            backdrop-filter: var(--dash-blur)
-            -webkit-backdrop-filter: var(--dash-blur)
             box-shadow: var(--dash-shadow)
 
             .OptionBallButton
@@ -328,4 +317,29 @@
             #DxDf
                 --ball-accent: var(--dash-blue)
 
+@media (max-width: 800px)
+    .SavePatientContainer
+        min-height: auto
+        flex-direction: column
+        padding: 12px
+
+        .SavePatientStack
+            width: 100%
+
+            .GeneralTextAreaContainer .ClinicalTextArea .LeftContainer .TextBgContainer
+                height: auto
+                min-height: 60dvh
+
+        .OptionBallButtonsContainer
+            width: 100%
+            height: auto
+
+            .InnerOptionBallButtonsContainer
+                width: 100%
+                flex-direction: row
+                flex-wrap: wrap
+                justify-content: center
+
+                .OptionBallButton::after
+                    display: none
 

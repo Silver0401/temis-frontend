@@ -179,6 +179,10 @@ export const Synthesize_New_Patient = (
   // Entradas completas del catálogo CIE. El router de guías las usa como
   // evidencia dura para decidir qué bloques del formulario pintar.
   diagnosisCatalog?: CIEResponse[],
+  // Médico destino cuando quien registra es enfermería. Escribir no puede ser
+  // la unión de sus médicos: el paciente queda a nombre de uno. El backend lo
+  // valida contra sus tutores y lo quita antes de guardar el documento.
+  tutorId?: string,
 ): Promise<feathersApiProps> => {
   return new Promise((resolve) =>
     resolve({
@@ -191,6 +195,7 @@ export const Synthesize_New_Patient = (
         ClinicalHistory,
         ...(patientIdentification ? { patientIdentification } : {}),
         ...(diagnosisCatalog?.length ? { diagnosisCatalog } : {}),
+        ...(tutorId ? { tutorId } : {}),
       },
       query: { synthesize: true },
     }),
@@ -562,13 +567,16 @@ export const Delete_Entire_Group = (
 
 // ------------- Agenda Functions ------------------------------
 
-export const Get_User_Agenda = (): Promise<feathersApiProps> => {
+// `tutorId` solo aplica a enfermería: la agenda que se abre es la de UN médico,
+// y con dos o más tutores el backend exige saber cuál.
+export const Get_User_Agenda = (tutorId?: string): Promise<feathersApiProps> => {
   return new Promise((resolve) =>
     resolve({
       method: "get",
       service: "agenda",
       logId: "user_retrieved_agenda",
       logs: false,
+      ...(tutorId ? { query: { tutorId } } : {}),
     }),
   );
 };

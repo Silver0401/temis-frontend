@@ -88,9 +88,9 @@
             background: var(--dash-card-bg-2)
             border: 1px solid var(--dash-line)
             border-radius: 11px
-            width: 40px
-            height: 40px
-            min-width: 40px
+            width: 44px
+            height: 44px
+            min-width: 44px
             padding: 0
             transition: border-color 160ms, background 160ms
 
@@ -125,9 +125,9 @@
 
             .searchGlobalButton
                 margin-right: 0
-                width: 32px
-                height: 32px
-                min-width: 32px
+                width: 44px
+                height: 44px
+                min-width: 44px
                 border-radius: 9px
                 background: transparent
                 border: none
@@ -199,9 +199,9 @@
 
         // Botón regresar (izquierda del título)
         .folderBackBtn
-            width: 40px
-            height: 40px
-            min-width: 40px
+            width: 44px
+            height: 44px
+            min-width: 44px
             flex-shrink: 0
             background: var(--dash-card-bg-2)
             border: 1px solid var(--dash-line)
@@ -223,9 +223,9 @@
 
         // Botón eliminar carpeta (derecha del título)
         .folderDeleteBtn
-            width: 40px
-            height: 40px
-            min-width: 40px
+            width: 44px
+            height: 44px
+            min-width: 44px
             flex-shrink: 0
             background: var(--dash-card-bg-2)
             border: 1px solid var(--dash-line)
@@ -323,9 +323,9 @@
                     // Botón "+" como pill dashed (ButtonCC icon-only)
                     .plusSearchButton
                         margin: 0
-                        width: 32px
-                        height: 32px
-                        min-width: 32px
+                        width: 44px
+                        height: 44px
+                        min-width: 44px
                         padding: 0
                         background: transparent
                         border: 1px dashed var(--dash-line-hi)
@@ -552,7 +552,6 @@
                     alignStuff(0,1,0,0)
                     height: 50px
                     background-color: var(--transparency)
-                    backdrop-filter: blur(20px)
                     
 
                 .Birthplace
@@ -621,6 +620,46 @@
 
 @media (max-width: 800px)
     .MyPatientsContainer
+        padding: 14px 12px 0
+
+        .dashTopNav
+            display: grid
+            grid-template-columns: minmax(0, 1fr) auto
+            align-items: center
+
+            .docChip
+                min-width: 0
+
+                .docMeta
+                    min-width: 0
+
+                    .docName, .docCedula
+                        overflow: hidden
+                        text-overflow: ellipsis
+
+            .searchInputsContainer
+                grid-column: 1 / -1
+                grid-row: 2
+                width: 100%
+                max-width: none
+                margin-left: 0
+
+            .headSpacer
+                display: none
+
+            .headActions
+                grid-column: 2
+                grid-row: 1
+
+        .viewTitleRow
+            align-items: flex-start
+            gap: 10px
+
+            .viewTitleText
+                min-width: 0
+
+                .titleTextBlock h2
+                    font-size: clamp(1.25rem, 7vw, 1.7rem)
 
         .PatientsLoaderContainer
             height: 600px
@@ -632,4 +671,6 @@
             height: auto
             top: 0
 
+        .newGroupModalFormContainer
+            margin: 16px
 

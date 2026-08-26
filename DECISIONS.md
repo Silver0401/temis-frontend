@@ -1,5 +1,14 @@
 # Decisiones de Performance — CronosMD Frontend
 
+## 2026-08-26 - Politica movil de TEMIS
+
+- Se reutiliza `800px` como breakpoint principal de telefono/tablet; no se agregan breakpoints nuevos para 360, 390 o 430 px.
+- Tablas clinicas o administrativas que no pueden perder columnas conservan ancho interno y scroll horizontal propio; una vista de cards requiere cambio de TSX.
+- Todo control de formulario movil usa al menos 16 px para evitar zoom de iOS y los controles interactivos intervenidos usan al menos 44 x 44 px.
+- Modales usan limites basados en `100dvh`, scroll interno y overscroll contenido.
+- Se eliminan los `backdrop-filter` remanentes de Stylus. Las superficies conservan fondos tokenizados sin blur.
+- El CSS siempre se compila apuntando a `src/styles/stylus/Index.styl`, nunca a la carpeta.
+
 **Fecha:** 22 de julio de 2026  
 **Autor:** Agente de Diagnóstico  
 **Estado:** Fase 1 completada — Diagnóstico pendiente de implementación
@@ -320,3 +329,25 @@ Se aplicó a `src/library/Account/MyProfile.tsx` y al bloque `.ProfileSection` d
 - **Esquema día/noche.** `ThemeSync` voltea `--white` (y con él `--lp-text-1`), `--lp-glass-bg*`, `--lp-accent` y `--bg`, así que los tokens usados son seguros en ambos modos. Las iniciales del avatar se dejaron en `var(--bg)` —como estaban antes— porque `var(--secondary)` no contrasta contra el degradado en modo noche.
 - **Fondo del modal.** `ModalCC` sin prop `schema` cae en `.Schema-day`, que pinta `var(--lp-bg-mid-inverse)`; esa variable solo la define `SchemaSwitch-CC`, que no corre en `/account`. Se le puso fondo propio a `.ProfileLogoutModal` con `var(--lp-bg-mid)`, que sí está en `globals.css` y sí voltea con el tema.
 - **Ojo al compilar Stylus a mano.** `npx stylus src/styles/stylus --out src/styles/css/Index.css` (los mismos args del script `stylus`) compila cada `.styl` por separado y se pisan entre sí: deja un `Index.css` de 220 bytes. Para un build de una sola pasada hay que apuntar al archivo raíz: `npx stylus src/styles/stylus/Index.styl --out src/styles/css/Index.css`. En dev no se nota porque `-w` recompila en cada cambio.
+
+## 2026-08-25 — Enfermería ligada a varios médicos (frontend)
+
+Contraparte del cambio documentado en `backend/DECISIONS.md`.
+
+- `MedicalTeam.tsx` se parte en dos vistas sobre la misma ruta: el médico
+  administra su equipo, la enfermera solo responde invitaciones
+  (`TeamInvitations.tsx`). Por eso `My Team` se agregó a `enfermeria` en
+  `DashboardRegistry`.
+- Alta de integrante: si el backend responde 409 con `code TEAM_MEMBER_EXISTS`,
+  en vez de un toast de error se abre el diálogo «Este perfil ya existe →
+  invitar a tu equipo». La invitación queda pendiente; ella acepta desde su
+  cuenta y hasta entonces ve pacientes.
+- `useTutors.ts`: `useTutorTarget` resuelve el médico destino de una escritura.
+  Con un tutor se elige solo; con dos o más pinta selector en el alta de
+  paciente y manda `tutorId`. Leer pacientes sí es la unión de sus médicos;
+  escribir no puede serlo.
+- `globalsCC.d.ts`: `tutorId?` y `tutorIds?` en `UserBasedSchema`.
+
+Pendiente: el mismo selector en la pantalla de agenda, y la regla de Stylus de
+`.NurseTutorSelect` (no se tocaron `.styl` porque otra sesión estaba
+recompilando `Index.css` en paralelo).

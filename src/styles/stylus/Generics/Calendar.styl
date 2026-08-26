@@ -27,6 +27,7 @@
     color: var(--dash-text-2)
     border-radius: 11px
     text-transform: capitalize
+    min-height: 44px
     transition: border-color 160ms var(--ease-out), color 160ms var(--ease-out), background 160ms var(--ease-out), transform 120ms var(--ease-out)
 
     &:hover
@@ -138,3 +139,20 @@
         background: var(--dash-cyan)
     &.p
         background: var(--dash-purple)
+
+@media (max-width: 800px)
+    .fc .fc-toolbar
+        align-items: stretch
+        flex-direction: column
+        gap: 10px
+
+    .fc .fc-toolbar-chunk
+        display: flex
+        justify-content: center
+
+    .fc .fc-toolbar-title
+        font-size: clamp(1rem, 5vw, 1.4rem)
+        text-align: center
+
+    .fc .fc-col-header-cell-cushion
+        font-size: 0.7rem

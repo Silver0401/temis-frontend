@@ -1,8 +1,8 @@
 
 #DropdownCC
     position: relative
-    width: 30px
-    height: 30px
+    width: 44px
+    height: 44px
     border-radius: 50%
     alignStuff(0,1,0,0)
     cursor: pointer
@@ -17,15 +17,16 @@
 
     .itemsContainer
         position: absolute
-        top: 30px
+        top: 44px
         right: 0px
         width: 200px
         height: auto
         overflow: hidden
         border-radius: 10px
-        backdrop-filter: blur(15px)
+        background-color: var(--dash-glass-solid)
 
         .dropdownItem
+            min-height: 44px
             width: 100%
             alignStuff(0,1,0,0)
             justify-content: space-between
@@ -57,7 +58,7 @@
 
         .dropdownItem
             transition: height 350ms, opacity 300ms
-            height: 40px
+            height: 44px
             opacity: 1
 
 .Dropdownclosed

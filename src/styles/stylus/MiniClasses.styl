@@ -3,12 +3,13 @@
     fillSpace()
 
 .formOptContainer
-    width: clamp(300px, 50vw, 450px)
+    width: min(100%, 450px)
     height: 500px
 
 @media (max-width: 800px) 
     .formOptContainer
-        height: 600px
+        height: auto
+        min-height: 500px
 
 .fontWhite
     color: var(--white)

@@ -62,7 +62,7 @@
 
         select
             width: 100%
-            min-height: 42px
+            min-height: 44px
             padding: 0 11px
             border: 1px solid var(--dash-line)
             border-radius: 9px
@@ -79,7 +79,7 @@
         font-size: 0.78rem
 
     .createConsentButton, .consentQrPanel button, .consentRows button
-        min-height: 40px
+        min-height: 44px
         padding: 0 14px
         border: 1px solid var(--dash-cyan)
         border-radius: 9px
@@ -156,13 +156,18 @@
     .consentsError
         color: var(--red) !important
 
-@media (max-width: 760px)
+@media (max-width: 800px)
     .DashboardConsents
         .consentsScroll
             padding: 16px
 
         .consentsGrid
             grid-template-columns: 1fr
+
+        .consentsTitle
+            align-items: flex-start
+            flex-direction: column
+            gap: 10px
 
         .consentRows article
             grid-template-columns: 1fr auto

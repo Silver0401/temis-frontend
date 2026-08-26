@@ -22,7 +22,7 @@
     border-bottom: 1px solid var(--grey)
     alignStuff(0, 1, 0, 0)
     justify-content: space-between
-    backdrop-filter: blur(10px)
+    background: var(--lp-glass-bg)
     z-index: var(--globalZ4)
     animation: fadeIn 1000ms linear
 
@@ -30,8 +30,6 @@
     &.lp-nav
         display: none
         background: var(--lp-glass-bg) !important
-        backdrop-filter: blur(32px) saturate(200%) !important
-        -webkit-backdrop-filter: blur(32px) saturate(200%) !important
         border: 1px solid var(--lp-glass-border) !important
         border-bottom: 1px solid var(--lp-glass-border) !important
         border-radius: var(--lp-r-pill) !important
@@ -63,8 +61,6 @@
             ul
                 width: 300px !important
                 background: rgba(0, 21, 8, 0.85) !important
-                backdrop-filter: blur(32px) saturate(200%) !important
-                -webkit-backdrop-filter: blur(32px) saturate(200%) !important
                 border-left: 1px solid var(--lp-glass-border) !important
                 flex-direction: column !important
                 flex-direction: column-reverse !important
@@ -282,14 +278,15 @@
 
         ul
           width: 20%
-          height: calc(100vh - var(--nav))
+          height: calc(100dvh - var(--nav))
           position: absolute
           top: var(--nav)
           right: 0
           flex-direction: column
           width 300px !important;
           background-color: var(--white)
-          overflow: hidden
+          overflow-y: auto
+          overflow-x: hidden
           pointer-events: all
           flex-direction: column-reverse
           justify-content: flex-end
@@ -455,4 +452,3 @@ label svg {
 
 @media (max-width: 500px){
   }
-

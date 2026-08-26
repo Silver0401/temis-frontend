@@ -75,8 +75,9 @@ export const DashboardSectionsByRole: Record<UserRole, DashboardStates[]> = {
     "Consents",
   ],
   // Enfermería levanta la ficha del paciente y lleva agenda; no navega el
-  // listado de pacientes del tutor.
-  enfermeria: ["New Patient", "My Agenda"],
+  // listado de pacientes del tutor. "My Team" es para ella la bandeja de
+  // invitaciones: una enfermera puede atender a uno o dos médicos.
+  enfermeria: ["New Patient", "My Agenda", "My Team"],
   admin: ["Admin Patients", "Admin Stats", "Admin Agendas"],
 };
 

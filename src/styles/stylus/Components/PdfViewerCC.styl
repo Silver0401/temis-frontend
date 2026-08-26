@@ -18,3 +18,18 @@
             fillSpace()
             border-radius: 20px
             overflow: hidden
+
+@media (max-width: 800px)
+    .PdfViewerCC
+        flex-direction: column
+        overflow-y: auto
+
+        .PdfOptions, .PdfContainer
+            width: 100%
+
+        .PdfOptions
+            height: auto
+            flex-shrink: 0
+
+        .PdfContainer
+            min-height: 60dvh

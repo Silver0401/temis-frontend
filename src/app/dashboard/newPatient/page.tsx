@@ -542,7 +542,7 @@ const NewPatientIndex: React.FC = () => {
           identifier="ManualPatientIdForm"
           title="Datos de Identificación"
           subtitle="Ingresa los datos del paciente manualmente"
-          steps={3}
+          steps={4}
           titlesStyle={{
             title: { textAlign: "center" },
             subtitle: { textAlign: "center" },
@@ -790,21 +790,6 @@ const NewPatientIndex: React.FC = () => {
             },
             {
               type: "custom",
-              identifier: "derechohabiencia",
-              label: "Derechohabiencia",
-              required: true,
-              children: (
-                <AfiliacionesSearchCC
-                  identifier="derechohabiencia"
-                  title="Derechohabiencia (selecciona una o varias)"
-                  initialSelected={manualAfiliaciones}
-                  onSelect={handleManualAfiliacionesSelect}
-                  onClear={() => setManualAfiliaciones([])}
-                />
-              ),
-            },
-            {
-              type: "custom",
               identifier: "DomicilioSearch",
               label: "Domicilio",
               required: true,
@@ -848,6 +833,21 @@ const NewPatientIndex: React.FC = () => {
                 if (parsed !== 2) setManualPaisProcedencia(undefined);
               },
             },
+            {
+              type: "custom",
+              identifier: "derechohabiencia",
+              label: "Derechohabiencia",
+              required: true,
+              children: (
+                <AfiliacionesSearchCC
+                  identifier="derechohabiencia"
+                  title="Derechohabiencia (selecciona una o varias)"
+                  initialSelected={manualAfiliaciones}
+                  onSelect={handleManualAfiliacionesSelect}
+                  onClear={() => setManualAfiliaciones([])}
+                />
+              ),
+            },
             // Solo se captura el país de procedencia cuando la migración es internacional
             ...(manualMigrante === 2
               ? [
@@ -870,7 +870,6 @@ const NewPatientIndex: React.FC = () => {
           ]}
         />
       </div>,
-
     ],
   };
 

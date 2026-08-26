@@ -8,7 +8,7 @@
     position: fixed
     left: 0
     top: 0
-    height: 100vh
+    height: 100dvh
     padding: 14px
     z-index: var(--globalZ5)
     transition: width 240ms var(--ease-drawer)
@@ -18,8 +18,6 @@
         width: 100%
         height: 100%
         background: var(--dash-sidebar-bg)
-        backdrop-filter: var(--dash-blur)
-        -webkit-backdrop-filter: var(--dash-blur)
         border: 1px solid var(--dash-line)
         border-radius: 20px
         display: flex
@@ -276,8 +274,6 @@
         inset: 0
         z-index: var(--globalZ4)
         background: var(--dash-scrim)
-        backdrop-filter: blur(2px)
-        -webkit-backdrop-filter: blur(2px)
         animation: sideNavBackdropIn 200ms var(--ease-drawer)
 
     @keyframes sideNavBackdropIn
@@ -305,8 +301,6 @@
             padding: 0
             border: 1px solid var(--dash-line)
             background: var(--dash-sidebar-bg)
-            backdrop-filter: var(--dash-blur)
-            -webkit-backdrop-filter: var(--dash-blur)
             box-shadow: 0 8px 24px var(--dash-scrim)
             cursor: grab
             touch-action: none // pointer drag sin que la página haga scroll
@@ -325,11 +319,14 @@
         position: fixed
         left: 0
         top: 0
-        height: 100vh
-        width: var(--siderExpanded)
+        height: 100dvh
+        width: min(var(--siderExpanded), 100vw)
         padding: 10px
         z-index: var(--globalZ5)
         animation: sideNavPanelIn 240ms var(--ease-drawer)
+
+        .SideNav
+            overflow-y: auto
 
     @keyframes sideNavPanelIn
         from
