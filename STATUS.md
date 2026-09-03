@@ -2,6 +2,7 @@
 
 ## Snapshot TEMIS - 2026-09-03
 
+- Tarea 3 completada: el formulario ya envía la temporalidad elegida y el backend abre historia para CNS, Crónicos, CPN, Puerperio y PF de primera vez.
 - Tarea 2 completada: la nota se captura en Habitus, PEEA, Diagnóstico y Tratamiento, conservando un único `string` al guardar.
 - Tarea 1 completada: las filas de pacientes del dashboard admin abren el mismo `ClinicalHistory` usado por el médico mediante `DashboardContext.setShowPatient`.
 - El listado recibe el paciente completo desde `admin-console`; el acceso admin es de solo lectura en backend.

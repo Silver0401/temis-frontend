@@ -1,5 +1,10 @@
 # Progreso
 
+## 2026-09-03 - Tarea 3: historia clínica en notas de primera vez
+
+- `ConfirmMedRecord.tsx` normaliza y envía `Temporality`; antes el selector se mostraba pero su valor no entraba en `recordData`.
+- Se corrigió el valor inicial backend `PrimeraVez` para mostrarlo como `Primera Vez`.
+
 ## 2026-09-03 - Tarea 2: nota de evolución en cuatro campos
 
 - `ClinicalTextArea` admite un modo de campos etiquetados y `SavePatientForm` lo activa con Habitus, PEEA, Diagnóstico y Tratamiento.

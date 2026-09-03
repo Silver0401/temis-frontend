@@ -219,7 +219,7 @@ const ConfirmMedRecord: React.FC = () => {
           "Subsecuente"
             ? "Subsecuente"
             : currentSessionData.currentRecord?.record?.Temporality ===
-                "Primera Vez"
+                "PrimeraVez"
               ? "Primera Vez"
               : undefined,
       },
@@ -284,6 +284,10 @@ const ConfirmMedRecord: React.FC = () => {
           currentSessionData.currentRecord.record.ClinicalHistory,
         // `Entry` ya no viaja: lo deriva el backend de si hay `patientId`.
         patientId: currentSessionData.currentRecord.record.patientId,
+        Temporality:
+          data.get("TemporalitySelect") === "Primera Vez"
+            ? "PrimeraVez"
+            : "Subsecuente",
         ServiceArea: data.get("ServiceAreaSelect") as ServiceAreas,
         FirstTimeInYear: data.get("FirstTimeYearSelect") === "Si",
         ...groupVariablesByTarget(

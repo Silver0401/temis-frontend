@@ -1,5 +1,10 @@
 # Decisiones de Performance — CronosMD Frontend
 
+## 2026-09-03 - Temporalidad como fuente de verdad
+
+- El frontend conserva la etiqueta legible `Primera Vez`, pero envía el literal existente del contrato: `PrimeraVez`.
+- La decisión de abrir historia queda en backend; el cliente no duplica las reglas clínicas por tipo de nota.
+
 ## 2026-09-03 - Compatibilidad de notas de evolución
 
 - El formato persistido es un único string con bloques `Label:\ncontenido`, en orden Habitus, PEEA, Diagnóstico y Tratamiento.
