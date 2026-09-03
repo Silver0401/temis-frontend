@@ -1,5 +1,11 @@
 # STATUS — Cronos Frontend (Worker OpenCode)
 
+## Snapshot TEMIS - 2026-09-03
+
+- Tarea 1 completada: las filas de pacientes del dashboard admin abren el mismo `ClinicalHistory` usado por el médico mediante `DashboardContext.setShowPatient`.
+- El listado recibe el paciente completo desde `admin-console`; el acceso admin es de solo lectura en backend.
+- Pendiente de verificación visual por Ismael.
+
 ## Snapshot TEMIS - 2026-08-26
 
 - Auditoria movil completa para las 19 rutas solicitadas en 360, 390, 430 y 768 px.

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -12,6 +12,7 @@ import {
 import ActionButton from "@/library/Generics/ActionButton";
 import LoaderCC from "@/components/Loader-CC";
 import { AgeFromBirthdate } from "@/scripts/Generator";
+import { DashboardContext } from "@/e2e/dashboardContext";
 
 import AdminFilters, {
   AdminFilterState,
@@ -54,6 +55,7 @@ const miles = (n: number) => n.toLocaleString("es-MX");
 
 export default function AdminPatients() {
   const { feathersFetchCC } = useGlobalContext();
+  const { setShowPatient } = useContext(DashboardContext);
   const [draft, setDraft] = useState<AdminFilterState>(EmptyAdminFilters);
   const [applied, setApplied] = useState<AdminFilterState>(EmptyAdminFilters);
   const [page, setPage] = useState(0);
@@ -318,7 +320,11 @@ export default function AdminPatients() {
             </p>
           ) : (
             rows.map((row) => (
-              <div className="admin-row" key={row._id}>
+              <div
+                className="admin-row"
+                key={row._id}
+                onClick={() => setShowPatient(row.patient)}
+              >
                 <div className="admin-who">
                   <span
                     className="admin-avatar"

@@ -1,5 +1,10 @@
 # Decisiones de Performance — CronosMD Frontend
 
+## 2026-09-03 - Apertura de expediente en admin
+
+- La fila admin abre el expediente con `setShowPatient`, igual que la lista del médico.
+- El resultado conserva sus columnas aplanadas y agrega `patient` para alimentar el componente existente sin reconstruir el documento en el cliente.
+
 ## 2026-08-26 - Politica movil de TEMIS
 
 - Se reutiliza `800px` como breakpoint principal de telefono/tablet; no se agregan breakpoints nuevos para 360, 390 o 430 px.

@@ -20,6 +20,7 @@ export type AdminPatientRow = {
   clues: string[];
   registeredAt: string;
   doctorName: string | null;
+  patient: Patient;
 };
 
 export type AdminPatientsResponse = {

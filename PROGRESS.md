@@ -1,5 +1,11 @@
 # Progreso
 
+## 2026-09-03 - Tarea 1: expediente clínico desde admin
+
+- `AdminPatients.tsx` conecta cada fila con `DashboardContext.setShowPatient`.
+- `adminTypes.ts` declara el paciente completo que acompaña a cada resultado.
+- Se reutiliza el `ClinicalHistory` global del dashboard; no se creó una vista ni una navegación paralela.
+
 ## 2026-08-26 - Auditoria y optimizacion movil TEMIS
 
 - Se revisaron las 19 rutas solicitadas para 360, 390, 430 y 768 px.
