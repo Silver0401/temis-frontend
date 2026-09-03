@@ -1,5 +1,11 @@
 # Progreso
 
+## 2026-09-03 - Tarea 2: nota de evolución en cuatro campos
+
+- `ClinicalTextArea` admite un modo de campos etiquetados y `SavePatientForm` lo activa con Habitus, PEEA, Diagnóstico y Tratamiento.
+- `clinicalNoteFields.ts` concatena los valores en un solo texto antes del submit; no cambia el payload ni el schema.
+- Se agregó una prueba de serialización y compatibilidad legacy.
+
 ## 2026-09-03 - Tarea 1: expediente clínico desde admin
 
 - `AdminPatients.tsx` conecta cada fila con `DashboardContext.setShowPatient`.

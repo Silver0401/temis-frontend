@@ -1,5 +1,11 @@
 # Decisiones de Performance — CronosMD Frontend
 
+## 2026-09-03 - Compatibilidad de notas de evolución
+
+- El formato persistido es un único string con bloques `Label:\ncontenido`, en orden Habitus, PEEA, Diagnóstico y Tratamiento.
+- Solo se separa un registro existente si contiene los cuatro encabezados completos y en ese orden. Un string legacy sin separadores se coloca íntegro en Habitus; los otros tres campos quedan vacíos.
+- No se cambia el contrato ni el schema de `ClinicalHistory`.
+
 ## 2026-09-03 - Apertura de expediente en admin
 
 - La fila admin abre el expediente con `setShowPatient`, igual que la lista del médico.

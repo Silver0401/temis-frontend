@@ -4,6 +4,10 @@ import InputCC from "@/components/Input-CC";
 import { UseMutationResult } from "@tanstack/react-query";
 import { toast } from "sonner";
 import LoaderCC from "@/components/Loader-CC";
+import {
+  parseClinicalNote,
+  serializeClinicalNote,
+} from "@/scripts/clinicalNoteFields";
 
 interface ClinicalTextAreaProps {
   identifier: string;
@@ -27,6 +31,7 @@ interface ClinicalTextAreaProps {
   };
   /** Contenido que va entre el área de texto y el botón de guardar. */
   belowText?: React.ReactNode;
+  fields?: readonly string[];
 }
 
 const ClinicalTextArea: React.FC<ClinicalTextAreaProps> = ({
@@ -40,6 +45,7 @@ const ClinicalTextArea: React.FC<ClinicalTextAreaProps> = ({
   currentValue,
   submitButton,
   belowText,
+  fields,
   disableSessionSave,
 }) => {
   const prevValue = useRef<string>(currentValue ? currentValue : "");
@@ -49,6 +55,9 @@ const ClinicalTextArea: React.FC<ClinicalTextAreaProps> = ({
   const [forceRemountKey, setForceRemountKey] = useState(0);
 
   const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const fieldValues = fields
+    ? parseClinicalNote(currentValue ?? "", fields)
+    : [];
 
   // Not Allow to Erase Ficha de Identificación Variables
   // const formatedValue = useMemo((): string => {
@@ -145,41 +154,73 @@ const ClinicalTextArea: React.FC<ClinicalTextAreaProps> = ({
   }, [forceRemountKey]);
 
   return (
-    <div className="ClinicalTextArea" id={identifier}>
+    <div
+      className="ClinicalTextArea"
+      id={identifier}
+      data-multiple={fields ? "true" : "false"}
+    >
       <div className="LeftContainer">
-        <div className="TextBgContainer">
-          <div className="Backdrop" ref={backdropRef}>
-            <div
-              className="Highlights"
-              ref={highlightAreaRef}
-            >{`${currentValue}`}</div>
-          </div>
-          <InputCC
-            key={forceRemountKey}
-            type="textarea"
-            identifier={`${identifier}`}
-            id="AiWordSheetTextArea"
-            disableSessionSave={disableSessionSave}
-            onScroll={(e) => {
-              setScrollPosition(e.currentTarget.scrollTop);
-            }}
-            styles={{
-              container: {
-                width: "100%",
-                height: "100%",
-              },
-              input: {
-                backgroundColor: "transparent",
-              },
-            }}
-            currentValue={currentValue}
-            readOnly={uneditable}
-            onChange={(text) => {
-              if (!uneditable) {
-                onChange && onChange(text);
-              }
-            }}
-          />
+        <div
+          className="TextBgContainer"
+          data-multiple={fields ? "true" : "false"}
+        >
+          {fields ? (
+            <div className="ClinicalTextFields">
+              {fields.map((field, index) => (
+                <label className="ClinicalTextField" key={field}>
+                  <span>{field}</span>
+                  <InputCC
+                    type="textarea"
+                    identifier={`${identifier}-${index}`}
+                    disableSessionSave={disableSessionSave}
+                    currentValue={fieldValues[index]}
+                    readOnly={uneditable}
+                    onChange={(text) => {
+                      if (uneditable) return;
+                      const nextValues = [...fieldValues];
+                      nextValues[index] = text;
+                      onChange?.(serializeClinicalNote(fields, nextValues));
+                    }}
+                  />
+                </label>
+              ))}
+            </div>
+          ) : (
+            <>
+              <div className="Backdrop" ref={backdropRef}>
+                <div
+                  className="Highlights"
+                  ref={highlightAreaRef}
+                >{`${currentValue}`}</div>
+              </div>
+              <InputCC
+                key={forceRemountKey}
+                type="textarea"
+                identifier={`${identifier}`}
+                id="AiWordSheetTextArea"
+                disableSessionSave={disableSessionSave}
+                onScroll={(e) => {
+                  setScrollPosition(e.currentTarget.scrollTop);
+                }}
+                styles={{
+                  container: {
+                    width: "100%",
+                    height: "100%",
+                  },
+                  input: {
+                    backgroundColor: "transparent",
+                  },
+                }}
+                currentValue={currentValue}
+                readOnly={uneditable}
+                onChange={(text) => {
+                  if (!uneditable) {
+                    onChange && onChange(text);
+                  }
+                }}
+              />
+            </>
+          )}
 
           {(mutation && mutation.isPending) || saving || loading ? (
             <div className="loadingCont">

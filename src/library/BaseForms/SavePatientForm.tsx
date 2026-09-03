@@ -29,6 +29,7 @@ import { resolveUserRole } from "@/library/Dashboard/userRole";
 import { useTutorTarget } from "@/library/Dashboard/useTutors";
 import { SOMAS_FIELDS, somasSummary } from "@/scripts/somasFields";
 import MultiCIESearchCC from "@/components/SearchInputs/MultiCieSearch-CC";
+import { EVOLUTION_NOTE_FIELDS } from "@/scripts/clinicalNoteFields";
 
 // Texto con el que se abre el expediente cuando quien registra es enfermería:
 // captura la ficha de identidad y la somatometría, no la nota clínica.
@@ -872,6 +873,7 @@ const SavePatientForm: React.FC<SavePatientFormProps> = ({ loading }) => {
               <ClinicalTextArea
                 key={"textTranscriberCHTA"}
                 identifier={"textTranscriberCHTA"}
+                fields={EVOLUTION_NOTE_FIELDS}
                 currentValue={currentSessionData.currentModText}
                 onChange={(text) => {
                   setCurrentSessionData({
