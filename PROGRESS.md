@@ -1,5 +1,10 @@
 # Progreso
 
+## 2026-09-03 - Tarea 4: diagnósticos primero, segundo y tercero
+
+- `MultiCieSearch-CC.tsx` muestra el siguiente número a capturar, etiqueta cada diagnóstico por posición y bloquea una cuarta selección.
+- El orden visual sigue siendo el orden de `diagnosisCatalog`, que el backend persiste como `Diagnosis[]` y el archivo GIIS consume en sus primeras tres posiciones.
+
 ## 2026-09-03 - Tarea 3: historia clínica en notas de primera vez
 
 - `ConfirmMedRecord.tsx` normaliza y envía `Temporality`; antes el selector se mostraba pero su valor no entraba en `recordData`.

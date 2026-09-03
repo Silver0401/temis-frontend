@@ -1,5 +1,10 @@
 # Decisiones de Performance — CronosMD Frontend
 
+## 2026-09-03 - Tres diagnósticos ordenados
+
+- No cambia el backend: ya almacena un arreglo ordenado y el intercambio usa `Diagnosis[0..2]`.
+- La UI limita la captura a tres en vez de permitir diagnósticos adicionales no reportables; quitar uno permite volver a ocupar esa posición.
+
 ## 2026-09-03 - Temporalidad como fuente de verdad
 
 - El frontend conserva la etiqueta legible `Primera Vez`, pero envía el literal existente del contrato: `PrimeraVez`.

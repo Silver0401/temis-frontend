@@ -41,6 +41,13 @@
                     .SearchInputContainer
                         width: 100%
 
+                        .CIENextLabel
+                            display: block
+                            margin-bottom: 6px
+                            font-size: 0.72rem
+                            font-weight: 600
+                            opacity: 0.65
+
                     .CIEPillList
                         display: flex
                         flex-direction: row
@@ -65,6 +72,13 @@
                         strong
                             font-family: ui-monospace, SFMono-Regular, Menlo, monospace
                             font-size: 0.78rem
+
+                        i
+                            font-size: 0.68rem
+                            font-style: normal
+                            text-transform: uppercase
+                            letter-spacing: 0.05em
+                            opacity: 0.6
 
                         span
                             overflow: hidden
@@ -93,15 +107,6 @@
                                 width: 14px
                                 height: 14px
 
-                        // Fuera de los tres que viajan al archivo de intercambio.
-                        &[data-reportable="false"]
-                            border-style: dashed
-                            opacity: 0.6
-
-                    .CIEPillNote
-                        margin: 0
-                        font-size: 0.75rem
-                        opacity: 0.6
 
         .TextBgContainer
             position: relative

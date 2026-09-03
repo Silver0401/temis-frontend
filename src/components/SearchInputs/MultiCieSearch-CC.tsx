@@ -12,10 +12,7 @@ interface MultiCIESearchCCProps {
   colorSchema?: colorSchemas;
   className?: string;
   identifier?: string;
-  /**
-   * Cuántos diagnósticos viajan al archivo de intercambio GIIS. Los que pasen
-   * de aquí se conservan en el expediente pero se marcan como no reportables.
-   */
+  /** Máximo de diagnósticos que admite el formato GIIS. */
   reportableLimit?: number;
 }
 
@@ -68,6 +65,10 @@ const MultiCIESearchCC: React.FC<MultiCIESearchCCProps> = ({
 
   const addDiagnosis = (option: string) => {
     if (!option || option === "default") return;
+    if (value.length >= reportableLimit) {
+      toast.info(`Solo se permiten ${reportableLimit} diagnósticos`);
+      return;
+    }
     const clave = option.split(" - ")[0].trim();
     const found = searchedCIEs.find((cie) => cie.CATALOG_KEY === clave);
     if (!found) return;
@@ -89,62 +90,71 @@ const MultiCIESearchCC: React.FC<MultiCIESearchCCProps> = ({
       key={identifier}
     >
       <div className="SearchInputContainer">
-        {search_mutation.isPending ? (
-          <InputCC
-            identifier="loaderInput"
-            currentValue="Buscando Diagnósticos ..."
-            styles={{ container: { width: "100%" } }}
-            colorSchema={colorSchema ? colorSchema : "day"}
-            type="text"
-            loading
-          />
-        ) : (
-          <InputCC
-            key={resetKey}
-            identifier={`${identifier}-search`}
-            type={search_mutation.isIdle ? "text" : "select"}
-            options={searchedCIEs.map(
-              (cie) => `${cie.CATALOG_KEY} - ${cie.NOMBRE}`,
-            )}
-            iconCustoms={
-              !search_mutation.isIdle
-                ? {
-                    icon: (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="size-6"
-                        style={{ width: "80%", height: "80%" }}
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    ),
-                    onClick: clearSearch,
+        <span className="CIENextLabel">
+          {value.length < reportableLimit
+            ? `Diagnóstico ${value.length + 1} de ${reportableLimit}`
+            : `${reportableLimit} diagnósticos capturados`}
+        </span>
+        {value.length < reportableLimit ? (
+          <>
+            {search_mutation.isPending ? (
+              <InputCC
+                identifier="loaderInput"
+                currentValue="Buscando Diagnósticos ..."
+                styles={{ container: { width: "100%" } }}
+                colorSchema={colorSchema ? colorSchema : "day"}
+                type="text"
+                loading
+              />
+            ) : (
+              <InputCC
+                key={resetKey}
+                identifier={`${identifier}-search`}
+                type={search_mutation.isIdle ? "text" : "select"}
+                options={searchedCIEs.map(
+                  (cie) => `${cie.CATALOG_KEY} - ${cie.NOMBRE}`,
+                )}
+                iconCustoms={
+                  !search_mutation.isIdle
+                    ? {
+                        icon: (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="size-6"
+                            style={{ width: "80%", height: "80%" }}
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        ),
+                        onClick: clearSearch,
+                      }
+                    : undefined
+                }
+                debouncer
+                placeholder={
+                  search_mutation.isIdle
+                    ? "Busca por nombre o código CIE-10"
+                    : "Selecciona un Diagnóstico"
+                }
+                styles={{ container: { width: "100%" } }}
+                colorSchema={colorSchema ? colorSchema : "day"}
+                onChange={(text) => {
+                  if (search_mutation.isIdle) {
+                    text.length > 0 && search_mutation.mutate(text);
+                  } else {
+                    addDiagnosis(text);
                   }
-                : undefined
-            }
-            debouncer
-            placeholder={
-              search_mutation.isIdle
-                ? "Busca por nombre o código CIE-10"
-                : "Selecciona un Diagnóstico"
-            }
-            styles={{ container: { width: "100%" } }}
-            colorSchema={colorSchema ? colorSchema : "day"}
-            onChange={(text) => {
-              if (search_mutation.isIdle) {
-                text.length > 0 && search_mutation.mutate(text);
-              } else {
-                addDiagnosis(text);
-              }
-            }}
-          />
-        )}
+                }}
+              />
+            )}
+          </>
+        ) : null}
       </div>
 
       {value.length ? (
@@ -153,13 +163,9 @@ const MultiCIESearchCC: React.FC<MultiCIESearchCCProps> = ({
             <li
               key={cie.CATALOG_KEY}
               className="CIEPill"
-              data-reportable={index < reportableLimit}
-              title={
-                index < reportableLimit
-                  ? cie.NOMBRE
-                  : `${cie.NOMBRE} — fuera de los ${reportableLimit} que se reportan a GIIS`
-              }
+              title={cie.NOMBRE}
             >
+              <i>{`Diagnóstico ${index + 1}`}</i>
               <strong>{cie.CATALOG_KEY}</strong>
               <span>{cie.NOMBRE}</span>
               <button
@@ -182,13 +188,6 @@ const MultiCIESearchCC: React.FC<MultiCIESearchCCProps> = ({
             </li>
           ))}
         </ul>
-      ) : null}
-
-      {value.length > reportableLimit ? (
-        <p className="CIEPillNote">
-          Solo los primeros {reportableLimit} diagnósticos se reportan a GIIS; el
-          resto queda en el expediente.
-        </p>
       ) : null}
     </div>
   );

@@ -13565,6 +13565,13 @@ label svg {
 .ClinicalTextArea .LeftContainer .BelowTextSlot .DiagnosisPickerRow .MultiCIESearchContainer .SearchInputContainer {
   width: 100%;
 }
+.ClinicalTextArea .LeftContainer .BelowTextSlot .DiagnosisPickerRow .MultiCIESearchContainer .SearchInputContainer .CIENextLabel {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.65;
+}
 .ClinicalTextArea .LeftContainer .BelowTextSlot .DiagnosisPickerRow .MultiCIESearchContainer .CIEPillList {
   display: flex;
   flex-direction: row;
@@ -13589,6 +13596,13 @@ label svg {
 .ClinicalTextArea .LeftContainer .BelowTextSlot .DiagnosisPickerRow .MultiCIESearchContainer .CIEPill strong {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.78rem;
+}
+.ClinicalTextArea .LeftContainer .BelowTextSlot .DiagnosisPickerRow .MultiCIESearchContainer .CIEPill i {
+  font-size: 0.68rem;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
 }
 .ClinicalTextArea .LeftContainer .BelowTextSlot .DiagnosisPickerRow .MultiCIESearchContainer .CIEPill span {
   overflow: hidden;
@@ -13616,15 +13630,6 @@ label svg {
 .ClinicalTextArea .LeftContainer .BelowTextSlot .DiagnosisPickerRow .MultiCIESearchContainer .CIEPill button svg {
   width: 14px;
   height: 14px;
-}
-.ClinicalTextArea .LeftContainer .BelowTextSlot .DiagnosisPickerRow .MultiCIESearchContainer .CIEPill[data-reportable="false"] {
-  border-style: dashed;
-  opacity: 0.6;
-}
-.ClinicalTextArea .LeftContainer .BelowTextSlot .DiagnosisPickerRow .MultiCIESearchContainer .CIEPillNote {
-  margin: 0;
-  font-size: 0.75rem;
-  opacity: 0.6;
 }
 .ClinicalTextArea .LeftContainer .TextBgContainer {
   position: relative;
