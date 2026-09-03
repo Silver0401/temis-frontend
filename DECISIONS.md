@@ -1,5 +1,12 @@
 # Decisiones de Performance — CronosMD Frontend
 
+## 2026-09-03 - Extracción auditable de XLSX
+
+- El JSON es un artefacto de revisión y no se conecta a React ni al backend.
+- Cada input conserva hoja, coordenadas, evidencia y confianza. `required: null` expresa que los libros no marcan obligatoriedad; no se convierte esa ausencia en `false`.
+- Las validaciones de lista, si aparecen en futuros XLSX, tienen prioridad y resuelven opciones inline, rangos y nombres definidos. En los dos archivos actuales no existe ninguna validación de datos.
+- Los `.docx` y `.numbers` no se fuerzan por este parser: requieren conversión o extractores propios para no perder estructura.
+
 ## 2026-09-03 - Tres diagnósticos ordenados
 
 - No cambia el backend: ya almacena un arreglo ordenado y el intercambio usa `Diagnosis[0..2]`.

@@ -1,5 +1,12 @@
 # Progreso
 
+## 2026-09-03 - Tarea 5: extractor de formatos XLSX
+
+- `scripts/extract_xlsx_forms.py` lee validaciones, catálogos referenciados, celdas, merges y opciones impresas; acepta rutas y salida por CLI.
+- `scripts/temis-form-inputs.json` contiene 631 campos del expediente clínico y 25 del aviso al Ministerio Público, agrupados por libro, hoja y sección.
+- Los dos XLSX recibidos tienen cero `dataValidation`, cero nombres definidos y cero controles nativos; por eso no hay inputs `select` respaldados por validaciones. Las opciones visibles se conservan como `radio` o `checkbox` con coordenadas y evidencia.
+- `CONSTANCIA MÉDICA_2025.docx` y `NOTA REFERENCIA - CONTRAREFERENCIA 2025.numbers` quedan pendientes de extractores específicos o conversión; no bloquearon los XLSX.
+
 ## 2026-09-03 - Tarea 4: diagnósticos primero, segundo y tercero
 
 - `MultiCieSearch-CC.tsx` muestra el siguiente número a capturar, etiqueta cada diagnóstico por posición y bloquea una cuarta selección.

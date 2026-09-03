@@ -2,6 +2,7 @@
 
 ## Snapshot TEMIS - 2026-09-03
 
+- Tarea 5 completada: extractor manual y JSON de revisión generados para los dos XLSX; aún no se integran al flujo.
 - Tarea 4 completada: la captura CIE queda limitada y ordenada como Diagnóstico 1, 2 y 3.
 - Tarea 3 completada: el formulario ya envía la temporalidad elegida y el backend abre historia para CNS, Crónicos, CPN, Puerperio y PF de primera vez.
 - Tarea 2 completada: la nota se captura en Habitus, PEEA, Diagnóstico y Tratamiento, conservando un único `string` al guardar.
