@@ -143,7 +143,7 @@
                 &:focus
                     outline: none
                     border-color: var(--dash-line-hi)
-                    box-shadow: 0 0 0 3px rgba(90, 222, 164, 0.08)
+                    box-shadow: 0 0 0 3px unquote("color-mix(in srgb, var(--primary) 8%, transparent)")
 
             select option
                 background: var(--dash-glass-solid)
@@ -174,7 +174,7 @@
 
             &:focus-within
                 border-color: var(--dash-line-hi)
-                box-shadow: 0 0 0 3px rgba(90, 222, 164, 0.08)
+                box-shadow: 0 0 0 3px unquote("color-mix(in srgb, var(--primary) 8%, transparent)")
 
             svg
                 flex: 0 0 auto
@@ -239,7 +239,7 @@
 
                 &[data-on="true"]
                     background: var(--dash-cyan)
-                    color: #02180c
+                    color: var(--btn-gradient-ink)
                     font-weight: 600
 
             .month-step
@@ -268,7 +268,7 @@
         padding: 5px 10px
         border-radius: 999px
         border: 1px solid var(--dash-line-hi)
-        background: rgba(90, 222, 164, 0.08)
+        background: unquote("color-mix(in srgb, var(--primary) 8%, transparent)")
         color: var(--dash-text)
         font-family: inherit
         font-size: 0.72rem
@@ -359,7 +359,7 @@
             font-size: clamp(3rem, 4.4vw, 4.6rem)
             line-height: 1
             color: var(--dash-cyan)
-            text-shadow: 0 0 34px rgba(90, 222, 164, 0.3)
+            text-shadow: 0 0 34px unquote("color-mix(in srgb, var(--primary) 30%, transparent)")
             font-variant-numeric: tabular-nums
             white-space: nowrap
 
@@ -612,7 +612,7 @@
         .month-bar-fill
             width: 100%
             border-radius: 5px 5px 0 0
-            background: rgba(99, 201, 146, 0.18)
+            background: unquote("color-mix(in srgb, var(--dash-cyan) 18%, transparent)")
             transition: background 120ms ease
 
         .month-bar-label
@@ -621,13 +621,13 @@
             color: var(--dash-text-3)
 
         &:hover .month-bar-fill
-            background: rgba(99, 201, 146, 0.32)
+            background: unquote("color-mix(in srgb, var(--dash-cyan) 32%, transparent)")
 
         // Énfasis: un tono para el mes elegido, el resto es contexto.
         &[data-current="true"]
             .month-bar-fill
-                background: linear-gradient(180deg, var(--dash-cyan), rgba(90, 222, 164, 0.35))
-                box-shadow: 0 0 26px rgba(90, 222, 164, 0.35)
+                background: linear-gradient(180deg, var(--dash-cyan), unquote("color-mix(in srgb, var(--primary) 35%, transparent)"))
+                box-shadow: 0 0 26px unquote("color-mix(in srgb, var(--primary) 35%, transparent)")
 
             .month-bar-value
                 color: var(--dash-cyan)
@@ -673,11 +673,11 @@
         gap: 14px
         align-items: center
         padding: 13px 20px
-        border-bottom: 1px solid rgba(99, 201, 146, 0.07)
+        border-bottom: 1px solid var(--dash-chip-bg)
         font-size: 0.8rem
 
         &:hover
-            background: rgba(99, 201, 146, 0.05)
+            background: var(--dash-glass-lite)
 
     .admin-who
         display: flex
@@ -695,7 +695,7 @@
         place-items: center
         font-size: 0.7rem
         font-weight: 600
-        color: #02180c
+        color: var(--btn-gradient-ink)
         background: var(--dash-sex-m)
 
         &[data-sex="f"]
@@ -799,7 +799,7 @@
         padding: 7px 8px
         border-radius: 11px
         border: 1px solid var(--dash-line)
-        background: rgba(0, 25, 11, 0.4)
+        background: var(--dash-card-bg-2)
         color: inherit
         font-family: inherit
         text-align: left
@@ -823,7 +823,7 @@
 
         &[data-sel="true"]
             border-color: var(--dash-cyan)
-            box-shadow: inset 0 0 0 1px rgba(90, 222, 164, 0.18), 0 0 26px rgba(90, 222, 164, 0.14)
+            box-shadow: inset 0 0 0 1px unquote("color-mix(in srgb, var(--primary) 18%, transparent)"), 0 0 26px unquote("color-mix(in srgb, var(--primary) 14%, transparent)")
 
             .admin-day-n
                 color: var(--dash-cyan)
@@ -834,7 +834,7 @@
         border-radius: 6px
         font-size: 0.63rem
         font-weight: 500
-        color: #02180c
+        color: var(--btn-gradient-ink)
         overflow: hidden
         text-overflow: ellipsis
         white-space: nowrap
@@ -908,7 +908,7 @@
         padding: 11px 13px
         border-radius: 11px
         border: 1px solid var(--dash-line)
-        background: rgba(0, 25, 11, 0.45)
+        background: var(--dash-card-bg-2)
 
     .admin-appt-bar
         flex: 0 0 auto
@@ -1155,6 +1155,51 @@
         width: 40%
         background: var(--dash-cyan)
         animation: adminExchangeSlide 1.2s ease-in-out infinite
+
+    .admin-suive
+        display: flex
+        flex-direction: column
+        gap: 12px
+        padding: 16px
+        border: 1px solid var(--dash-line)
+        border-radius: var(--lp-r-card)
+        background: var(--dash-card-bg)
+
+    .admin-suive-head
+        display: flex
+        align-items: flex-end
+        justify-content: space-between
+        gap: 16px
+
+        h2
+            margin: 4px 0 0
+            font-size: 1.1rem
+
+        > b
+            color: var(--dash-cyan)
+
+    .admin-suive-table
+        overflow-x: auto
+
+    .admin-suive-row
+        display: grid
+        grid-template-columns: minmax(210px, 1.2fr) minmax(260px, 1.6fr) 100px 70px
+        gap: 12px
+        min-width: 720px
+        padding: 10px 8px
+        border-top: 1px solid var(--dash-line)
+        color: var(--dash-text-2)
+        font-size: 0.78rem
+
+        strong
+            color: var(--dash-text)
+
+    .admin-suive-columns
+        border-top: 0
+        color: var(--dash-text-3)
+        font-size: 0.63rem
+        letter-spacing: 0.1em
+        text-transform: uppercase
 
 @keyframes adminExchangeSlide
     0%

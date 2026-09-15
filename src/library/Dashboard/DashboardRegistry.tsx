@@ -63,10 +63,18 @@ export const DashboardStatesObject: DashboardStatesIndexed = {
 // Qué secciones ve cada rol. Es la única fuente de verdad: la SideNav filtra
 // con esto y `DashboardByRole` lo usa como guard de ruta.
 export const DashboardSectionsByRole: Record<UserRole, DashboardStates[]> = {
-  // "Add Document" y "Consents" van aquí aunque HIDDEN_STATES los saque del
+  // "Consents" va aquí aunque HIDDEN_STATES lo saque del
   // menú: el guard de ruta de DashboardByRole expulsa cualquier ruta que no
-  // esté en esta lista, y ambas siguen siendo alcanzables por URL.
+  // esté en esta lista, y sigue siendo alcanzable por URL.
   medico: [
+    "My Patients",
+    "My Team",
+    "New Patient",
+    "My Agenda",
+    "Add Document",
+    "Consents",
+  ],
+  odontologo: [
     "My Patients",
     "My Team",
     "New Patient",
@@ -84,6 +92,7 @@ export const DashboardSectionsByRole: Record<UserRole, DashboardStates[]> = {
 // A dónde cae cada rol si entra a una ruta que no le corresponde.
 export const RoleFallbackRoute: Record<UserRole, string> = {
   medico: DashboardStatesObject["My Patients"].Route,
+  odontologo: DashboardStatesObject["My Patients"].Route,
   enfermeria: DashboardStatesObject["My Agenda"].Route,
   admin: DashboardStatesObject["Admin Patients"].Route,
 };

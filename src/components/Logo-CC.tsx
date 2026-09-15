@@ -13,15 +13,15 @@ interface LogoCCProps {
  * Logo de marca Temis — reutilizable y responsivo al ancho de su contenedor.
  *
  * Concepto LP-16: símbolo «Reloj de Arena» (variante A · Outline Clásico) +
- * wordmark CRONOS con «MD» en superíndice (gradiente de marca cian→azul).
+ * wordmark TEMIS con «MD» en superíndice (gradiente naranja de marca).
  *
  * El contenedor declara `container-type: inline-size` (ver LogoCC.styl):
  *   · ancho amplio   → icono + CRONOS + MD
  *   · ancho medio    → icono + CRONOS
  *   · ancho mínimo   → solo icono (ej. SideNav colapsada)
  *
- * El color del texto se hereda del slot (`currentColor`); el gradiente del símbolo
- * usa los tokens theme-aware `--hub-cyan` / `--hub-glow` (definidos por SchemaSwitch).
+ * El color del texto se hereda del slot (`currentColor`); el símbolo conserva el
+ * gradiente naranja oficial de la marca en cualquier esquema.
  */
 const LogoCC: React.FC<LogoCCProps> = ({ className = "", title = "Temis" }) => {
   // Id único por instancia: evita colisiones de <linearGradient> si hay varios logos.
@@ -38,8 +38,8 @@ const LogoCC: React.FC<LogoCCProps> = ({ className = "", title = "Temis" }) => {
       <svg className="clMark" viewBox="0 0 100 100" aria-hidden="true">
         <defs>
           <linearGradient id={gradId} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="var(--hub-cyan)" />
-            <stop offset="1" stopColor="var(--hub-glow)" />
+            <stop offset="0" stopColor="#ffb35c" />
+            <stop offset="1" stopColor="#a34a00" />
           </linearGradient>
         </defs>
         {/* Tapas superior e inferior */}
@@ -70,13 +70,13 @@ const LogoCC: React.FC<LogoCCProps> = ({ className = "", title = "Temis" }) => {
           strokeLinejoin="round"
         />
         {/* Arena acumulada + hilo cayendo */}
-        <path d="M40 80 L60 80 L50 67 Z" fill="var(--hub-cyan)" />
+        <path d="M40 80 L60 80 L50 67 Z" fill="#ffb35c" />
         <line
           x1="50"
           y1="50"
           x2="50"
           y2="63"
-          stroke="var(--hub-cyan)"
+          stroke="#ffb35c"
           strokeWidth="3"
           strokeLinecap="round"
         />

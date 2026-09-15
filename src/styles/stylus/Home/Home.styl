@@ -26,16 +26,16 @@
 }
 
 .lp-risk-High
-  --risk: #ff4343
+  --risk: var(--dash-risk-high)
 
 .lp-risk-Medium
-  --risk: #ff7843
+  --risk: var(--dash-risk-mid)
 
 .lp-risk-Low
-  --risk: #fff243
+  --risk: var(--yellow)
 
 .lp-risk-Controlled
-  --risk: #43ff9e
+  --risk: var(--dash-risk-ok)
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // BACKGROUND CANVAS (montado global en layout.tsx)
@@ -188,7 +188,7 @@
   line-height 1
   white-space nowrap
   color transparent
-  -webkit-text-stroke 1px rgba(123, 213, 165, 0.07)
+  -webkit-text-stroke 1px unquote("color-mix(in srgb, var(--primary) 7%, transparent)")
   user-select none
   pointer-events none
   z-index 0
@@ -470,8 +470,8 @@
   width 6px
   height 6px
   border-radius 50%
-  background var(--risk, #0affe0)
-  box-shadow 0 0 8px var(--risk, #0affe0)
+  background var(--risk, var(--lp-accent))
+  box-shadow 0 0 8px var(--risk, var(--lp-accent))
   flex-shrink 0
 
 // Marcas de esquina
@@ -679,19 +679,19 @@
 .lp-strip-open
   flex 4.4
   border-color var(--lp-glass-border-hi)
-  box-shadow 0 0 44px rgba(90, 222, 164, 0.07)
+  box-shadow 0 0 44px unquote("color-mix(in srgb, var(--primary) 7%, transparent)")
 
   &.lp-tone-cyan
-    background linear-gradient(150deg, rgba(90, 222, 164,0.09) 0%, var(--lp-card-bg) 55%)
-    border-color rgba(90, 222, 164,0.3)
+    background linear-gradient(150deg, unquote("color-mix(in srgb, var(--primary) 9%, transparent)") 0%, var(--lp-card-bg) 55%)
+    border-color unquote("color-mix(in srgb, var(--primary) 30%, transparent)")
 
   &.lp-tone-blue
-    background linear-gradient(150deg, rgba(0, 159, 59,0.12) 0%, var(--lp-card-bg) 55%)
-    border-color rgba(0, 159, 59,0.32)
+    background linear-gradient(150deg, unquote("color-mix(in srgb, var(--secondary) 12%, transparent)") 0%, var(--lp-card-bg) 55%)
+    border-color unquote("color-mix(in srgb, var(--secondary) 32%, transparent)")
 
   &.lp-tone-purple
-    background linear-gradient(150deg, rgba(0, 159, 59,0.10) 0%, var(--lp-card-bg) 55%)
-    border-color rgba(0, 159, 59,0.28)
+    background linear-gradient(150deg, unquote("color-mix(in srgb, var(--secondary) 10%, transparent)") 0%, var(--lp-card-bg) 55%)
+    border-color unquote("color-mix(in srgb, var(--secondary) 28%, transparent)")
 
 // Estado colapsado: número arriba, título vertical, "+" abajo
 .lp-strip-closed
@@ -875,7 +875,7 @@
   height 9px
   width 48%
   border-radius 3px
-  background rgba(191, 230, 205, 0.25)
+  background unquote("color-mix(in srgb, var(--primary) 25%, transparent)")
   margin-bottom 4px
   flex-shrink 0
 
@@ -890,7 +890,7 @@
   top 0
   height 100%
   border-radius 3px
-  background rgba(170, 223, 190, 0.22)
+  background unquote("color-mix(in srgb, var(--primary) 22%, transparent)")
   transform-origin left center
   animation lp-ocr-raw-out 4.5s ease-in-out infinite
   animation-delay calc(var(--row) * 0.68s)
@@ -958,8 +958,8 @@
   i
     position absolute
     inset 0
-    border 1px solid rgba(10, 255, 224, 0.45)
-    background rgba(10, 255, 224, 0.05)
+    border 1px solid unquote("color-mix(in srgb, var(--lp-accent) 45%, transparent)")
+    background unquote("color-mix(in srgb, var(--lp-accent) 5%, transparent)")
 
     &:nth-child(1)
       transform rotateY(0deg) translateZ(46px)
@@ -1011,7 +1011,7 @@
   height 130px
   border-radius 50%
   border 1px solid var(--lp-glass-border-hi)
-  background repeating-radial-gradient(circle, transparent 0 24px, rgba(10, 255, 224, 0.12) 25px)
+  background repeating-radial-gradient(circle, transparent 0 24px, var(--lp-accent-soft) 25px)
   position relative
   overflow hidden
 
@@ -1019,7 +1019,7 @@
     content ""
     position absolute
     inset 0
-    background conic-gradient(rgba(10, 255, 224, 0.5), transparent 70deg, transparent)
+    background conic-gradient(var(--lp-accent-glow), transparent 70deg, transparent)
     animation rotate 3.2s linear infinite
 
   &::after
@@ -1051,7 +1051,7 @@
   height 88vh
   border 1px solid var(--lp-glass-border)
   clip-path polygon(18px 0%, calc(100% - 18px) 0%, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0% calc(100% - 18px), 0% 18px)
-  background linear-gradient(180deg, rgba(90, 222, 164,0.03) 0%, transparent 40%)
+  background linear-gradient(180deg, unquote("color-mix(in srgb, var(--primary) 3%, transparent)") 0%, transparent 40%)
   overflow hidden
 
   .lp-stage-aura
@@ -1085,7 +1085,7 @@
     width 6px
     height 6px
     border-radius 50%
-    background var(--risk, #0affe0)
+    background var(--risk, var(--lp-accent))
 
 .lp-case-list
   display flex
@@ -1122,21 +1122,21 @@
     pointer-events none
 
   &.lp-case-active
-    border-color unquote("color-mix(in srgb, var(--risk, #0affe0) 55%, transparent)")
+    border-color unquote("color-mix(in srgb, var(--risk, var(--lp-accent)) 55%, transparent)")
     transform translateY(-3px)
-    box-shadow 0 0 50px unquote("color-mix(in srgb, var(--risk, #0affe0) 12%, transparent)")
+    box-shadow 0 0 50px unquote("color-mix(in srgb, var(--risk, var(--lp-accent)) 12%, transparent)")
 
     .lp-case-idx
-      -webkit-text-stroke-color unquote("color-mix(in srgb, var(--risk, #0affe0) 60%, transparent)")
+      -webkit-text-stroke-color unquote("color-mix(in srgb, var(--risk, var(--lp-accent)) 60%, transparent)")
 
   @media (hover: hover) and (pointer: fine)
     &:hover
-      border-color unquote("color-mix(in srgb, var(--risk, #0affe0) 55%, transparent)")
+      border-color unquote("color-mix(in srgb, var(--risk, var(--lp-accent)) 55%, transparent)")
       transform translateY(-3px)
-      box-shadow 0 0 50px unquote("color-mix(in srgb, var(--risk, #0affe0) 12%, transparent)")
+      box-shadow 0 0 50px unquote("color-mix(in srgb, var(--risk, var(--lp-accent)) 12%, transparent)")
 
       .lp-case-idx
-        -webkit-text-stroke-color unquote("color-mix(in srgb, var(--risk, #0affe0) 60%, transparent)")
+        -webkit-text-stroke-color unquote("color-mix(in srgb, var(--risk, var(--lp-accent)) 60%, transparent)")
 
 .lp-case-idx
   position absolute
@@ -1195,8 +1195,8 @@
   color var(--risk, var(--primary))
   padding 6px 14px
   border-radius var(--lp-r-pill)
-  border 1px solid unquote("color-mix(in srgb, var(--risk, #0affe0) 35%, transparent)")
-  background unquote("color-mix(in srgb, var(--risk, #0affe0) 8%, transparent)")
+  border 1px solid unquote("color-mix(in srgb, var(--risk, var(--lp-accent)) 35%, transparent)")
+  background unquote("color-mix(in srgb, var(--risk, var(--lp-accent)) 8%, transparent)")
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // WORKFLOW — FILAS EDITORIALES
@@ -1218,7 +1218,7 @@
 
   @media (hover: hover) and (pointer: fine)
     &:hover
-      background rgba(90, 222, 164, 0.03)
+      background unquote("color-mix(in srgb, var(--primary) 3%, transparent)")
 
       .lp-flow-num
         -webkit-text-stroke-color var(--primary)
@@ -1386,13 +1386,13 @@
 
   &.lp-featured
     border-color var(--lp-glass-border-hi)
-    background linear-gradient(160deg, rgba(90, 222, 164,0.07) 0%, var(--lp-glass-bg) 50%)
+    background linear-gradient(160deg, unquote("color-mix(in srgb, var(--primary) 7%, transparent)") 0%, var(--lp-glass-bg) 50%)
     transform translateY(-8px)
-    box-shadow 0 0 60px rgba(90, 222, 164,0.1), 0 20px 60px var(--lp-featured-shadow)
+    box-shadow 0 0 60px unquote("color-mix(in srgb, var(--primary) 10%, transparent)"), 0 20px 60px var(--lp-featured-shadow)
 
     &:hover
       transform translateY(-12px)
-      border-color rgba(90, 222, 164,0.4)
+      border-color unquote("color-mix(in srgb, var(--primary) 40%, transparent)")
 
 .lp-plan-popular
   position absolute
@@ -1402,8 +1402,8 @@
   font-weight 600
   letter-spacing 0.14em
   text-transform uppercase
-  color #000f06
-  background linear-gradient(135deg, var(--lp-accent), #00c8d8)
+  color var(--btn-gradient-ink)
+  background linear-gradient(135deg, var(--lp-accent), var(--primary))
   padding 4px 10px
   border-radius var(--lp-r-pill)
   z-index 2
@@ -1527,7 +1527,7 @@
   transform translate(-50%, -50%)
   width 700px
   height 400px
-  background radial-gradient(ellipse, rgba(10,255,224,0.08) 0%, transparent 70%)
+  background radial-gradient(ellipse, unquote("color-mix(in srgb, var(--lp-accent) 8%, transparent)") 0%, transparent 70%)
   pointer-events none
 
 .lp-cta-orbit
@@ -1538,7 +1538,7 @@
   height 540px
   margin -270px 0 0 -270px
   border-radius 50%
-  border 1px dashed rgba(90, 222, 164, 0.14)
+  border 1px dashed unquote("color-mix(in srgb, var(--primary) 14%, transparent)")
   animation rotate 46s linear infinite
   pointer-events none
 
@@ -1557,7 +1557,7 @@
     width 760px
     height 760px
     margin -380px 0 0 -380px
-    border-color rgba(0, 159, 59, 0.12)
+    border-color unquote("color-mix(in srgb, var(--secondary) 12%, transparent)")
     animation rotateLeft 70s linear infinite
 
     &::before

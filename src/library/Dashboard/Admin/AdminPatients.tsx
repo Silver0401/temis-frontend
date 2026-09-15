@@ -7,11 +7,14 @@ import { toast } from "sonner";
 import { useGlobalContext } from "@/e2e/globalContext";
 import {
   Generate_Exchange_File,
+  Generate_Suive_Report,
   Search_Admin_Patients,
+  type SuiveReport,
 } from "@/e2e/server/FeathersAPI";
 import ActionButton from "@/library/Generics/ActionButton";
 import LoaderCC from "@/components/Loader-CC";
 import { AgeFromBirthdate } from "@/scripts/Generator";
+import { downloadSuiveCsv } from "@/scripts/suiveReport";
 import { DashboardContext } from "@/e2e/dashboardContext";
 
 import AdminFilters, {
@@ -72,6 +75,7 @@ export default function AdminPatients() {
     from: "",
     to: "",
   });
+  const [suiveReport, setSuiveReport] = useState<SuiveReport>();
 
   const patients = useQuery({
     queryKey: ["admin-patients", applied, page],
@@ -99,35 +103,39 @@ export default function AdminPatients() {
    */
   const hayPeriodo = Boolean(exportRange.from || exportRange.to);
 
+  const exportPatientIds = async () => {
+    const patientIds: string[] = [];
+    for (let skip = 0; skip < MAX_EXPORTACION; skip += PASO_EXPORTACION) {
+      const pagina = await feathersFetchCC<AdminPatientsResponse>(
+        await Search_Admin_Patients({
+          ...applied,
+          $limit: PASO_EXPORTACION,
+          $skip: skip,
+        }),
+      );
+      if (pagina.type === "error") throw new Error("admin-patients-error");
+      patientIds.push(...pagina.data.rows.map((row) => row._id));
+      if (
+        pagina.data.rows.length < PASO_EXPORTACION ||
+        patientIds.length >= pagina.data.total
+      ) {
+        break;
+      }
+    }
+    if (!patientIds.length) throw new Error("sin-pacientes");
+    return patientIds.slice(0, MAX_EXPORTACION);
+  };
+
   const exchange_file_mutation = useMutation({
     mutationFn: async () => {
       // Se recorre la búsqueda completa, no la página. `rows` son 25 registros;
       // exportar eso con una etiqueta que dice "resultados" entregaría un
       // archivo incompleto que parece correcto. admin-console tope 100 por
       // petición, así que se pagina hasta el límite del backend.
-      const patientIds: string[] = [];
-      for (let skip = 0; skip < MAX_EXPORTACION; skip += PASO_EXPORTACION) {
-        const pagina = await feathersFetchCC<AdminPatientsResponse>(
-          await Search_Admin_Patients({
-            ...applied,
-            $limit: PASO_EXPORTACION,
-            $skip: skip,
-          }),
-        );
-        if (pagina.type === "error") throw new Error("admin-patients-error");
-        patientIds.push(...pagina.data.rows.map((row) => row._id));
-        if (
-          pagina.data.rows.length < PASO_EXPORTACION ||
-          patientIds.length >= pagina.data.total
-        ) {
-          break;
-        }
-      }
-
-      if (!patientIds.length) throw new Error("sin-pacientes");
+      const patientIds = await exportPatientIds();
 
       const response = await feathersFetchCC<ExchangeFileBatch>(
-        await Generate_Exchange_File(patientIds.slice(0, MAX_EXPORTACION), {
+        await Generate_Exchange_File(patientIds, {
           from: exportRange.from,
           to: exportRange.to,
         }),
@@ -170,6 +178,31 @@ export default function AdminPatients() {
       }
     },
     onError: () => toast.error("No se pudo generar el archivo de intercambio"),
+  });
+
+  const suive_mutation = useMutation({
+    mutationFn: async () => {
+      const patientIds = await exportPatientIds();
+      const response = await feathersFetchCC<SuiveReport>(
+        await Generate_Suive_Report(patientIds, exportRange),
+      );
+      if (response.type === "error") throw new Error("suive-error");
+      return response.data;
+    },
+    onSuccess: (report) => {
+      setSuiveReport(report);
+      if (report.totalCasos) {
+        downloadSuiveCsv(report);
+        toast.success(`Reporte SUIVE generado con ${report.totalCasos} casos`);
+      } else {
+        toast.error("No se encontraron casos SUIVE en el periodo");
+      }
+      if (report.omitidos.length) {
+        toast.warning(`${report.omitidos.length} pacientes no pudieron revisarse`);
+      }
+      if (report.avisos.length) toast.warning(report.avisos.join(" · "));
+    },
+    onError: () => toast.error("No se pudo generar el reporte SUIVE"),
   });
 
 
@@ -244,6 +277,12 @@ export default function AdminPatients() {
                   ? "Generando…"
                   : `Generar archivo (${miles(Math.min(total, MAX_EXPORTACION))})`}
               </ActionButton>
+              <ActionButton
+                disabled={!total || suive_mutation.isPending}
+                onClick={() => suive_mutation.mutate()}
+              >
+                {suive_mutation.isPending ? "Generando…" : "Generar SUIVE"}
+              </ActionButton>
             </div>
             <small className="admin-export-hint">
               {hayPeriodo
@@ -270,6 +309,34 @@ export default function AdminPatients() {
           pacientes de la búsqueda… cada uno se resuelve por separado, puede
           tardar.
         </div>
+      ) : null}
+
+      {suiveReport ? (
+        <section className="admin-suive" aria-labelledby="admin-suive-title">
+          <div className="admin-suive-head">
+            <div>
+              <span className="admin-export-label">Informe epidemiológico</span>
+              <h2 id="admin-suive-title">Resumen SUIVE</h2>
+            </div>
+            <b>{suiveReport.totalCasos} casos</b>
+          </div>
+          <div className="admin-suive-table">
+            <div className="admin-suive-row admin-suive-columns">
+              <span>Grupo</span>
+              <span>Diagnóstico</span>
+              <span>Clave EPI</span>
+              <span>Casos</span>
+            </div>
+            {suiveReport.resumen.map((item) => (
+              <div className="admin-suive-row" key={item.epiClave}>
+                <span>{item.grupo}</span>
+                <b>{item.diagnosticoSuive}</b>
+                <span>{item.epiClave}</span>
+                <strong>{item.casos}</strong>
+              </div>
+            ))}
+          </div>
+        </section>
       ) : null}
 
       <AdminFilters

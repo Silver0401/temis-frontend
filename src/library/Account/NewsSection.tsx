@@ -2,12 +2,12 @@
 
 import React from "react";
 import DisintegrateImage from "@/components/DisintegrateImage";
-import Bg from "@/assets/Images/GreenAbstract.jpg";
+import OrangeAbstract from "@/assets/Images/OrangeAbstract2.jpg";
 
 const NewsSection: React.FC = () => {
   return (
     <div className="NewsSection" id="overlap2">
-      <DisintegrateImage src={Bg.src} className="bgImgContainer" />
+      <DisintegrateImage src={OrangeAbstract.src} className="bgImgContainer" />
       <span className="square1" />
       <span className="square2" />
       <span className="square3" />

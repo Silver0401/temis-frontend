@@ -108,6 +108,7 @@ const ConfirmMedRecord: React.FC = () => {
 
   const save_labs_mutation = useMutation({
     mutationFn: async ({
+      baseText,
       values,
       name,
       dateTaken,
@@ -115,6 +116,7 @@ const ConfirmMedRecord: React.FC = () => {
       recordId,
     }: NewLabSomaRequest) => {
       const req = await Save_Laboratories_Custom({
+        baseText,
         values,
         name,
         dateTaken,
@@ -318,9 +320,10 @@ const ConfirmMedRecord: React.FC = () => {
 
         if (currentSessionData.extraData.Labs.length > 0) {
           currentSessionData.extraData.Labs.forEach(
-            ({ values, dateTaken, name }: LabSomaLocalProps) => {
+            ({ baseText, values, dateTaken, name }: LabSomaLocalProps) => {
               promises.push(
                 save_labs_mutation.mutateAsync({
+                  baseText,
                   values,
                   dateTaken,
                   name,

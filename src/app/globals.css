@@ -4,21 +4,22 @@
 :root {
   --bg: #141414;
   --dual: #000000;
-  --grey: #929292;
-  --silver: #2e2e2e;
+  --grey: #d7ad86;
+  --silver: #f1d1b2;
   --white: #e6e6e6;
-  --primary: #bbf3d8;
-  --secondary: #00391b;
-  --tertiary: #36a5a5;
-  --quaternary: #f0d6ff;
+  --primary: #ffb35c;
+  --secondary: #a34a00;
+  --tertiary: #c66a1d;
+  --quaternary: #321e3e;
   --red: #ee9e9e;
   --green: #88e28a;
-  --yellow: #f4eb6a;
+  --yellow: #e7da63;
   --red-inverted: #6b1212;
   --green-inverted: #177542;
   --yellow-inverted: #d7c739;
-  --transparency: rgba(255, 255, 255, 0.5);
-  --translucid: rgba(0, 0, 0, 0.5);
+  --transparency: rgba(0, 0, 0, 0.5);
+  --translucid: rgba(255, 255, 255, 0.5);
+  --btn-gradient-ink: #141414;
   --maxWidth: 680px;
 
   --nav: 55px;
@@ -42,51 +43,53 @@
   /* Custom Injected Calendar Styling */
   --fc-small-font-size: 0.8rem;
 
-  --lp-bg-from: #020d06;
-  --lp-bg-mid: #001507;
-  --lp-bg-to: #020d06;
-  --lp-bg-orb-a: rgba(0, 159, 59, 0.18);
-  --lp-bg-orb-b: rgba(90, 222, 164, 0.12);
-  --lp-bg-orb-c: rgba(0, 159, 59, 0.14);
+  --lp-bg-from: #100904;
+  --lp-bg-mid: #1c0d03;
+  --lp-bg-mid-inverse: #eed2b6;
+  --lp-bg-to: #100904;
+  --lp-bg-orb-a: rgba(214, 103, 15, 0.18);
+  --lp-bg-orb-b: rgba(255, 179, 92, 0.12);
+  --lp-bg-orb-c: rgba(214, 103, 15, 0.14);
 
   /* Background dots */
-  --lp-bg-dots: rgba(86, 200, 141, 0.08);
+  --lp-bg-dots: rgba(255, 179, 92, 0.08);
 
   /* Floating orbs */
-  --lp-orb-1: hsla(172, 100%, 52%, 0.122);
+  --lp-orb-1: hsla(31, 100%, 52%, 0.122);
   --lp-orb-2: hsla(220, 100%, 60%, 0.122);
   --lp-orb-3: hsla(270, 100%, 60%, 0.122);
-  --lp-orb-4: hsla(150, 100%, 50%, 0.122);
+  --lp-orb-4: hsla(24, 100%, 50%, 0.122);
 
   /* Accent colors */
-  --lp-accent: #0affe0;
+  --lp-accent: #ff9f1a;
   --lp-featured-shadow: rgba(0, 0, 0, 0.4);
 
   /* Footer — default night (light bg); SchemaSwitch overrides both modes */
-  --lp-footer-bg: rgba(238, 248, 242, 0.95);
-  --lp-footer-word-stroke: rgba(0, 55, 7, 0.12);
-  --lp-footer-word-stroke-accent: rgba(0, 159, 59, 0.25);
-  --lp-footer-text: rgba(153, 201, 171, 0.45);
-  --lp-footer-text-hover: #f0fbf5;
-  --lp-footer-border: rgba(86, 200, 141, 0.12);
-  --lp-footer-accent: #0affe0;
-  --lp-footer-border-hi: rgba(10, 255, 224, 0.25);
-  --lp-accent-2: #00a03d;
-  --lp-accent-soft: rgba(10, 255, 224, 0.12);
-  --lp-accent-glow: rgba(10, 255, 224, 0.25);
+  --lp-footer-bg: rgba(255, 245, 236, 0.95);
+  --lp-footer-word-stroke: rgba(92, 39, 0, 0.12);
+  --lp-footer-word-stroke-accent: rgba(214, 103, 15, 0.25);
+  --lp-footer-text: rgba(176, 111, 59, 0.55);
+  --lp-footer-text-hover: #2a1302;
+  --lp-footer-border: rgba(214, 103, 15, 0.18);
+  --lp-footer-accent: #a34a00;
+  --lp-footer-border-hi: rgba(214, 103, 15, 0.38);
+  --lp-accent-2: #b95300;
+  --lp-accent-soft: rgba(255, 159, 26, 0.12);
+  --lp-accent-glow: rgba(255, 159, 26, 0.25);
 
   /* Text — night defaults; SchemaSwitch overrides per mode */
   --lp-text-1: var(--white);
-  --lp-text-2: rgba(191, 230, 205, 0.75);
-  --lp-text-3: rgba(153, 201, 171, 0.4);
+  --lp-text-2: rgba(241, 209, 178, 0.75);
+  --lp-text-3: rgba(215, 173, 134, 0.4);
 
   /* Glass surfaces */
-  --lp-chip-bg: rgba(0, 32, 8, 0.75);
-  --lp-glass-bg: rgba(0, 28, 11, 0.45);
-  --lp-glass-bg-inverted: rgba(0, 28, 11, 0.45);
-  --lp-glass-bg-lite: rgba(0, 48, 20, 0.35);
-  --lp-glass-border: rgba(86, 200, 141, 0.12);
-  --lp-glass-border-hi: rgba(10, 255, 224, 0.25);
+  --lp-chip-bg: rgba(35, 31, 28, 0.88);
+  --lp-glass-bg: rgba(31, 28, 26, 0.8);
+  --lp-glass-bg-inverted: rgba(255, 255, 255, 0.55);
+  --lp-glass-bg-lite: rgba(39, 34, 30, 0.52);
+  --lp-glass-border: rgba(255, 179, 92, 0.12);
+  --lp-glass-border-hi: rgba(255, 179, 92, 0.25);
+  --lp-card-bg: rgba(38, 33, 29, 0.96);
   /* Temis: sin backdrop-filter (blur/saturate) — costoso en hardware modesto.
      Los fondos "glass" quedan sólidos con --lp-glass-bg*. Ver DECISIONS.md. */
   --lp-glass-blur: none;
@@ -121,51 +124,207 @@
   --ease-out-ui: cubic-bezier(0.25, 1, 0.5, 1);
 
   /* Pricing */
-  --lp-plan-glow-text: #001105;
+  --lp-plan-glow-text: #271101;
 
   /* Specialties cards — night defaults (SchemaSwitch overrides per mode) */
-  --lp-sp-card: #092817;
-  --lp-sp-fold-base: #061a0f;
+  --lp-sp-card: #351b09;
+  --lp-sp-fold-base: #261307;
   --lp-sp-icon-overlay: rgba(0, 0, 0, 0.45);
   --lp-sp-dotgrid-line: rgba(255, 255, 255, 0.04);
-  --lp-sp-name-color: rgba(217, 240, 225, 0.9);
+  --lp-sp-name-color: rgba(250, 224, 198, 0.9);
   --lp-sp-name-border: rgba(255, 255, 255, 0.07);
-  --lp-sp-ribbon-bg: rgba(0, 22, 8, 0.82);
-  --lp-sp-ribbon-text: rgba(153, 201, 171, 0.75);
-  --lp-sp-ribbon-border: rgba(4, 183, 111, 0.18);
+  --lp-sp-ribbon-bg: rgba(39, 17, 2, 0.82);
+  --lp-sp-ribbon-text: rgba(215, 173, 134, 0.75);
+  --lp-sp-ribbon-border: rgba(222, 112, 24, 0.18);
 
   /* ── Dashboard (LP-11 redesign) — night defaults; SchemaSwitch overrides per mode ── */
   --siderExpanded: 220px;
   --siderCollapsed: 78px;
-  --dash-app-bg: #010803;
+  --dash-app-bg: #0c0703;
   --dash-scrim: rgba(0, 0, 0, 0.4);
-  --dash-sidebar-bg: rgba(0, 20, 8, 0.72);
-  --dash-card-bg: rgba(0, 30, 13, 0.55);
-  --dash-card-bg-2: rgba(0, 42, 17, 0.42);
-  --dash-glass-lite: rgba(99, 201, 146, 0.05);
-  --dash-line: rgba(99, 201, 146, 0.16);
-  --dash-line-hi: rgba(90, 222, 164, 0.3);
-  --dash-chip-bg: rgba(99, 201, 146, 0.07);
-  --dash-shine: linear-gradient(180deg, rgba(99, 201, 146, 0.1), transparent);
-  --dash-text: #eefaf2;
-  --dash-text-2: rgba(193, 231, 207, 0.62);
-  --dash-text-3: rgba(153, 201, 171, 0.4);
-  --dash-cyan: #5adea4;
-  --dash-blue: #00822f;
-  --dash-purple: #36c170;
-  --dash-glow-a: rgba(0, 159, 59, 0.22);
-  --dash-glow-b: rgba(90, 222, 164, 0.16);
-  --dash-glow-c: rgba(54, 193, 112, 0.1);
+  --dash-sidebar-bg: rgba(29, 26, 24, 0.86);
+  --dash-card-bg: rgba(34, 30, 27, 0.72);
+  --dash-card-bg-2: rgba(42, 36, 31, 0.6);
+  --dash-glass-lite: rgba(35, 31, 28, 0.2);
+  --dash-line: rgba(225, 142, 69, 0.16);
+  --dash-line-hi: rgba(255, 179, 92, 0.3);
+  --dash-chip-bg: rgba(225, 142, 69, 0.07);
+  --dash-shine: linear-gradient(180deg, rgba(225, 142, 69, 0.1), transparent);
+  --dash-text: #fff5eb;
+  --dash-text-2: rgba(245, 213, 181, 0.62);
+  --dash-text-3: rgba(215, 173, 134, 0.4);
+  --dash-cyan: #ffb35c;
+  --dash-blue: #a34a00;
+  --dash-purple: #e77b1f;
+  --dash-glow-a: rgba(214, 103, 15, 0.22);
+  --dash-glow-b: rgba(255, 179, 92, 0.16);
+  --dash-glow-c: rgba(231, 123, 31, 0.1);
   --dash-risk-high: #ff6b8b;
   --dash-risk-mid: #ffd166;
   --dash-risk-low: #5adea4;
   --dash-risk-ok: #5fe6a8;
-  --dash-glass-solid: rgba(0, 33, 14, 0.97);
+  --dash-glass-solid: rgba(49, 22, 4, 0.97);
   --dash-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
-  --dash-sex-m: #5adea4;
+  --dash-sex-m: #ffb35c;
   --dash-sex-f: #ff8fb3;
   --dash-blur: blur(28px) saturate(160%);
   --dash-blur-card: blur(34px) saturate(170%);
+
+  --fc-button-bg-color: #ffb35c;
+  --fc-button-text-color: #2e2e2e;
+  --fc-button-hover-bg-color: #ffe0bdff;
+  --fc-button-active-bg-color: #d58b48ff;
+  --fc-border-color: #444444ff;
+  --fc-neutral-text-color: #e6e6e6;
+  --fc-today-bg-color: rgba(214, 103, 15, 0.48);
+  --fc-event-text-color: #2e2e2e;
+  --fc-event-bg-color: #ffb35c;
+  --fc-page-bg-color: #000000;
+
+  --hub-ink: #0c0703;
+  --hub-cyan: #ffb35c;
+  --hub-glow: #a34a00;
+  --hub-fade: rgba(245, 213, 181, 0.5);
+  --hub-line: rgba(225, 142, 69, 0.18);
+  --hub-text: #fff5eb;
+  --hub-btn-bg: rgba(49, 22, 4, 0.55);
+  --hub-btn-bg-cta: rgba(49, 22, 4, 0.6);
+  --hub-btn-border: rgba(225, 142, 69, 0.22);
+  --hub-btn-border-cta: rgba(225, 142, 69, 0.3);
+  --hub-menu-bg: #fff5eb;
+  --hub-menu-color: #0c0703;
+  --hub-glow-center: rgba(238, 135, 50, 0.5);
+  --hub-glow-mid: rgba(214, 103, 15, 0.24);
+  --hub-stage-bg: radial-gradient(95% 62% at 50% 32%, #5a2905 0%, transparent 62%), radial-gradient(60% 22% at 50% 79%, rgba(232, 130, 45, 0.22) 0%, transparent 70%), linear-gradient(to bottom, #3d1b03 0%, #301502 60%, #2a1202 100%);
+  --hub-system-inactive: rgba(245, 213, 181, 0.3);
+  --hub-system-passed: rgba(245, 213, 181, 0.55);
+  --hub-dot-inactive: rgba(245, 213, 181, 0.25);
+  --hub-track-bg: rgba(255, 255, 255, 0.12);
+  --hub-particle: rgba(255, 225, 196, 0.92);
+  --hub-particle-shadow: drop-shadow(0 0 5px rgba(255, 225, 196, 0.55)) drop-shadow(0 0 2px rgba(255, 179, 92, 0.7));
+}
+
+:root[data-theme="day"] {
+  --bg: #e6e6e6;
+  --dual: #ffffff;
+  --grey: #f1d1b2;
+  --silver: #d7ad86;
+  --white: #141414;
+  --primary: #a34a00;
+  --secondary: #ffb35c;
+  --quaternary: #f0d6ff;
+  --red: #6b1212;
+  --green: #177542;
+  --yellow: #d7c739;
+  --red-inverted: #ee9e9e;
+  --green-inverted: #88e28a;
+  --yellow-inverted: #e7da63;
+  --transparency: rgba(255, 255, 255, 0.5);
+  --translucid: rgba(0, 0, 0, 0.5);
+
+  --lp-bg-from: #f5dfca;
+  --lp-bg-mid: #eed2b6;
+  --lp-bg-mid-inverse: #1c0d03;
+  --lp-bg-to: #e5c19e;
+  --lp-bg-dots: rgba(214, 103, 15, 0.13);
+  --lp-bg-orb-a: rgba(214, 103, 15, 0.14);
+  --lp-bg-orb-b: rgba(255, 179, 92, 0.1);
+  --lp-bg-orb-c: rgba(214, 103, 15, 0.12);
+  --lp-orb-1: rgba(214, 103, 15, 0.14);
+  --lp-orb-2: rgba(255, 179, 92, 0.12);
+  --lp-orb-3: rgba(214, 103, 15, 0.1);
+  --lp-orb-4: rgba(255, 179, 92, 0.1);
+  --lp-accent: #a34a00;
+  --lp-featured-shadow: rgba(0, 0, 0, 0.07);
+  --lp-text-2: rgba(42, 19, 2, 0.75);
+  --lp-text-3: rgba(32, 16, 4, 0.45);
+  --lp-chip-bg: rgba(235, 231, 227, 0.86);
+  --lp-glass-bg: rgba(232, 228, 224, 0.72);
+  --lp-glass-bg-inverted: rgba(43, 20, 4, 0.65);
+  --lp-glass-bg-lite: rgba(225, 220, 215, 0.55);
+  --lp-glass-border: rgba(214, 103, 15, 0.14);
+  --lp-glass-border-hi: rgba(163, 74, 0, 0.5);
+  --lp-accent-soft: rgba(163, 74, 0, 0.14);
+  --lp-card-bg: rgba(238, 233, 228, 0.96);
+  --lp-sp-card: #fff0e2;
+  --lp-sp-fold-base: #dfbb98;
+  --lp-sp-icon-overlay: rgba(255, 255, 255, 0.55);
+  --lp-sp-dotgrid-line: rgba(92, 39, 0, 0.05);
+  --lp-sp-name-color: rgba(64, 28, 2, 0.85);
+  --lp-sp-name-border: rgba(92, 39, 0, 0.08);
+  --lp-sp-ribbon-bg: rgba(50, 22, 2, 0.75);
+  --lp-sp-ribbon-text: rgba(241, 209, 178, 0.85);
+  --lp-sp-ribbon-border: rgba(185, 83, 0, 0.22);
+
+  --dash-app-bg: #f4e3d3;
+  --dash-scrim: rgba(48, 20, 0, 0.18);
+  --dash-sidebar-bg: rgba(235, 230, 225, 0.92);
+  --dash-card-bg: rgba(232, 226, 220, 0.78);
+  --dash-card-bg-2: rgba(225, 219, 213, 0.62);
+  --dash-glass-lite: rgba(218, 212, 206, 0.66);
+  --dash-line: rgba(163, 74, 0, 0.16);
+  --dash-line-hi: rgba(163, 74, 0, 0.35);
+  --dash-chip-bg: rgba(163, 74, 0, 0.06);
+  --dash-shine: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent);
+  --dash-text: #2a1302;
+  --dash-text-2: rgba(48, 22, 3, 0.72);
+  --dash-text-3: rgba(32, 16, 4, 0.55);
+  --dash-cyan: #b85b00;
+  --dash-blue: #a34a00;
+  --dash-purple: #a94f00;
+  --dash-glow-a: rgba(163, 74, 0, 0.14);
+  --dash-glow-b: rgba(222, 112, 24, 0.12);
+  --dash-glow-c: rgba(169, 79, 0, 0.08);
+  --dash-risk-high: #c2305a;
+  --dash-risk-mid: #b8860b;
+  --dash-risk-low: #00a166;
+  --dash-risk-ok: #1d9b63;
+  --dash-glass-solid: rgba(255, 252, 249, 0.97);
+  --dash-shadow: 0 24px 60px rgba(92, 39, 0, 0.16);
+  --dash-sex-m: #b85b00;
+  --dash-sex-f: #d65a86;
+
+  --fc-button-bg-color: #5c2700;
+  --fc-button-text-color: #e6e6e6;
+  --fc-button-hover-bg-color: #873b00;
+  --fc-button-active-bg-color: #873b00;
+  --fc-border-color: #abababff;
+  --fc-neutral-text-color: #2e2e2e;
+  --fc-today-bg-color: rgba(255, 179, 92, 0.49);
+  --fc-event-text-color: #e6e6e6;
+  --fc-event-bg-color: #5c2700;
+  --fc-page-bg-color: #ffffff;
+
+  --hub-ink: #eed2b6;
+  --hub-cyan: #a34a00;
+  --hub-glow: #ffb35c;
+  --hub-fade: rgba(72, 31, 5, 0.6);
+  --hub-line: rgba(163, 74, 0, 0.22);
+  --hub-text: #2a1302;
+  --hub-btn-bg: rgba(239, 209, 180, 0.6);
+  --hub-btn-bg-cta: rgba(239, 209, 180, 0.65);
+  --hub-btn-border: rgba(163, 74, 0, 0.28);
+  --hub-btn-border-cta: rgba(163, 74, 0, 0.38);
+  --hub-menu-bg: #2a1302;
+  --hub-menu-color: #eed2b6;
+  --hub-glow-center: rgba(163, 74, 0, 0.4);
+  --hub-glow-mid: rgba(255, 179, 92, 0.2);
+  --hub-stage-bg: radial-gradient(95% 62% at 50% 32%, rgba(163, 74, 0, 0.18) 0%, transparent 62%), radial-gradient(60% 22% at 50% 79%, rgba(255, 179, 92, 0.15) 0%, transparent 70%), linear-gradient(to bottom, #e5c19e 0%, #eed2b6 60%, #f5dfca 100%);
+  --hub-system-inactive: rgba(72, 31, 5, 0.3);
+  --hub-system-passed: rgba(72, 31, 5, 0.55);
+  --hub-dot-inactive: rgba(72, 31, 5, 0.25);
+  --hub-track-bg: rgba(72, 31, 5, 0.12);
+  --hub-particle: rgba(163, 74, 0, 0.92);
+  --hub-particle-shadow: drop-shadow(0 0 6px rgba(163, 74, 0, 0.8)) drop-shadow(0 0 2px rgba(163, 74, 0, 1));
+
+  --lp-footer-bg: rgba(39, 17, 2, 0.92);
+  --lp-footer-word-stroke: rgba(255, 179, 92, 0.14);
+  --lp-footer-word-stroke-accent: rgba(255, 159, 26, 0.3);
+  --lp-footer-text: rgba(215, 173, 134, 0.55);
+  --lp-footer-text-hover: #fff5eb;
+  --lp-footer-border: rgba(255, 179, 92, 0.12);
+  --lp-footer-accent: #ff9f1a;
+  --lp-footer-border-hi: rgba(255, 159, 26, 0.25);
 }
 
 h1,
@@ -256,19 +415,4 @@ main {
   #GeneralSection {
     height: auto;
   }
-}
-
-/* ------------- Random color Tester -----------*/
-
-.nothingContainerthatWillNeverBeUsed {
-  color: rgba(255, 255, 255, 0.2);
-  color: rgb(152, 152, 152);
-  background: radial-gradient(
-    circle,
-    rgba(160, 239, 202, 0.7) 0%,
-    rgba(0, 48, 19, 0.7) 100%
-  );
-  color: #303030;
-  fill: #767673;
-  /* stroke: theme === "day" ? "" : "", */
 }

@@ -28,7 +28,7 @@ const LineGraphCC: React.FC<LineGraphProps> = ({
   // const { ref, inView } = useInView({
   //   threshold: 0.1, // How much of it needs to be visible
   // });
-  const LineColor = theme === "day" ? "#00391b" : "#bbf3d8";
+  const LineColor = theme === "day" ? "#5c2700" : "#ffddb8";
   const Theme = {
     background: theme === "day" ? "#e6e6e6" : "#141414",
     crosshair: {
@@ -89,7 +89,7 @@ const LineGraphCC: React.FC<LineGraphProps> = ({
       },
       text: {
         fontSize: 11,
-        fill: "rgb(104, 193, 178)",
+        fill: "rgb(198, 106, 29)",
         outlineWidth: 0,
         outlineColor: "#ffffff",
       },
@@ -365,7 +365,7 @@ const LineGraphCC: React.FC<LineGraphProps> = ({
               }
               colors={
                 LabBaseParameters[title]
-                  ? ["rgb(104, 193, 178)", "rgb(244, 117, 96)"]
+                  ? ["rgb(198, 106, 29)", "rgb(244, 117, 96)"]
                   : LineColor
               }
               useMesh

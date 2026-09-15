@@ -13,8 +13,10 @@ import {
   Get_Patients_For_GIIS,
   Get_User_Groups,
   Get_User_Patients,
+  Generate_Suive_Report,
   Remove_Patient_From_Group,
   Search_One_Patient,
+  type SuiveReport,
 } from "@/e2e/server/FeathersAPI";
 import {
   IsFirstDateWithTimeMoreRecentThanSecondDate,
@@ -32,6 +34,7 @@ import { toast } from "sonner";
 import { DashboardContext } from "@/e2e/dashboardContext";
 import LoaderCC from "@/components/Loader-CC";
 import IconsCC from "@/assets/icons/IconsCC";
+import { downloadSuiveCsv } from "@/scripts/suiveReport";
 
 const getInitials = (name?: string) =>
   (name || "")
@@ -40,6 +43,87 @@ const getInitials = (name?: string) =>
     .slice(0, 2)
     .map((n) => n[0]?.toUpperCase() ?? "")
     .join("") || "Dr";
+
+const SuiveReportPanel = ({ patientIds }: { patientIds: string[] }) => {
+  const { feathersFetchCC } = useGlobalContext();
+  const [range, setRange] = useState({ from: "", to: "" });
+  const [report, setReport] = useState<SuiveReport>();
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const response = await feathersFetchCC<SuiveReport>(
+        await Generate_Suive_Report(patientIds, range),
+      );
+      if (response.type === "error") throw new Error("suive-error");
+      return response.data;
+    },
+    onSuccess: (result) => {
+      setReport(result);
+      if (result.totalCasos) {
+        downloadSuiveCsv(result);
+        toast.success(`Reporte SUIVE generado con ${result.totalCasos} casos`);
+      } else {
+        toast.error("No se encontraron casos SUIVE en el periodo");
+      }
+      if (result.omitidos.length) {
+        toast.warning(`${result.omitidos.length} pacientes no pudieron revisarse`);
+      }
+      if (result.avisos.length) toast.warning(result.avisos.join(" · "));
+    },
+    onError: () => toast.error("No se pudo generar el reporte SUIVE"),
+  });
+
+  return (
+    <div className="suive-report-panel">
+      <header>
+        <span>Vigilancia epidemiológica</span>
+        <h2>Reporte SUIVE</h2>
+        <p>{patientIds.length} pacientes bajo tu atención</p>
+      </header>
+      <div className="suive-report-range">
+        <label>
+          Desde
+          <input
+            type="date"
+            value={range.from}
+            onChange={(event) =>
+              setRange((current) => ({ ...current, from: event.target.value }))
+            }
+          />
+        </label>
+        <label>
+          Hasta
+          <input
+            type="date"
+            value={range.to}
+            onChange={(event) =>
+              setRange((current) => ({ ...current, to: event.target.value }))
+            }
+          />
+        </label>
+        <ButtonCC
+          text={mutation.isPending ? "Generando" : "Generar y descargar CSV"}
+          loading={mutation.isPending}
+          onClick={() => mutation.mutate()}
+        />
+      </div>
+      {report ? (
+        <div className="suive-report-summary" aria-live="polite">
+          <b>{report.totalCasos} casos encontrados</b>
+          <div className="suive-report-table">
+            {report.resumen.map((item) => (
+              <div key={item.epiClave}>
+                <span>{item.grupo}</span>
+                <strong>{item.diagnosticoSuive}</strong>
+                <i>EPI {item.epiClave}</i>
+                <b>{item.casos}</b>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+};
 
 const MyPatients = () => {
   const queryClient = useQueryClient();
@@ -361,6 +445,22 @@ const MyPatients = () => {
     });
   };
 
+  const openSuiveReport = () => {
+    const patientIds = (data?.data?.patientsList ?? []).map((patient) => patient._id);
+    if (!patientIds.length) {
+      toast.error("No tienes pacientes para generar el reporte SUIVE");
+      return;
+    }
+    setGlobalModal({
+      Settings: {
+        size: "medium",
+        animation: "popUp",
+        identifier: "SuiveReportModal",
+      },
+      Component: <SuiveReportPanel patientIds={patientIds} />,
+    });
+  };
+
   // On refetch, if a Patients file was previously opened, Open it again.
   useEffect(() => {
     if (!isRefetching) {
@@ -491,6 +591,17 @@ const MyPatients = () => {
             classname="openFilterAndSearchDGIISModal"
             type="Phantom"
             icon={IconsCC.DatabaseSearch}
+          />
+          <ButtonCC
+            onClick={openSuiveReport}
+            classname="suiveReportButton"
+            type="Phantom"
+            icon={
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <title>Generar reporte SUIVE</title>
+                <path d="M6.75 2.25A2.25 2.25 0 0 0 4.5 4.5v15A2.25 2.25 0 0 0 6.75 21h10.5a2.25 2.25 0 0 0 2.25-2.25V8.12a2.25 2.25 0 0 0-.659-1.59l-3.37-3.371a2.25 2.25 0 0 0-1.591-.659H6.75Zm4.5 6a.75.75 0 0 1 1.5 0v3h3a.75.75 0 0 1 0 1.5h-3v3a.75.75 0 0 1-1.5 0v-3h-3a.75.75 0 0 1 0-1.5h3v-3Z" />
+              </svg>
+            }
           />
           <ButtonCC
             onClick={() => {}}

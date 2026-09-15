@@ -728,6 +728,54 @@ export const Generate_Exchange_File = (
   );
 };
 
+export type SuiveReport = {
+  casos: Array<{
+    patientId: string;
+    recordId: string;
+    fechaConsulta: string;
+    nombrePaciente: string;
+    edad: number | null;
+    sexo: string | null;
+    cieCapturado: string;
+    epiClave: number;
+    diagnosticoSuive: string;
+    grupo: string;
+    notificacionInmediata: boolean;
+    estudioEpidemiologico: boolean;
+    estudioBrote: boolean;
+  }>;
+  resumen: Array<{
+    epiClave: number;
+    diagnosticoSuive: string;
+    grupo: string;
+    casos: number;
+  }>;
+  totalCasos: number;
+  totalPacientesRevisados: number;
+  omitidos: Array<{ patientId: string; reason: string }>;
+  avisos: string[];
+};
+
+export const Generate_Suive_Report = (
+  patientIds: string[],
+  range: { from?: string; to?: string } = {},
+): Promise<feathersApiProps> => {
+  return new Promise((resolve) =>
+    resolve({
+      method: "create",
+      service: "suive",
+      logId: "suive_report_generated",
+      logs: false,
+      nonLoggable: true,
+      data: {
+        patientIds,
+        ...(range.from ? { from: range.from } : {}),
+        ...(range.to ? { to: range.to } : {}),
+      },
+    }),
+  );
+};
+
 export const Create_Insurance_Report = (
   patientId: string,
   recordIds: string[],
@@ -799,8 +847,35 @@ export const Modify_Laboratories = (
   );
 };
 
+// Alta desde el formulario (igual que Cronos): `baseText` lo estructura el hook
+// `format_labs` del backend con IA.
+export const Save_Laboratories = (
+  labsData: FormData,
+): Promise<feathersApiProps> => {
+  return new Promise((resolve) =>
+    resolve({
+      method: "create",
+      service: "labs",
+      logs: false,
+      successToast: `Laboratorios agregados al expediente`,
+      logId: "user_added_laboratories_to_patient_from_original_form",
+      patientId: labsData.get("patientId") as string,
+      data: {
+        baseText: labsData.get("labsFullText") as string,
+        dateTaken: labsData.get("labsDate") as string,
+        name: labsData.get("labsName") as string,
+        patientId: labsData.get("patientId") as string,
+        diagnosisId: ((labsData.get("labsDxId") as string) ?? "")
+          .split("|")[1]
+          ?.trim(),
+      },
+    }),
+  );
+};
+
 export const Save_Laboratories_Custom = ({
   name,
+  baseText,
   values,
   dateTaken,
   patientId,
@@ -817,6 +892,7 @@ export const Save_Laboratories_Custom = ({
       logId: "user_added_laboratories_to_patient_with_document",
       data: {
         name,
+        baseText,
         values,
         dateTaken,
         patientId,

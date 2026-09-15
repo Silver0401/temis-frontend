@@ -5,6 +5,9 @@ import { DashboardStatesObject } from "@/library/Dashboard/DashboardRegistry";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext } from "react";
 import { DashboardContext } from "@/e2e/dashboardContext";
+import IconsCC from "@/assets/icons/IconsCC";
+import { GlobalContext } from "@/e2e/globalContext";
+import { GlobalModalDefault } from "@/scripts/Constants";
 
 export default function NewPatientLayout({
   children,
@@ -13,14 +16,74 @@ export default function NewPatientLayout({
 }>) {
   const router = useRouter();
   const pathname = usePathname();
-  const { currentSessionData, setCurrentSessionData, setShowPatient } =
-    useContext(DashboardContext);
+  const {
+    currentSessionData,
+    setCurrentSessionData,
+    setShowPatient,
+    ResetSessionData,
+  } = useContext(DashboardContext);
+  const { setGlobalModal } = useContext(GlobalContext);
+
+  const esDocumento = currentSessionData.toBeAdded === "document";
+
+  // Confirmación antes de tirar el flujo en curso (portado de Cronos).
+  const OpenPatientModalReset = () => {
+    const CloseAndDoAction = () => {
+      setGlobalModal(GlobalModalDefault);
+      ResetSessionData({ withRouter: true });
+    };
+
+    setGlobalModal({
+      Component: (
+        <div className="genericModalInfo">
+          <h3>{"Reiniciar"}</h3>
+          <p>
+            {esDocumento
+              ? "¿Estás seguro que quieres reiniciar el flujo de agregar documento? Se perderán los datos actuales"
+              : "¿Estás seguro que quieres reiniciar el flujo de registro de paciente? Se perderán los datos actuales"}
+          </p>
+          <ButtonCC
+            type="Phantom"
+            text="Reiniciar Flujo"
+            onClick={CloseAndDoAction}
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                />
+              </svg>
+            }
+          />
+        </div>
+      ),
+      Settings: {
+        size: "small",
+        animation: "popUp",
+        identifier: "ResetPatientCurrentSessionData",
+      },
+    });
+  };
 
   // El botón de regreso se renderiza siempre EXCEPTO en la vista inicial de
   // "nuevo paciente" (paso 0 de la ruta base): ahí no hay a dónde volver y el
   // reset dejaba la vista en blanco.
+  // Este layout también lo monta /dashboard/addDocument (mismo page.tsx), así
+  // que ambas rutas cuentan como raíz del flujo.
+  const enRaiz = [
+    DashboardStatesObject["New Patient"].Route,
+    DashboardStatesObject["Add Document"].Route,
+  ].includes(pathname);
   const hideReturn =
-    pathname === `${DashboardStatesObject["New Patient"].Route}` &&
+    enRaiz &&
     (currentSessionData.toBeAdded === "init" ||
       currentSessionData.currentStep === 0);
 
@@ -38,7 +101,12 @@ export default function NewPatientLayout({
         <ButtonCC
           type="Phantom"
           onClick={() => {
-            if (pathname === `${DashboardStatesObject["New Patient"].Route}`) {
+            if (currentSessionData.currentRecord) {
+              setCurrentSessionData({
+                ...currentSessionData,
+                currentRecord: undefined,
+              });
+            } else if (enRaiz) {
               setCurrentSessionData({
                 ...currentSessionData,
                 currentStep:
@@ -75,6 +143,11 @@ export default function NewPatientLayout({
             top: "10px",
             left: "30px",
             zIndex: 10,
+            height: "100px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            alignItems: "center",
             visibility: hideReturn ? "hidden" : "visible",
           }}
         >
@@ -97,6 +170,12 @@ export default function NewPatientLayout({
                 />
               </svg>
             }
+          />
+
+          <ButtonCC
+            type="Phantom"
+            onClick={OpenPatientModalReset}
+            icon={IconsCC.Trash}
           />
         </div>
       )}

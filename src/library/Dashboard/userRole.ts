@@ -6,6 +6,7 @@ export const resolveUserRole = (
 
 export const RoleLabels: Record<UserRole, string> = {
   medico: "Médico",
+  odontologo: "Odontólogo",
   enfermeria: "Enfermería",
   admin: "Administrador",
 };

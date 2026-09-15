@@ -14,9 +14,9 @@ import IconsCC from "@/assets/icons/IconsCC";
 const ACTION_STATES: DashboardStates[] = ["New Patient", "Add Document"];
 
 // Estados que existen en el registro pero no se ofrecen en la navegación.
-// Add Document y Consents se retiraron del menú a petición del usuario; sus
-// rutas siguen vivas.
-const HIDDEN_STATES: DashboardStates[] = ["Add Document", "Consents"];
+// Consents se retiró del menú a petición del usuario; su ruta sigue viva.
+// Add Document volvió a Acciones el 2026-09-15 (flujo paciente → tipo → formulario).
+const HIDDEN_STATES: DashboardStates[] = ["Consents"];
 
 const FAB_SIZE = 56; // px — diámetro de la bolita flotante
 const DRAG_THRESHOLD = 4; // px — movimiento mínimo para distinguir drag de tap

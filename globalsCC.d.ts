@@ -573,10 +573,11 @@ export declare global {
 
   // Access role (version of access). Drives which dashboard the account sees.
   // Undefined on legacy users → treated as "medico".
-  // - medico: unico rol creable por registro publico.
+  // - medico: rol clinico creable por registro publico.
+  // - odontologo: mismo perfil clinico; se deriva del tipo de personal.
   // - enfermeria: unico rol creable desde Mi Equipo, bajo tutela de un medico.
   // - admin: supervision global, se siembra con backend/src/scripts/seed-admin.ts.
-  type UserRole = "medico" | "enfermeria" | "admin";
+  type UserRole = "medico" | "odontologo" | "enfermeria" | "admin";
 
   interface UserBasedSchema {
     _id: string;
