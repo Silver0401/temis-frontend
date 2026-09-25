@@ -14,6 +14,7 @@ interface EntFedSearchCCProps {
   identifier?: string;
   disabled?: boolean;
   placeholder?: string;
+  label?: string;
 }
 
 const EntFedSearchCC: React.FC<EntFedSearchCCProps> = ({
@@ -25,6 +26,7 @@ const EntFedSearchCC: React.FC<EntFedSearchCCProps> = ({
   disabled,
   currentValue,
   placeholder,
+  label,
 }) => {
   const { feathersFetchCC } = useGlobalContext();
   const [searchedEntFeds, setSearchedEntFeds] = React.useState<
@@ -74,7 +76,7 @@ const EntFedSearchCC: React.FC<EntFedSearchCCProps> = ({
             identifier="loaderInput"
             currentValue="Buscando Entidades Federativas ..."
             styles={{ container: { width: "100%" } }}
-            colorSchema="night"
+            colorSchema={colorSchema ? colorSchema : "day"}
             type="text"
             loading
           />
@@ -82,6 +84,7 @@ const EntFedSearchCC: React.FC<EntFedSearchCCProps> = ({
           <InputCC
             identifier={`${identifier || "EntFedSearch"}-search`}
             disabled={disabled}
+            label={label}
             currentValue={
               currentValue
                 ? currentValue

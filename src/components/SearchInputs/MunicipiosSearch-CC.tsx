@@ -15,6 +15,7 @@ interface MunicipiosSearchCCProps {
   efeKey?: number;
   disabled?: boolean;
   placeholder?: string;
+  label?: string;
 }
 
 const MunicipiosSearchCC: React.FC<MunicipiosSearchCCProps> = ({
@@ -27,6 +28,7 @@ const MunicipiosSearchCC: React.FC<MunicipiosSearchCCProps> = ({
   disabled,
   efeKey,
   placeholder,
+  label,
 }) => {
   const { feathersFetchCC } = useGlobalContext();
   const [searchedMunicipios, setSearchedMunicipios] = React.useState<
@@ -83,6 +85,7 @@ const MunicipiosSearchCC: React.FC<MunicipiosSearchCCProps> = ({
         ) : (
           <InputCC
             identifier={`${identifier || "MunicipiosSearch"}-search`}
+            label={label}
             disabled={disabled}
             currentValue={
               currentValue

@@ -267,22 +267,26 @@
 
 
 .InputCC-Schema-day
-    // background-color: var(--grey) !important
+    background-color: var(--white)
 
     .placeholderHider
-        background-color: var(--grey) !important
+        background-color: var(--white)
 
     label
-        background-color: var(--grey) !important
-        color: var(--bg) !important
+        background-color: var(--white)
+        color: var(--bg)
 
 
     .InputCC
-        background-color: transparent
-        // color: var(--bg) !important
+        background-color: var(--white)
 
         &::placeholder
-            color: var(--white) !important 
+            color: transparent
+            opacity: 1
+
+        &:focus::placeholder
+            color: var(--white) 
+            opacity: 1
 
     .InputCC:-webkit-autofill,
     .InputCC:-webkit-autofill:hover, 
@@ -322,25 +326,25 @@
 
 
 .InputCC-Schema-night
-    // background-color: var(--silver) !important
+    background-color: var(--grey)
 
     .placeholderHider
-        background-color: var(--silver) !important
+        background-color: var(--grey) 
 
     label
-        background-color: var(--silver)
+        background-color: var(--grey)
         color: var(--white)
 
-    #InputCC-Selected
-        label
-            color: var(--bg) !important
-
     .InputCC
-        background-color: transparent
-        // color: var(--white) !important
+        background-color: var(--grey)
 
         &::placeholder
-            color: var(--bg) !important 
+            color: transparent
+            opacity: 1
+
+        &:focus::placeholder
+            color: var(--grey) 
+            opacity: 1
 
 
     .InputCC:-webkit-autofill,

@@ -1,7 +1,3 @@
-.fillSpace {
-  width: 100%;
-  height: 100%;
-}
 .formOptContainer {
   width: clamp(300px, 70vw, 650px);
   height: 500px;
@@ -14,6 +10,11 @@
 }
 .fontWhite {
   color: var(--white);
+}
+.fontBg {
+  color: var(--bg);
+}
+r(--white);
 }
 .fontBg {
   color: var(--bg);
@@ -289,18 +290,26 @@
   text-overflow: ellipsis;
   max-width: 160px;
 }
+.InputCC-Schema-day {
+  background-color: var(--white);
+}
 .InputCC-Schema-day .placeholderHider {
-  background-color: var(--grey) !important;
+  background-color: var(--white);
 }
 .InputCC-Schema-day label {
-  background-color: var(--grey) !important;
-  color: var(--bg) !important;
+  background-color: var(--white);
+  color: var(--bg);
 }
 .InputCC-Schema-day .InputCC {
-  background-color: transparent;
+  background-color: var(--white);
 }
 .InputCC-Schema-day .InputCC::placeholder {
-  color: var(--white) !important;
+  color: transparent;
+  opacity: 1;
+}
+.InputCC-Schema-day .InputCC:focus::placeholder {
+  color: var(--white);
+  opacity: 1;
 }
 .InputCC-Schema-day .InputCC:-webkit-autofill,
 .InputCC-Schema-day .InputCC:-webkit-autofill:hover,
@@ -329,21 +338,26 @@
 .InputCC-Schema-day .InputCC-Icon .openLock {
   fill: var(--green) !important;
 }
+.InputCC-Schema-night {
+  background-color: var(--grey);
+}
 .InputCC-Schema-night .placeholderHider {
-  background-color: var(--silver) !important;
+  background-color: var(--grey);
 }
 .InputCC-Schema-night label {
-  background-color: var(--silver);
+  background-color: var(--grey);
   color: var(--white);
 }
-.InputCC-Schema-night #InputCC-Selected label {
-  color: var(--bg) !important;
-}
 .InputCC-Schema-night .InputCC {
-  background-color: transparent;
+  background-color: var(--grey);
 }
 .InputCC-Schema-night .InputCC::placeholder {
-  color: var(--bg) !important;
+  color: transparent;
+  opacity: 1;
+}
+.InputCC-Schema-night .InputCC:focus::placeholder {
+  color: var(--grey);
+  opacity: 1;
 }
 .InputCC-Schema-night .InputCC:-webkit-autofill,
 .InputCC-Schema-night .InputCC:-webkit-autofill:hover,
@@ -966,7 +980,7 @@
 .FormCC .PCC-Form {
   align-self: flex-start;
   font-size: 0.8rem;
-  color: var(--grey);
+  color: var(--lp-text-2);
 }
 .FormCC .InputCC-Checkbox,
 .FormCC .InputCC-Container {
@@ -1908,14 +1922,14 @@
   color: var(--white);
 }
 .Prescriber-day .fillerBar {
-  background-color: var(--grey);
+  background-color: var(--white);
 }
 .Prescriber-night .title,
 .Prescriber-night .subtitle {
   color: var(--bg);
 }
 .Prescriber-night .fillerBar {
-  background-color: var(--lightgrey);
+  background-color: var(--bg);
 }
 .PrescriptionCC {
   position: relative;
@@ -11794,6 +11808,7 @@ label svg {
   padding: 13px 20px;
   border-bottom: 1px solid var(--dash-chip-bg);
   font-size: 0.8rem;
+  cursor: pointer;
 }
 .AdminSearchView .admin-row:hover {
   background: var(--dash-glass-lite);
@@ -13955,6 +13970,8 @@ label svg {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  height: 720px;
+  overflow-y: auto;
 }
 .SavePatientContainer .SavePatientStack .NursePatientSaveBar {
   position: relative;

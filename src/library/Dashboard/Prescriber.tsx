@@ -112,7 +112,9 @@ const Prescriber: React.FC<PrescriptionSectionProps> = ({
   };
 
   return (
-    <div className={`Prescriber Prescriber-${colorSchema}`}>
+    <div
+      className={`Prescriber Prescriber-${colorSchema ? colorSchema : "day"}`}
+    >
       <h4 className="title">{"Prescribe Fármacos"}</h4>
       <p className="subtitle">
         {"Ve llenando la información de todos los fármacos que quieras recetar"}
@@ -138,7 +140,7 @@ const Prescriber: React.FC<PrescriptionSectionProps> = ({
         return (
           <div className="DrugPrescCont" key={`DrugPrescCont${count}`}>
             <DrugSearchCC
-              colorSchema={colorSchema === "day" ? "night" : "day"}
+              colorSchema={colorSchema ? colorSchema : "day"}
               currentValue={
                 currentMedicationList[count]
                   ? currentMedicationList[count].drugPresentation
@@ -171,7 +173,7 @@ const Prescriber: React.FC<PrescriptionSectionProps> = ({
                     placeholder="Indicación ej: 1 tableta cada 8 horas por 7 dias"
                     identifier={`DrugPrescInput`}
                     debouncer
-                    colorSchema={colorSchema === "day" ? "night" : "day"}
+                    colorSchema={colorSchema ? colorSchema : "day"}
                     currentValue={
                       currentMedicationList[count]
                         ? currentMedicationList[count].indication

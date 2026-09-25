@@ -1,6 +1,6 @@
 {
   "name": "temis-frontend",
-  "version": "1.0.9.0",
+  "version": "1.0.9.1",
   "private": true,
   "scripts": {
     "dev": "concurrently \"env-cmd -f ./.env.dev next dev\" \"npm run stylus\" \"npm run mac-qr-dev\"",

@@ -13,6 +13,7 @@ interface PaisesSearchCCProps {
   className?: string;
   identifier?: string;
   placeholder?: string;
+  label?: string;
 }
 
 const PaisesSearchCC: React.FC<PaisesSearchCCProps> = ({
@@ -23,6 +24,7 @@ const PaisesSearchCC: React.FC<PaisesSearchCCProps> = ({
   colorSchema,
   currentValue,
   placeholder,
+  label,
 }) => {
   const { feathersFetchCC } = useGlobalContext();
   const [searchedPaises, setSearchedPaises] = React.useState<PaisesResponse[]>(
@@ -72,13 +74,14 @@ const PaisesSearchCC: React.FC<PaisesSearchCCProps> = ({
             identifier="loaderInput"
             currentValue="Buscando Países ..."
             styles={{ container: { width: "100%" } }}
-            colorSchema="night"
+            colorSchema={colorSchema ? colorSchema : "day"}
             type="text"
             loading
           />
         ) : (
           <InputCC
             identifier={`${identifier || "PaisesSearch"}-search`}
+            label={label}
             currentValue={
               currentValue
                 ? currentValue

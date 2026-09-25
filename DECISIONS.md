@@ -1,5 +1,29 @@
 # Decisiones de Performance — CronosMD Frontend
 
+## 2026-09-25 - Flujo "agregar documento" en su propia ruta (portado de Cronos)
+
+- `/dashboard/addDocument` dejó de ser un re-export de `newPatient` y ahora tiene
+  `page.tsx` y `layout.tsx` propios, como en Cronos. Pasos: 0 buscar paciente ·
+  1 tipo de documento · 2 formulario (`AddNewDocForm`).
+- `newPatient/page.tsx` perdió la rama `document` del objeto `AddPatientDocFlow`
+  (ahora `AddPatientFlow`, un array plano) y el efecto que derivaba el flujo del
+  pathname. `newPatient/layout.tsx` perdió `esDocumento` y la rama de pasos del
+  flujo de documento; su única raíz vuelve a ser la ruta de alta.
+- `template.tsx` de addDocument sigue siendo re-export del de newPatient: Cronos
+  hace exactamente lo mismo.
+- **Divergencia con Cronos que NO se resolvió aquí:** en Cronos el flujo de
+  documento sigue redirigiendo a subrutas bajo `newPatient/` (textTranscriber
+  etc.), así que su helper `isDocumentFlowPath` no aplica a la pantalla
+  compartida. En Temis pasa lo mismo con `newPatient/clinicalRecord`, donde
+  `SavePatientForm` elige entre `upload_evo_note` y `ValidateAndSaveSomasAndData`.
+  Por eso `toBeAdded` **se conserva**, ya no como ramificador de páginas sino
+  como marcador que leen `SavePatientForm` y `AddNewDocForm`. Eliminarlo exigiría
+  o inventar una subruta que Cronos no tiene, o borrar el guardado de nota de
+  evolución — ninguna de las dos se pidió.
+- `NewFlowIndexed` en `globalsCC.d.ts` quedó sin usar; se deja declarado para no
+  tocar tipos fuera del alcance.
+- Verificado: `npx tsc --noEmit` limpio y `npm run lint` sin warnings nuevos.
+
 ## 2026-09-03 - Extracción auditable de XLSX
 
 - El JSON es un artefacto de revisión y no se conecta a React ni al backend.

@@ -16,6 +16,7 @@ interface LocalidadesSearchCCProps {
   munKey?: number;
   disabled?: boolean;
   placeholder?: string;
+  label?: string;
 }
 
 const LocalidadesSearchCC: React.FC<LocalidadesSearchCCProps> = ({
@@ -29,6 +30,7 @@ const LocalidadesSearchCC: React.FC<LocalidadesSearchCCProps> = ({
   efeKey,
   munKey,
   placeholder,
+  label,
 }) => {
   const { feathersFetchCC } = useGlobalContext();
   const [searchedLocalidades, setSearchedLocalidades] = React.useState<
@@ -78,7 +80,7 @@ const LocalidadesSearchCC: React.FC<LocalidadesSearchCCProps> = ({
             identifier="loaderInput"
             currentValue="Buscando Localidades ..."
             styles={{ container: { width: "100%" } }}
-            colorSchema="night"
+            colorSchema={colorSchema ? colorSchema : "day"}
             type="text"
             loading
           />
@@ -86,6 +88,7 @@ const LocalidadesSearchCC: React.FC<LocalidadesSearchCCProps> = ({
           <InputCC
             identifier={`${identifier || "LocalidadesSearch"}-search`}
             disabled={disabled}
+            label={label}
             currentValue={
               currentValue
                 ? currentValue

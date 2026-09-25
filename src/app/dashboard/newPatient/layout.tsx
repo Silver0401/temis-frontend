@@ -24,8 +24,6 @@ export default function NewPatientLayout({
   } = useContext(DashboardContext);
   const { setGlobalModal } = useContext(GlobalContext);
 
-  const esDocumento = currentSessionData.toBeAdded === "document";
-
   // Confirmación antes de tirar el flujo en curso (portado de Cronos).
   const OpenPatientModalReset = () => {
     const CloseAndDoAction = () => {
@@ -38,9 +36,9 @@ export default function NewPatientLayout({
         <div className="genericModalInfo">
           <h3>{"Reiniciar"}</h3>
           <p>
-            {esDocumento
-              ? "¿Estás seguro que quieres reiniciar el flujo de agregar documento? Se perderán los datos actuales"
-              : "¿Estás seguro que quieres reiniciar el flujo de registro de paciente? Se perderán los datos actuales"}
+            {
+              "¿Estás seguro que quieres reiniciar el flujo de registro de paciente? Se perderán los datos actuales"
+            }
           </p>
           <ButtonCC
             type="Phantom"
@@ -76,16 +74,10 @@ export default function NewPatientLayout({
   // El botón de regreso se renderiza siempre EXCEPTO en la vista inicial de
   // "nuevo paciente" (paso 0 de la ruta base): ahí no hay a dónde volver y el
   // reset dejaba la vista en blanco.
-  // Este layout también lo monta /dashboard/addDocument (mismo page.tsx), así
-  // que ambas rutas cuentan como raíz del flujo.
-  const enRaiz = [
-    DashboardStatesObject["New Patient"].Route,
-    DashboardStatesObject["Add Document"].Route,
-  ].includes(pathname);
-  const hideReturn =
-    enRaiz &&
-    (currentSessionData.toBeAdded === "init" ||
-      currentSessionData.currentStep === 0);
+  // El flujo de documento vive en /dashboard/addDocument con su propio layout,
+  // así que aquí la única raíz es la del alta de paciente.
+  const enRaiz = pathname === DashboardStatesObject["New Patient"].Route;
+  const hideReturn = enRaiz && currentSessionData.currentStep === 0;
 
   return (
     <>
@@ -109,12 +101,11 @@ export default function NewPatientLayout({
             } else if (enRaiz) {
               setCurrentSessionData({
                 ...currentSessionData,
-                currentStep:
-                  currentSessionData.toBeAdded === "document"
-                    ? currentSessionData.currentStep - 1
-                    : [1, 2, 3, 5].includes(currentSessionData.currentStep)
-                      ? 0
-                      : currentSessionData.currentStep - 1,
+                currentStep: [1, 2, 3, 5].includes(
+                  currentSessionData.currentStep,
+                )
+                  ? 0
+                  : currentSessionData.currentStep - 1,
               });
             } else {
               router.back();

@@ -51,7 +51,8 @@ const BallLabels: Record<CHSections, string> = {
 
 const SavePatientForm: React.FC<SavePatientFormProps> = ({ loading }) => {
   const router = useRouter();
-  const { feathersFetchCC, axiosFetchCC, getAccessToken } = useGlobalContext();
+  const { feathersFetchCC, axiosFetchCC, getAccessToken, appDaySchema } =
+    useGlobalContext();
   const base = "/dashboard";
   const {
     setShowPatient,
@@ -709,7 +710,9 @@ const SavePatientForm: React.FC<SavePatientFormProps> = ({ loading }) => {
         throw new Error("No Somatometricos Added");
       }
       if (mustChoose && !tutorId) {
-        throw new Error("Selecciona el médico para el que registras al paciente");
+        throw new Error(
+          "Selecciona el médico para el que registras al paciente",
+        );
       }
       const req = await Synthesize_New_Patient(
         ClinicalHistory,
@@ -903,7 +906,7 @@ const SavePatientForm: React.FC<SavePatientFormProps> = ({ loading }) => {
                     </label>
                     <MultiCIESearchCC
                       identifier="RecordDiagnosisCIE"
-                      colorSchema="night"
+                      colorSchema={appDaySchema ? "day" : "night"}
                       value={currentSessionData.diagnosisCatalog}
                       onChange={(diagnoses) =>
                         setCurrentSessionData({

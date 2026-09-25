@@ -41,6 +41,7 @@ interface DomicilioSearchCCProps {
   currentValue?: string;
   className?: string;
   identifier?: string;
+  label?: string;
 }
 
 const newSessionToken = (): string =>
@@ -56,6 +57,7 @@ const DomicilioSearchCC: React.FC<DomicilioSearchCCProps> = ({
   colorSchema,
   currentValue,
   placeholder,
+  label,
 }) => {
   const { feathersFetchCC } = useGlobalContext();
   const [searchedDomicilios, setSearchedDomicilios] = React.useState<
@@ -124,13 +126,14 @@ const DomicilioSearchCC: React.FC<DomicilioSearchCCProps> = ({
             identifier="loaderInput"
             currentValue="Buscando direcciones ..."
             styles={{ container: { width: "100%" } }}
-            colorSchema="night"
+            colorSchema={colorSchema ? colorSchema : "day"}
             type="text"
             loading
           />
         ) : (
           <InputCC
             identifier={`${identifier || "DomicilioSearch"}-search`}
+            label={label}
             currentValue={
               currentValue
                 ? currentValue
